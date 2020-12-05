@@ -16,7 +16,8 @@
 		88B5596325785E4C00D64D1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88B5596125785E4C00D64D1A /* LaunchScreen.storyboard */; };
 		88B5596E25785E4D00D64D1A /* Simple_Habit_TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5596D25785E4D00D64D1A /* Simple_Habit_TrackerTests.swift */; };
 		88B5597925785E4D00D64D1A /* Simple_Habit_TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5597825785E4D00D64D1A /* Simple_Habit_TrackerUITests.swift */; };
-		88C59BCB257863350090B231 /* MTSlideToOpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C59BCA257863350090B231 /* MTSlideToOpenView.swift */; };
+		88B6C18D257B27580045D022 /* ConfettiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6C18C257B27580045D022 /* ConfettiType.swift */; };
+		88D11F7E257B1CD30040C61F /* MTSlideToOpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +53,8 @@
 		88B5597425785E4D00D64D1A /* Simple Habit TrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Simple Habit TrackerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B5597825785E4D00D64D1A /* Simple_Habit_TrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Simple_Habit_TrackerUITests.swift; sourceTree = "<group>"; };
 		88B5597A25785E4D00D64D1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		88C59BCA257863350090B231 /* MTSlideToOpenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MTSlideToOpenView.swift; path = ../../../../Desktop/MTSlideToOpenView.swift; sourceTree = "<group>"; };
+		88B6C18C257B27580045D022 /* ConfettiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiType.swift; sourceTree = "<group>"; };
+		88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTSlideToOpenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +105,7 @@
 		88B5595525785E4B00D64D1A /* Simple Habit Tracker */ = {
 			isa = PBXGroup;
 			children = (
-				88C59BCA257863350090B231 /* MTSlideToOpenView.swift */,
+				88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */,
 				88B5595625785E4B00D64D1A /* AppDelegate.swift */,
 				88B5595825785E4B00D64D1A /* SceneDelegate.swift */,
 				88B5595A25785E4B00D64D1A /* ViewController.swift */,
@@ -112,6 +114,7 @@
 				88B5596125785E4C00D64D1A /* LaunchScreen.storyboard */,
 				88B5596425785E4C00D64D1A /* Info.plist */,
 				8847771D2578963700999250 /* UIColor+Components.swift */,
+				88B6C18C257B27580045D022 /* ConfettiType.swift */,
 			);
 			path = "Simple Habit Tracker";
 			sourceTree = "<group>";
@@ -264,11 +267,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88C59BCB257863350090B231 /* MTSlideToOpenView.swift in Sources */,
+				88D11F7E257B1CD30040C61F /* MTSlideToOpenView.swift in Sources */,
 				88B5595B25785E4B00D64D1A /* ViewController.swift in Sources */,
 				88B5595725785E4B00D64D1A /* AppDelegate.swift in Sources */,
 				8847771E2578963700999250 /* UIColor+Components.swift in Sources */,
 				88B5595925785E4B00D64D1A /* SceneDelegate.swift in Sources */,
+				88B6C18D257B27580045D022 /* ConfettiType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,13 +378,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -429,12 +434,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
