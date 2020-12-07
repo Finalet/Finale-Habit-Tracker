@@ -10,70 +10,66 @@ import Foundation
 
 class ViewController: UIViewController, MTSlideToOpenDelegate {
 
+    @IBOutlet weak var addButtonUI: UIButton!
+    @IBOutlet weak var tableView: UITableView!
+    
+    var sliders = [MTSlideToOpenView]()
+    
+    let sliderHeight: CGFloat = 60.0
+    let slidersGap: CGFloat = 20
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.view.addSubview(slideToLock)
-        self.view.addSubview(slideToLock1)
-        self.view.addSubview(slideToLock2)
-        self.view.addSubview(slideToLock3)
+        
+        initializeTable()
+        initializedAddButton()
     }
     
-    lazy var slideToLock: MTSlideToOpenView = {
-        let slide = MTSlideToOpenView(frame: CGRect(x: 40, y: 240, width: UIScreen.main.bounds.width - 80, height: 68))
+    func initializeTable () {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.rowHeight = sliderHeight + slidersGap
+        tableView.alwaysBounceVertical = false
+        
+        let numberOfHabits = UserDefaults.standard.integer(forKey: "numberOfHabits")
+        if numberOfHabits == 0 {
+            return
+        }
+        for n in 1...numberOfHabits {
+            addSlider(habitName: "Running1")
+        }
+    }
+    
+    func initializedAddButton () {
+        addButtonUI.layer.cornerRadius = addButtonUI.bounds.width/2
+        addButtonUI.layer.shadowColor = UIColor.black.cgColor
+        addButtonUI.layer.shadowRadius = 8
+        addButtonUI.layer.shadowOpacity = 0.4
+        addButtonUI.layer.shadowOffset = CGSize(width: 0, height: 0)
+    }
+    
+    func createNewSlider(name: String) -> MTSlideToOpenView {
+        let slide = MTSlideToOpenView(frame: CGRect(x: 20, y: slidersGap/2, width: UIScreen.main.bounds.width - 80, height: sliderHeight))
         slide.sliderViewTopDistance = 0
-        slide.sliderCornerRadius = 34
-        slide.thumnailImageView.backgroundColor  = UIColor(red:50/255, green:230/255, blue:50/255, alpha:1.0)
+        slide.sliderCornerRadius = sliderHeight/2
+        slide.thumbnailViewTopDistance = 4
+        slide.thumbnailViewStartingDistance = 4
+        slide.thumnailImageView.backgroundColor  = UIColor(red:50/255, green:255/255, blue:50/255, alpha:1.0)
         slide.draggedView.backgroundColor = UIColor(red:50/255, green:230/255, blue:50/255, alpha:1.0)
         slide.sliderBackgroundColor = UIColor(red:90/255, green:200/255, blue:90/255, alpha:1.0)
         slide.delegate = self
-        slide.labelText = "Slide to record Running"
+        slide.labelText = "Slide to record " + name
         slide.textLabel.textColor = .white
+
+        
+        /*
+        slide.layer.shadowRadius = 5
+        slide.layer.shadowOpacity = 0.4
+        slide.layer.shadowOffset = CGSize(width: 0, height: 0) */
         return slide
-    }()
-    
-    lazy var slideToLock1: MTSlideToOpenView = {
-        let slide = MTSlideToOpenView(frame: CGRect(x: 40, y: 340, width: UIScreen.main.bounds.width - 80, height: 68))
-        slide.sliderViewTopDistance = 0
-        slide.sliderCornerRadius = 34
-        slide.thumnailImageView.backgroundColor  = UIColor(red:40/255, green:170/255, blue:255/255, alpha:1.0)
-        slide.draggedView.backgroundColor = UIColor(red:40/255, green:170/255, blue:255/255, alpha:1.0)
-        slide.sliderBackgroundColor = UIColor(red:30/255, green:120/255, blue:180/255, alpha:1.0)
-        slide.delegate = self
-        slide.labelText = "Slide to record Running"
-        slide.textLabel.textColor = .white
-        return slide
-    }()
-    
-    lazy var slideToLock2: MTSlideToOpenView = {
-        let slide = MTSlideToOpenView(frame: CGRect(x: 40, y: 440, width: UIScreen.main.bounds.width - 80, height: 68))
-        slide.sliderViewTopDistance = 0
-        slide.sliderCornerRadius = 34
-        slide.thumnailImageView.backgroundColor = UIColor(red:255/255, green:80/255, blue:220/255, alpha:1.0)
-        slide.draggedView.backgroundColor = UIColor(red:255/255, green:80/255, blue:220/255, alpha:1.0)
-        slide.sliderBackgroundColor = UIColor(red:200/255, green:40/255, blue:170/255, alpha:1.0)
-        slide.delegate = self
-        slide.labelText = "Slide to record Running"
-        slide.textLabel.textColor = .white
-        return slide
-    }()
-    
-    lazy var slideToLock3: MTSlideToOpenView = {
-        let slide = MTSlideToOpenView(frame: CGRect(x: 40, y: 540, width: UIScreen.main.bounds.width - 80, height: 68))
-        slide.sliderViewTopDistance = 0
-        slide.sliderCornerRadius = 34
-        slide.thumnailImageView.backgroundColor  = UIColor(red:250/255, green:40/255, blue:40/255, alpha:1.0)
-        slide.draggedView.backgroundColor = UIColor(red:250/255, green:40/255, blue:40/255, alpha:1.0)
-        slide.sliderBackgroundColor = UIColor(red:200/255, green:20/255, blue:20/255, alpha:1.0)
-        slide.delegate = self
-        slide.labelText = "Slide to record Running"
-        slide.textLabel.textColor = .white
-        return slide
-    }()
+    }
     
 
-    var first: Bool = true
-    
     func mtSlideToOpenDelegateDidFinish(_ sender: MTSlideToOpenView) {
         sender.resetStateWithAnimation(false)
         
@@ -81,10 +77,6 @@ class ViewController: UIViewController, MTSlideToOpenDelegate {
             generator.notificationOccurred(.error)
         
         PlayConfetti()
-        
-        if (first) {
-            first = false
-        }
     }
     
     func PlayConfetti () {
@@ -115,7 +107,37 @@ class ViewController: UIViewController, MTSlideToOpenDelegate {
             background.removeFromSuperlayer()
         }
     }
+    
+    @IBAction func newButton(_ sender: Any) {
+        UISelectionFeedbackGenerator().selectionChanged()
+        addSlider(habitName: "Running")
+    }
 }
 
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("cell tapped")
+    }
+}
 
-
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sliders.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        
+        let newSlider = sliders[indexPath.row]
+        cell.contentView.addSubview(newSlider)
+        
+        return cell
+    }
+    
+    func addSlider (habitName: String) {
+        sliders.append(createNewSlider(name: habitName))
+        
+        tableView.reloadData()
+        UserDefaults.standard.set(sliders.count, forKey: "numberOfHabits")
+    }
+}
