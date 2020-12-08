@@ -10,6 +10,9 @@ import UIKit
 
 @objc public protocol MTSlideToOpenDelegate {
     func mtSlideToOpenDelegateDidFinish(_ sender: MTSlideToOpenView)
+    func lerpBackgroundColor (progress: CGFloat)
+    func resetBackgroundColor (progress: CGFloat)
+    func startColorLerp()
 }
 
 @objcMembers public class MTSlideToOpenView: UIView {
@@ -160,9 +163,6 @@ import UIKit
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(_:)))
         panGestureRecognizer.minimumNumberOfTouches = 1
         thumnailImageView.addGestureRecognizer(panGestureRecognizer)
-        
-        //let interaction = UIContextMenuInteraction(delegate: self)
-        //view.addInteraction(interaction)
     }
     
     private func setupConstraint() {
@@ -245,6 +245,7 @@ import UIKit
     }
     
     var lastProgress :CGFloat = 0
+    var lastPreciseProgress: CGFloat = 0
     // MARK: UIPanGestureRecognizer
     @objc private func handlePanGesture(_ sender: UIPanGestureRecognizer) {
         if isFinished || !isEnabled {
@@ -254,6 +255,7 @@ import UIKit
         
         switch sender.state {
         case .began:
+            delegate?.startColorLerp()
             break
         case .changed:
             if translatedPoint >= xEndingPoint {
@@ -268,6 +270,8 @@ import UIKit
             updateThumbnailXPosition(translatedPoint)
             textLabel.alpha = (xEndingPoint - translatedPoint) / xEndingPoint
             
+            delegate?.lerpBackgroundColor(progress: 1 - ((xEndingPoint-translatedPoint)/xEndingPoint))
+            lastPreciseProgress = 1 - ((xEndingPoint-translatedPoint)/xEndingPoint)
             
             var progress = 10 * (translatedPoint - xEndingPoint) / xEndingPoint
             progress.round()
@@ -278,7 +282,6 @@ import UIKit
             }
         
             lastProgress = progress
-
             break
         case .ended:
             if translatedPoint >= xEndingPoint {
@@ -287,11 +290,13 @@ import UIKit
                 // Finish action
                 isFinished = true
                 delegate?.mtSlideToOpenDelegateDidFinish(self)
+                delegate?.resetBackgroundColor(progress: 1.0)
                 return
             }
             if translatedPoint <= thumbnailViewStartingDistance {
                 textLabel.alpha = 1
                 updateThumbnailXPosition(thumbnailViewStartingDistance)
+                delegate?.resetBackgroundColor(progress: lastPreciseProgress)
                 return
             }
             UIView.animate(withDuration: animationVelocity) {
@@ -299,6 +304,7 @@ import UIKit
                 self.textLabel.alpha = 1
                 self.layoutIfNeeded()
             }
+            delegate?.resetBackgroundColor(progress: lastPreciseProgress)
             break
         default:
             break
@@ -342,23 +348,5 @@ class MTRoundImageView: UIImageView {
         self.layer.cornerRadius = radius
     }
 }
-/*
-extension MTSlideToOpenView: UIContextMenuInteractionDelegate {
-    public func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
 
-            let rename = UIAction(title: "Rename", image: UIImage(systemName: "square.and.pencil")) { action in
-                self.textLabel.text = "Renamed"
-            }
-
-            // Here we specify the "destructive" attribute to show that it’s destructive in nature
-            let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
-                removeSlider()
-            }
-
-            // Create and return a UIMenu with all of the actions as children
-            return UIMenu(title: "", children: [rename, delete])
-        }
-    }
-} */
 
