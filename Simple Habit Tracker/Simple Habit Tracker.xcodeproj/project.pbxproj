@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		8847771E2578963700999250 /* UIColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8847771D2578963700999250 /* UIColor+Components.swift */; };
+		889A69B5257EC5360016D3D0 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A69B4257EC5360016D3D0 /* PresentationController.swift */; };
+		889A69BA257EC6210016D3D0 /* AddHabitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889A69B9257EC6210016D3D0 /* AddHabitView.xib */; };
+		889A69BF257EC6B50016D3D0 /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A69BE257EC6B50016D3D0 /* AddHabitView.swift */; };
 		88B5595725785E4B00D64D1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5595625785E4B00D64D1A /* AppDelegate.swift */; };
 		88B5595925785E4B00D64D1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5595825785E4B00D64D1A /* SceneDelegate.swift */; };
 		88B5595B25785E4B00D64D1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5595A25785E4B00D64D1A /* ViewController.swift */; };
@@ -39,6 +42,9 @@
 
 /* Begin PBXFileReference section */
 		8847771D2578963700999250 /* UIColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Components.swift"; sourceTree = "<group>"; };
+		889A69B4257EC5360016D3D0 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
+		889A69B9257EC6210016D3D0 /* AddHabitView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddHabitView.xib; sourceTree = "<group>"; };
+		889A69BE257EC6B50016D3D0 /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		88B5595325785E4B00D64D1A /* Simple Habit Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Habit Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B5595625785E4B00D64D1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88B5595825785E4B00D64D1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +121,9 @@
 				88B5596425785E4C00D64D1A /* Info.plist */,
 				8847771D2578963700999250 /* UIColor+Components.swift */,
 				88B6C18C257B27580045D022 /* ConfettiType.swift */,
+				889A69B4257EC5360016D3D0 /* PresentationController.swift */,
+				889A69B9257EC6210016D3D0 /* AddHabitView.xib */,
+				889A69BE257EC6B50016D3D0 /* AddHabitView.swift */,
 			);
 			path = "Simple Habit Tracker";
 			sourceTree = "<group>";
@@ -241,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				88B5596325785E4C00D64D1A /* LaunchScreen.storyboard in Resources */,
+				889A69BA257EC6210016D3D0 /* AddHabitView.xib in Resources */,
 				88B5596025785E4C00D64D1A /* Assets.xcassets in Resources */,
 				88B5595E25785E4B00D64D1A /* Main.storyboard in Resources */,
 			);
@@ -268,7 +278,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				88D11F7E257B1CD30040C61F /* MTSlideToOpenView.swift in Sources */,
+				889A69BF257EC6B50016D3D0 /* AddHabitView.swift in Sources */,
 				88B5595B25785E4B00D64D1A /* ViewController.swift in Sources */,
+				889A69B5257EC5360016D3D0 /* PresentationController.swift in Sources */,
 				88B5595725785E4B00D64D1A /* AppDelegate.swift in Sources */,
 				8847771E2578963700999250 /* UIColor+Components.swift in Sources */,
 				88B5595925785E4B00D64D1A /* SceneDelegate.swift in Sources */,

@@ -160,6 +160,9 @@ import UIKit
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(self.handlePanGesture(_:)))
         panGestureRecognizer.minimumNumberOfTouches = 1
         thumnailImageView.addGestureRecognizer(panGestureRecognizer)
+        
+        //let interaction = UIContextMenuInteraction(delegate: self)
+        //view.addInteraction(interaction)
     }
     
     private func setupConstraint() {
@@ -339,4 +342,23 @@ class MTRoundImageView: UIImageView {
         self.layer.cornerRadius = radius
     }
 }
+/*
+extension MTSlideToOpenView: UIContextMenuInteractionDelegate {
+    public func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+
+            let rename = UIAction(title: "Rename", image: UIImage(systemName: "square.and.pencil")) { action in
+                self.textLabel.text = "Renamed"
+            }
+
+            // Here we specify the "destructive" attribute to show that it’s destructive in nature
+            let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+                removeSlider()
+            }
+
+            // Create and return a UIMenu with all of the actions as children
+            return UIMenu(title: "", children: [rename, delete])
+        }
+    }
+} */
 

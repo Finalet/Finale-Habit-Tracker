@@ -8,12 +8,12 @@
 import UIKit
 import Foundation
 
-class ViewController: UIViewController, MTSlideToOpenDelegate {
+class ViewController: UIViewController, MTSlideToOpenDelegate, AddHabitDelegate {
 
     @IBOutlet weak var addButtonUI: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
-    var sliders = [MTSlideToOpenView]()
+    var habits = [Habit]()
     
     let sliderHeight: CGFloat = 60.0
     let slidersGap: CGFloat = 20
@@ -24,20 +24,14 @@ class ViewController: UIViewController, MTSlideToOpenDelegate {
         initializeTable()
         initializedAddButton()
     }
-    
+
     func initializeTable () {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.rowHeight = sliderHeight + slidersGap
         tableView.alwaysBounceVertical = false
         
-        let numberOfHabits = UserDefaults.standard.integer(forKey: "numberOfHabits")
-        if numberOfHabits == 0 {
-            return
-        }
-        for n in 1...numberOfHabits {
-            addSlider(habitName: "Running1")
-        }
+        loadHabits()
     }
     
     func initializedAddButton () {
@@ -58,7 +52,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate {
         slide.draggedView.backgroundColor = UIColor(red:50/255, green:230/255, blue:50/255, alpha:1.0)
         slide.sliderBackgroundColor = UIColor(red:90/255, green:200/255, blue:90/255, alpha:1.0)
         slide.delegate = self
-        slide.labelText = "Slide to record " + name
+        slide.labelText = name
         slide.textLabel.textColor = .white
 
         
@@ -109,8 +103,46 @@ class ViewController: UIViewController, MTSlideToOpenDelegate {
     }
     
     @IBAction func newButton(_ sender: Any) {
+        let slideVC = AddHabitView()
+        slideVC.modalPresentationStyle = .custom
+        slideVC.transitioningDelegate = self
+        slideVC.delegate = self
+        slideVC.editingHabit = false
+        self.present(slideVC, animated: true, completion: nil)
+        
         UISelectionFeedbackGenerator().selectionChanged()
-        addSlider(habitName: "Running")
+    }
+    
+    func removeHabit (index: Int) {
+        habits.remove(at: index)
+        tableView.reloadData()
+        
+        saveHabits()
+    }
+    func openEditHabit (index: Int) {
+        let slideVC = AddHabitView()
+        slideVC.modalPresentationStyle = .custom
+        slideVC.transitioningDelegate = self
+        slideVC.delegate = self
+        slideVC.editingHabit = true
+        slideVC.editingHabitName = habits[index].name
+        slideVC.editHabitIndex = index
+        self.present(slideVC, animated: true, completion: nil)
+        
+        UISelectionFeedbackGenerator().selectionChanged()
+    }
+    func editHabit (habitIndex: Int, name: String) {
+        habits[habitIndex].name = name
+        tableView.reloadData()
+        saveHabits()
+    }
+    func addHabit(name: String) {
+        let newHabit = Habit(name: name)
+        habits.append(newHabit)
+        
+        tableView.reloadData()
+        
+        saveHabits()
     }
 }
 
@@ -122,22 +154,54 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sliders.count
+        return habits.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         
-        let newSlider = sliders[indexPath.row]
-        cell.contentView.addSubview(newSlider)
+        let habit = habits[indexPath.row]
+        let habitSlider = createNewSlider(name: habit.name)
+        cell.contentView.addSubview(habitSlider)
         
         return cell
     }
     
-    func addSlider (habitName: String) {
-        sliders.append(createNewSlider(name: habitName))
-        
-        tableView.reloadData()
-        UserDefaults.standard.set(sliders.count, forKey: "numberOfHabits")
+    func saveHabits () {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(habits), forKey:"savedHabits")
     }
+    func loadHabits () {
+        if let data = UserDefaults.standard.value(forKey:"savedHabits") as? Data {
+            let loadedHabits = try? PropertyListDecoder().decode(Array<Habit>.self, from: data)
+            habits = loadedHabits ?? [Habit]()
+        }
+    }
+    
+    
+    func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+
+            // Create an action for sharing
+            let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+                self.removeHabit(index: indexPath.row)
+            }
+            let rename = UIAction(title: "Edit", image: UIImage(systemName: "square.and.pencil")) { action in
+                self.openEditHabit(index: indexPath.row)
+            }
+
+            // Create other actions...
+
+            return UIMenu(title: "", children: [rename, delete])
+        }
+    }
+}
+
+extension ViewController: UIViewControllerTransitioningDelegate {
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        PresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+struct Habit: Codable {
+    var name: String
 }
