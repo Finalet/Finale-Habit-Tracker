@@ -8,7 +8,7 @@
 import UIKit
 import Foundation
 
-class ViewController: UIViewController, MTSlideToOpenDelegate, AddHabitDelegate {
+class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwiftDelegate, AddHabitDelegate {
 
     @IBOutlet weak var addButtonUI: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -38,30 +38,31 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, AddHabitDelegate 
     func initializedAddButton () {
         addButtonUI.layer.cornerRadius = addButtonUI.bounds.width/2
         addButtonUI.layer.shadowColor = UIColor.black.cgColor
-        addButtonUI.layer.shadowRadius = 8
-        addButtonUI.layer.shadowOpacity = 0.4
+        addButtonUI.layer.shadowRadius = 6
+        addButtonUI.layer.shadowOpacity = 0.3
         addButtonUI.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
-    func createNewSlider(name: String) -> MTSlideToOpenView {
+    func createNewSlider(habit: Habit) -> MTSlideToOpenView {
         let slide = MTSlideToOpenView(frame: CGRect(x: 20, y: slidersGap/2, width: UIScreen.main.bounds.width - 80, height: sliderHeight))
         slide.sliderViewTopDistance = 0
         slide.sliderCornerRadius = sliderHeight/2
         slide.thumbnailViewTopDistance = 4
         slide.thumbnailViewStartingDistance = 4
-        slide.thumnailImageView.backgroundColor  = UIColor(red:50/255, green:255/255, blue:50/255, alpha:1.0)
-        slide.draggedView.backgroundColor = UIColor(red:50/255, green:230/255, blue:50/255, alpha:1.0)
-        slide.sliderBackgroundColor = UIColor(red:90/255, green:200/255, blue:90/255, alpha:1.0)
+        slide.thumnailImageView.backgroundColor  = UIColor.white
+        slide.draggedView.backgroundColor = UIColor(named: habit.color + ".main")
+        slide.sliderBackgroundColor = UIColor(named: habit.color + ".secondary") ?? UIColor.systemTeal
         slide.backgroundColor = UIColor.clear
         slide.delegate = self
-        slide.labelText = name
+        slide.swiftDelegate = self
+        slide.labelText = habit.name
         slide.textLabel.textColor = .white
-
+        slide.habit = habit
         
-        /*
-        slide.layer.shadowRadius = 5
-        slide.layer.shadowOpacity = 0.4
-        slide.layer.shadowOffset = CGSize(width: 0, height: 0) */
+        slide.thumnailImageView.layer.shadowRadius = 4
+        slide.thumnailImageView.layer.shadowOpacity = 0.3
+        slide.thumnailImageView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
         return slide
     }
     
@@ -138,8 +139,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, AddHabitDelegate 
         tableView.reloadData()
         saveHabits()
     }
-    func addHabit(name: String) {
-        let newHabit = Habit(name: name)
+    func addHabit(name: String, color: String) {
+        let newHabit = Habit(name: name, color: color)
         habits.append(newHabit)
         
         tableView.reloadData()
@@ -156,26 +157,27 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, AddHabitDelegate 
         currentGreen = CGFloat(colorComponents?.green ?? 1) * 255.0
         currentBlue = CGFloat(colorComponents?.blue ?? 1) * 255.0
     }
-    func lerpBackgroundColor(progress: CGFloat) {
-        var newRed: CGFloat
-        var newGreen: CGFloat
-        var newBlue: CGFloat
+    func lerpBackgroundColor(progress: CGFloat, habit: Habit) {
+        let futureColor = UIColor(named: habit.color + ".main")?.components
+        let futureRed = CGFloat(futureColor?.red ?? 1) * 255.0
+        let futureGreen = CGFloat(futureColor?.green ?? 1) * 255.0
+        let futureBlue = CGFloat(futureColor?.blue ?? 1) * 255.0
         
-        newRed   = (1.0 - progress) * currentRed   + progress * 50;
-        newGreen = (1.0 - progress) * currentGreen + progress * 230;
-        newBlue  = (1.0 - progress) * currentBlue  + progress * 50;
+        let newRed = (1.0 - progress) * currentRed   + progress * futureRed;
+        let newGreen = (1.0 - progress) * currentGreen + progress * futureGreen;
+        let newBlue = (1.0 - progress) * currentBlue  + progress * futureBlue;
         
         let newColor: UIColor = UIColor(red: newRed/255, green: newGreen/255, blue: newBlue/255, alpha: 1.0)
         self.view.backgroundColor = newColor
     }
-    func resetBackgroundColor(progress: CGFloat) {
+    func resetBackgroundColor(progress: CGFloat, habit: Habit) {
         self.view.backgroundColor = UIColor.systemBackground
         var reduceVar: CGFloat = progress
         let velocity = progress/20
         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { timer in
             
             reduceVar -= velocity
-            self.lerpBackgroundColor(progress: reduceVar)
+            self.lerpBackgroundColor(progress: reduceVar, habit: habit)
             
             if reduceVar <= 0 {
                 timer.invalidate()
@@ -203,7 +205,7 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return habits.count
+        return habits.count + 1
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -213,12 +215,15 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        //let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) //NOT USING THIS CAUSE MEMORY OVERLOADED FROM CREATING NEW SLIDERS EVERYTIME
+        let cell = UITableViewCell();
         
-        let habit = habits[indexPath.row]
-        let habitSlider = createNewSlider(name: habit.name)
+        cell.selectionStyle = .none
         cell.backgroundColor = .clear
-        cell.contentView.addSubview(habitSlider)
+        if (indexPath.row != habits.count) { //Create empty row at the bottom to add space
+            cell.contentView.addSubview(createNewSlider(habit: habits[indexPath.row]))
+        }
+        print(indexPath.row)
         
         return cell
     }
@@ -259,4 +264,5 @@ extension ViewController: UIViewControllerTransitioningDelegate {
 
 struct Habit: Codable {
     var name: String
+    var color: String
 }

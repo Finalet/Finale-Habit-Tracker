@@ -10,12 +10,16 @@ import UIKit
 
 @objc public protocol MTSlideToOpenDelegate {
     func mtSlideToOpenDelegateDidFinish(_ sender: MTSlideToOpenView)
-    func lerpBackgroundColor (progress: CGFloat)
-    func resetBackgroundColor (progress: CGFloat)
+}
+
+protocol MTSlideToOpenSwiftDelegate: class {
+    func lerpBackgroundColor (progress: CGFloat, habit: Habit)
+    func resetBackgroundColor (progress: CGFloat, habit: Habit)
     func startColorLerp()
 }
 
 @objcMembers public class MTSlideToOpenView: UIView {
+    var habit: Habit!
     // MARK: All Views
     public let textLabel: UILabel = {
         let label = UILabel.init()
@@ -45,6 +49,7 @@ import UIKit
     }()
     // MARK: Public properties
     public weak var delegate: MTSlideToOpenDelegate?
+    weak var swiftDelegate: MTSlideToOpenSwiftDelegate?
     public var animationVelocity: Double = 0.2
     public var sliderViewTopDistance: CGFloat = 8.0 {
         didSet {
@@ -255,7 +260,7 @@ import UIKit
         
         switch sender.state {
         case .began:
-            delegate?.startColorLerp()
+            swiftDelegate?.startColorLerp()
             break
         case .changed:
             if translatedPoint >= xEndingPoint {
@@ -270,7 +275,7 @@ import UIKit
             updateThumbnailXPosition(translatedPoint)
             textLabel.alpha = (xEndingPoint - translatedPoint) / xEndingPoint
             
-            delegate?.lerpBackgroundColor(progress: 1 - ((xEndingPoint-translatedPoint)/xEndingPoint))
+            swiftDelegate?.lerpBackgroundColor(progress: 1 - ((xEndingPoint-translatedPoint)/xEndingPoint), habit: habit)
             lastPreciseProgress = 1 - ((xEndingPoint-translatedPoint)/xEndingPoint)
             
             var progress = 10 * (translatedPoint - xEndingPoint) / xEndingPoint
@@ -290,13 +295,13 @@ import UIKit
                 // Finish action
                 isFinished = true
                 delegate?.mtSlideToOpenDelegateDidFinish(self)
-                delegate?.resetBackgroundColor(progress: 1.0)
+                swiftDelegate?.resetBackgroundColor(progress: 1.0, habit: habit)
                 return
             }
             if translatedPoint <= thumbnailViewStartingDistance {
                 textLabel.alpha = 1
                 updateThumbnailXPosition(thumbnailViewStartingDistance)
-                delegate?.resetBackgroundColor(progress: lastPreciseProgress)
+                swiftDelegate?.resetBackgroundColor(progress: lastPreciseProgress, habit: habit)
                 return
             }
             UIView.animate(withDuration: animationVelocity) {
@@ -304,7 +309,7 @@ import UIKit
                 self.textLabel.alpha = 1
                 self.layoutIfNeeded()
             }
-            delegate?.resetBackgroundColor(progress: lastPreciseProgress)
+            swiftDelegate?.resetBackgroundColor(progress: lastPreciseProgress, habit: habit)
             break
         default:
             break

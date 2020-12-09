@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,6 +12,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddHabitView" customModule="Simple_Habit_Tracker" customModuleProvider="target">
             <connections>
+                <outlet property="colorCollectionView" destination="HWt-aF-tKF" id="sln-dh-vs0"/>
                 <outlet property="createButton" destination="hfh-Cq-XkT" id="076-1t-jKD"/>
                 <outlet property="nameInputField" destination="gq6-ee-QVj" id="jbb-Jq-9pO"/>
                 <outlet property="slideIndicator" destination="iDx-dC-rN8" id="3T5-V9-W4r"/>
@@ -37,10 +39,16 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Color" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O5q-XV-udy">
+                    <rect key="frame" x="20" y="189.66666666666666" width="374" height="21"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your desired habit" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gq6-ee-QVj">
                     <rect key="frame" x="20" y="135.66666666666666" width="374" height="34"/>
                     <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfh-Cq-XkT">
@@ -64,31 +72,50 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HWt-aF-tKF">
+                    <rect key="frame" x="20" y="220.66666666666663" width="374" height="200"/>
+                    <color key="backgroundColor" name="backgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="200" id="Bnb-7x-r4o"/>
+                    </constraints>
+                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QdO-Tk-hFc">
+                        <size key="itemSize" width="40" height="40"/>
+                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                    </collectionViewFlowLayout>
+                </collectionView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" name="backgroundColor"/>
             <constraints>
+                <constraint firstItem="O5q-XV-udy" firstAttribute="top" secondItem="gq6-ee-QVj" secondAttribute="bottom" constant="20" id="BgF-7i-uoE"/>
                 <constraint firstItem="UtR-Ft-Dd8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Dp3-BU-93e"/>
                 <constraint firstItem="UtR-Ft-Dd8" firstAttribute="top" secondItem="iDx-dC-rN8" secondAttribute="bottom" constant="10" id="GbP-Wf-z3N"/>
                 <constraint firstItem="GHL-hM-pTe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="MaJ-po-4cb"/>
                 <constraint firstAttribute="bottom" secondItem="hfh-Cq-XkT" secondAttribute="bottom" constant="60" id="Msb-ad-faj"/>
+                <constraint firstItem="HWt-aF-tKF" firstAttribute="top" secondItem="O5q-XV-udy" secondAttribute="bottom" constant="10" id="OI8-mJ-ra0"/>
                 <constraint firstItem="iDx-dC-rN8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="WZR-jd-lJb"/>
                 <constraint firstItem="hfh-Cq-XkT" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="YvZ-d0-NaN"/>
                 <constraint firstItem="gq6-ee-QVj" firstAttribute="top" secondItem="GHL-hM-pTe" secondAttribute="bottom" constant="5" id="cJW-DQ-vA9"/>
+                <constraint firstItem="HWt-aF-tKF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="dOR-cZ-cU2"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="O5q-XV-udy" secondAttribute="trailing" constant="20" id="geo-XI-o2c"/>
                 <constraint firstItem="GHL-hM-pTe" firstAttribute="top" secondItem="UtR-Ft-Dd8" secondAttribute="bottom" constant="20" id="kmj-EA-JOe"/>
+                <constraint firstItem="O5q-XV-udy" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="nOe-kf-0mc"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gq6-ee-QVj" secondAttribute="trailing" constant="20" id="oCE-Y5-x95"/>
                 <constraint firstItem="iDx-dC-rN8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="qdc-si-BTG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HWt-aF-tKF" secondAttribute="trailing" constant="20" id="sRB-Gn-DGi"/>
                 <constraint firstItem="gq6-ee-QVj" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="vaV-IL-5FR"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="173.4375"/>
         </view>
     </objects>
     <resources>
+        <namedColor name="backgroundColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

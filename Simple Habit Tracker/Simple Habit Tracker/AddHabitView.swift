@@ -14,7 +14,15 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var createButton: UIButton!
     @IBOutlet weak var viewTitle: UILabel!
     
+    @IBOutlet weak var colorCollectionView: UICollectionView!
+    
     weak var delegate: AddHabitDelegate?
+    
+    var allColorButtons = [UIButton]()
+    
+    var currentSelectedColor: String = ""
+    
+    let colors = ["green", "lightgreen", "yellow", "orange", "darkorange", "lightred", "red", "lightpurple", "purple", "deeppurple", "bluepurple", "blue", "lightblue", "cyan"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +31,12 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         
         slideIndicator.roundCorners(.allCorners, radius: 10)
         createButton.roundCorners(.allCorners, radius: 10)
+        
+        
+        let nibName = UINib(nibName: "ColorViewCell", bundle: nil)
+        colorCollectionView.register(nibName, forCellWithReuseIdentifier: "colorCell")
+        colorCollectionView.delegate = self
+        colorCollectionView.dataSource = self
         
         self.nameInputField.delegate = self
         
@@ -51,7 +65,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             name = String(nameInputField.text ?? "New Habit")
         }
         if (!editingHabit) {
-            delegate?.addHabit(name: name)
+            delegate?.addHabit(name: name, color: currentSelectedColor)
         } else {
             delegate?.editHabit(habitIndex: editHabitIndex, name: name)
         }
@@ -87,7 +101,46 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     }
 }
 
+extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return colors.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = colorCollectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath) //as colorCell
+        
+        cell.backgroundColor = UIColor.gray
+        cell.layer.cornerRadius = cell.frame.height / 2
+        
+        let button: UIButton = UIButton(type: UIButton.ButtonType.custom)
+        button.frame.size = cell.frame.size
+        button.addTarget(self, action: #selector(pickColor), for: .touchUpInside)
+        button.backgroundColor = UIColor(named: colors[indexPath.row] + ".main")
+        button.layer.cornerRadius = cell.frame.height / 2
+        button.accessibilityLabel = colors[indexPath.row]
+        cell.addSubview(button)
+        
+        allColorButtons.append(button)
+        
+        if indexPath.row == 0 {
+            pickColor(sender: button)
+        }
+        
+        return cell
+    }
+    
+    @objc func pickColor (sender: UIButton) {
+        for button in allColorButtons {
+            button.layer.borderWidth = 0
+        }
+        
+        currentSelectedColor = sender.accessibilityLabel ?? "green"
+        sender.layer.borderWidth = 3
+        sender.layer.borderColor = UIColor.systemGray.cgColor
+    }
+}
+
 protocol AddHabitDelegate: class {
-    func addHabit(name: String)
+    func addHabit(name: String, color: String)
     func editHabit(habitIndex: Int, name: String)
 }
