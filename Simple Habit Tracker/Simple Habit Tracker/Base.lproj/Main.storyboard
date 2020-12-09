@@ -26,7 +26,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ready to change your habits?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5w-4P-HiD">
-                                <rect key="frame" x="40" y="149" width="245" height="34"/>
+                                <rect key="frame" x="40" y="149" width="368" height="34"/>
                                 <fontDescription key="fontDescription" name="MuktaMahee-Regular" family="Mukta Mahee" pointSize="20"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
@@ -57,6 +57,7 @@
                         <constraints>
                             <constraint firstItem="FpT-i0-Xkl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="1Nm-k7-s2U"/>
                             <constraint firstItem="Geg-Pz-xnh" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="7KT-f5-imN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B5w-4P-HiD" secondAttribute="trailing" constant="20" id="Abg-51-afg"/>
                             <constraint firstItem="B5w-4P-HiD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="105" id="DgQ-YM-C60"/>
                             <constraint firstItem="Geg-Pz-xnh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="HBF-Wg-LRS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Geg-Pz-xnh" secondAttribute="trailing" constant="20" id="We2-KU-KgP"/>

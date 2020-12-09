@@ -30,7 +30,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         view.addGestureRecognizer(panGesture)
         
         slideIndicator.roundCorners(.allCorners, radius: 10)
-        createButton.roundCorners(.allCorners, radius: 10)
+        createButton.layer.cornerRadius = 10
         
         
         let nibName = UINib(nibName: "ColorViewCell", bundle: nil)
