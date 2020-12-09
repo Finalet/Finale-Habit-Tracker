@@ -110,7 +110,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         slideVC.modalPresentationStyle = .custom
         slideVC.transitioningDelegate = self
         slideVC.delegate = self
-        slideVC.editingHabit = false
+        slideVC.isEditingHabit = false
         self.present(slideVC, animated: true, completion: nil)
         
         UISelectionFeedbackGenerator().selectionChanged()
@@ -127,15 +127,16 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         slideVC.modalPresentationStyle = .custom
         slideVC.transitioningDelegate = self
         slideVC.delegate = self
-        slideVC.editingHabit = true
-        slideVC.editingHabitName = habits[index].name
+        slideVC.isEditingHabit = true
+        slideVC.editingHabit = habits[index]
         slideVC.editHabitIndex = index
         self.present(slideVC, animated: true, completion: nil)
         
         UISelectionFeedbackGenerator().selectionChanged()
     }
-    func editHabit (habitIndex: Int, name: String) {
+    func editHabit (habitIndex: Int, name: String, color: String) {
         habits[habitIndex].name = name
+        habits[habitIndex].color = color
         tableView.reloadData()
         saveHabits()
     }
@@ -223,7 +224,6 @@ extension ViewController: UITableViewDataSource {
         if (indexPath.row != habits.count) { //Create empty row at the bottom to add space
             cell.contentView.addSubview(createNewSlider(habit: habits[indexPath.row]))
         }
-        print(indexPath.row)
         
         return cell
     }
