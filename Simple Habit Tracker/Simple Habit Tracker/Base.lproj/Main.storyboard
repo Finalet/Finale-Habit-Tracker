@@ -19,20 +19,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi, Grant" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FpT-i0-Xkl">
-                                <rect key="frame" x="40" y="84" width="368" height="83.666666666666686"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hi, " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FpT-i0-Xkl">
+                                <rect key="frame" x="40" y="84" width="70" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="c9B-Kx-wLr"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="MuktaMahee-Bold" family="Mukta Mahee" pointSize="50"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ready to change your habits?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5w-4P-HiD">
-                                <rect key="frame" x="40" y="149" width="368" height="34"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ready to change your habits?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B5w-4P-HiD">
+                                <rect key="frame" x="40" y="134" width="368" height="33.333333333333343"/>
                                 <fontDescription key="fontDescription" name="MuktaMahee-Regular" family="Mukta Mahee" pointSize="20"/>
                                 <color key="textColor" systemColor="secondaryLabelColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Geg-Pz-xnh">
-                                <rect key="frame" x="20" y="223" width="388" height="703"/>
+                                <rect key="frame" x="20" y="197.33333333333331" width="388" height="728.66666666666674"/>
                                 <color key="backgroundColor" name="app.background"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pmF-8M-Sx9">
@@ -51,6 +54,14 @@
                                     <action selector="newButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AwU-ZW-oIo"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Tap To Edit" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pzk-zH-sU4">
+                                <rect key="frame" x="110" y="84" width="298" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="7IU-fg-jW9"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="MuktaMahee-Bold" family="Mukta Mahee" pointSize="50"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                            </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="app.background"/>
@@ -58,19 +69,24 @@
                             <constraint firstItem="FpT-i0-Xkl" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="1Nm-k7-s2U"/>
                             <constraint firstItem="Geg-Pz-xnh" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="7KT-f5-imN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B5w-4P-HiD" secondAttribute="trailing" constant="20" id="Abg-51-afg"/>
-                            <constraint firstItem="B5w-4P-HiD" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="105" id="DgQ-YM-C60"/>
+                            <constraint firstItem="B5w-4P-HiD" firstAttribute="top" secondItem="FpT-i0-Xkl" secondAttribute="bottom" constant="-10" id="DgQ-YM-C60"/>
                             <constraint firstItem="Geg-Pz-xnh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="HBF-Wg-LRS"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Geg-Pz-xnh" secondAttribute="trailing" constant="20" id="We2-KU-KgP"/>
                             <constraint firstItem="FpT-i0-Xkl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="c4F-qb-wB5"/>
-                            <constraint firstItem="Geg-Pz-xnh" firstAttribute="top" secondItem="B5w-4P-HiD" secondAttribute="bottom" constant="40" id="hsW-HO-p7J"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="FpT-i0-Xkl" secondAttribute="trailing" constant="20" id="oHC-vg-ch9"/>
+                            <constraint firstAttribute="trailing" secondItem="Pzk-zH-sU4" secondAttribute="trailing" constant="20" id="cAh-Oc-Ovx"/>
+                            <constraint firstItem="Geg-Pz-xnh" firstAttribute="top" secondItem="B5w-4P-HiD" secondAttribute="bottom" constant="30" id="hsW-HO-p7J"/>
+                            <constraint firstItem="Pzk-zH-sU4" firstAttribute="bottom" secondItem="FpT-i0-Xkl" secondAttribute="bottom" id="nXW-1N-1tz"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="pmF-8M-Sx9" secondAttribute="trailing" constant="40" id="qUs-wv-902"/>
+                            <constraint firstItem="Pzk-zH-sU4" firstAttribute="leading" secondItem="FpT-i0-Xkl" secondAttribute="trailing" id="qkd-Dj-2p0"/>
                             <constraint firstItem="pmF-8M-Sx9" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-20" id="tPT-s3-h7l"/>
                             <constraint firstItem="B5w-4P-HiD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="vAB-LL-o8Q"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="addButtonUI" destination="pmF-8M-Sx9" id="uon-i5-GOM"/>
+                        <outlet property="hiText" destination="FpT-i0-Xkl" id="DOX-3e-4pv"/>
+                        <outlet property="motivationalPhrasesLable" destination="B5w-4P-HiD" id="FxK-N3-zcC"/>
+                        <outlet property="nameTextField" destination="Pzk-zH-sU4" id="nUu-bL-7hg"/>
                         <outlet property="tableView" destination="Geg-Pz-xnh" id="kYK-9o-dNJ"/>
                     </connections>
                 </viewController>

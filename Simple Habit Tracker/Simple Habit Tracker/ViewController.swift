@@ -18,11 +18,20 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     let sliderHeight: CGFloat = 60.0
     let slidersGap: CGFloat = 20
     
+    @IBOutlet weak var motivationalPhrasesLable: UILabel!
+    var motivationalPhrases = ["Ready to change your habits?", "A small move forward every day.", "Don't let 'later' become 'never'.", "Little things make big days.", "Habits change into character.", "Life is a succession of habits.", "Winning is a habit", "Out of routine comes inspiratoin.", "God habits are the key to success.", "Once you learn to win, it becomes a habit."]
+    
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var hiText: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initializeTable()
         initializedAddButton()
+        initializeTitle()
+
+        self.hideKeyboardWhenTappedAround()
     }
 
     func initializeTable () {
@@ -43,6 +52,17 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         addButtonUI.layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
+    func initializeTitle () {
+        let x = Int.random(in: 0..<motivationalPhrases.count)
+        motivationalPhrasesLable.text = motivationalPhrases[x]
+        
+        nameTextField.delegate = self
+        
+        hiText.font = nameTextField.font?.withSize(CGFloat(UserDefaults.standard.float(forKey: "displayNameFontSize")))
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
+            self.nameTextField.text = UserDefaults.standard.string(forKey: "displayName") ?? ""
+        }
+    }
     func createNewSlider(habit: Habit) -> MTSlideToOpenView {
         let slide = MTSlideToOpenView(frame: CGRect(x: 20, y: slidersGap/2, width: UIScreen.main.bounds.width - 80, height: sliderHeight))
         slide.sliderViewTopDistance = 0
@@ -50,14 +70,22 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         slide.thumbnailViewTopDistance = 4
         slide.thumbnailViewStartingDistance = 4
         slide.thumnailImageView.backgroundColor  = UIColor.white
-        slide.draggedView.backgroundColor = UIColor(named: habit.color + ".main")
-        slide.sliderBackgroundColor = UIColor(named: habit.color + ".secondary") ?? UIColor.systemTeal
         slide.backgroundColor = UIColor.clear
         slide.delegate = self
         slide.swiftDelegate = self
         slide.labelText = habit.name
         slide.textLabel.textColor = .white
         slide.habit = habit
+        slide.sliderHolderView.layer.borderWidth = 3
+        slide.sliderHolderView.layer.borderColor = UIColor.systemGray2.withAlphaComponent(0.5).cgColor
+        
+        if (habit.color.contains("pastel")) {
+            slide.draggedView.backgroundColor = UIColor(named: habit.color)
+            slide.sliderBackgroundColor = UIColor(named: "pastel.grey") ?? UIColor.systemTeal
+        } else {
+            slide.draggedView.backgroundColor = UIColor(named: habit.color + ".main")
+            slide.sliderBackgroundColor = UIColor(named: habit.color + ".secondary") ?? UIColor.systemTeal
+        }
         
         slide.thumnailImageView.layer.shadowRadius = 4
         slide.thumnailImageView.layer.shadowOpacity = 0.3
@@ -159,10 +187,15 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         currentBlue = CGFloat(colorComponents?.blue ?? 1) * 255.0
     }
     func lerpBackgroundColor(progress: CGFloat, habit: Habit) {
-        let futureColor = UIColor(named: habit.color + ".main")?.components
-        let futureRed = CGFloat(futureColor?.red ?? 1) * 255.0
-        let futureGreen = CGFloat(futureColor?.green ?? 1) * 255.0
-        let futureBlue = CGFloat(futureColor?.blue ?? 1) * 255.0
+        var futureColor = UIColor.clear.components
+        if (habit.color.contains("pastel")) {
+            futureColor = UIColor(named: habit.color)!.components
+        } else {
+            futureColor = UIColor(named: habit.color + ".main")!.components
+        }
+        let futureRed = CGFloat(futureColor.red ) * 255.0
+        let futureGreen = CGFloat(futureColor.green ) * 255.0
+        let futureBlue = CGFloat(futureColor.blue ) * 255.0
         
         let newRed = (1.0 - progress) * currentRed   + progress * futureRed;
         let newGreen = (1.0 - progress) * currentGreen + progress * futureGreen;
@@ -240,6 +273,9 @@ extension ViewController: UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
+        if indexPath.row == habits.count { //if its the last cell which is empty
+            return nil
+        }
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
 
             // Create an action for sharing
@@ -259,6 +295,33 @@ extension ViewController: UITableViewDataSource {
 extension ViewController: UIViewControllerTransitioningDelegate {
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
         PresentationController(presentedViewController: presented, presenting: presenting)
+    }
+}
+
+extension ViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        UserDefaults.standard.set(nameTextField.text, forKey: "displayName")
+        UserDefaults.standard.set(hiText.font.pointSize, forKey: "displayNameFontSize")
+        return false
+    }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        hiText.font = nameTextField.font
+        return true
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        nameTextField.selectedTextRange = nameTextField.textRange(from: nameTextField.endOfDocument, to: nameTextField.endOfDocument)
+    }
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround () {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    @objc func dismissKeyboard () {
+        view.endEditing(true)
     }
 }
 

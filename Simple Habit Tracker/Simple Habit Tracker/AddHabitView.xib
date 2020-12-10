@@ -15,6 +15,7 @@
                 <outlet property="colorCollectionView" destination="HWt-aF-tKF" id="sln-dh-vs0"/>
                 <outlet property="createButton" destination="hfh-Cq-XkT" id="076-1t-jKD"/>
                 <outlet property="nameInputField" destination="gq6-ee-QVj" id="jbb-Jq-9pO"/>
+                <outlet property="pageDots" destination="GYh-dp-41U" id="kK8-lp-3bX"/>
                 <outlet property="slideIndicator" destination="iDx-dC-rN8" id="3T5-V9-W4r"/>
                 <outlet property="view" destination="iN0-l3-epB" id="3W1-fb-7ZF"/>
                 <outlet property="viewTitle" destination="UtR-Ft-Dd8" id="k0y-Dk-nVV"/>
@@ -71,41 +72,58 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HWt-aF-tKF">
-                    <rect key="frame" x="20" y="220.66666666666663" width="374" height="200"/>
+                <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="HWt-aF-tKF">
+                    <rect key="frame" x="0.0" y="220.66666666666666" width="414" height="97.333333333333343"/>
                     <color key="backgroundColor" name="app.background"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="200" id="Bnb-7x-r4o"/>
+                        <constraint firstAttribute="width" secondItem="HWt-aF-tKF" secondAttribute="height" multiplier="200:47" id="nvd-b8-G47"/>
                     </constraints>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="QdO-Tk-hFc">
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="4s8-yq-NC4">
                         <size key="itemSize" width="40" height="40"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Icon" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCO-rk-CGn">
+                    <rect key="frame" x="20" y="338" width="374" height="21"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="2" currentPage="1" translatesAutoresizingMaskIntoConstraints="NO" id="GYh-dp-41U">
+                    <rect key="frame" x="20" y="320" width="374" height="28"/>
+                    <color key="pageIndicatorTintColor" systemColor="systemGray2Color"/>
+                    <color key="currentPageIndicatorTintColor" name="app.selection"/>
+                </pageControl>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="app.background"/>
             <constraints>
                 <constraint firstItem="O5q-XV-udy" firstAttribute="top" secondItem="gq6-ee-QVj" secondAttribute="bottom" constant="20" id="BgF-7i-uoE"/>
                 <constraint firstItem="UtR-Ft-Dd8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Dp3-BU-93e"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="GYh-dp-41U" secondAttribute="trailing" constant="20" id="FJ0-2v-qpd"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hfh-Cq-XkT" secondAttribute="trailing" constant="20" id="GJ2-2R-pSg"/>
                 <constraint firstItem="UtR-Ft-Dd8" firstAttribute="top" secondItem="iDx-dC-rN8" secondAttribute="bottom" constant="10" id="GbP-Wf-z3N"/>
                 <constraint firstItem="GHL-hM-pTe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="MaJ-po-4cb"/>
                 <constraint firstAttribute="bottom" secondItem="hfh-Cq-XkT" secondAttribute="bottom" constant="60" id="Msb-ad-faj"/>
                 <constraint firstItem="HWt-aF-tKF" firstAttribute="top" secondItem="O5q-XV-udy" secondAttribute="bottom" constant="10" id="OI8-mJ-ra0"/>
                 <constraint firstItem="iDx-dC-rN8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="WZR-jd-lJb"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="UCO-rk-CGn" secondAttribute="trailing" constant="20" id="YBV-UR-ZKD"/>
                 <constraint firstItem="hfh-Cq-XkT" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="YvZ-d0-NaN"/>
                 <constraint firstItem="gq6-ee-QVj" firstAttribute="top" secondItem="GHL-hM-pTe" secondAttribute="bottom" constant="5" id="cJW-DQ-vA9"/>
-                <constraint firstItem="HWt-aF-tKF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="dOR-cZ-cU2"/>
+                <constraint firstItem="HWt-aF-tKF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="dOR-cZ-cU2"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="leading" secondItem="hfh-Cq-XkT" secondAttribute="leading" constant="-20" id="gLk-H3-iXu"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="O5q-XV-udy" secondAttribute="trailing" constant="20" id="geo-XI-o2c"/>
+                <constraint firstItem="GYh-dp-41U" firstAttribute="top" secondItem="HWt-aF-tKF" secondAttribute="bottom" constant="2" id="i6h-7N-a5N"/>
+                <constraint firstItem="GYh-dp-41U" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="kay-61-UvG"/>
                 <constraint firstItem="GHL-hM-pTe" firstAttribute="top" secondItem="UtR-Ft-Dd8" secondAttribute="bottom" constant="20" id="kmj-EA-JOe"/>
                 <constraint firstItem="O5q-XV-udy" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="nOe-kf-0mc"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gq6-ee-QVj" secondAttribute="trailing" constant="20" id="oCE-Y5-x95"/>
                 <constraint firstItem="iDx-dC-rN8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="qdc-si-BTG"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HWt-aF-tKF" secondAttribute="trailing" constant="20" id="sRB-Gn-DGi"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HWt-aF-tKF" secondAttribute="trailing" id="sRB-Gn-DGi"/>
+                <constraint firstItem="UCO-rk-CGn" firstAttribute="top" secondItem="HWt-aF-tKF" secondAttribute="bottom" constant="20" id="tib-dR-Gja"/>
+                <constraint firstItem="UCO-rk-CGn" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="trc-Jm-aLb"/>
                 <constraint firstItem="gq6-ee-QVj" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="vaV-IL-5FR"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="173.4375"/>
@@ -115,8 +133,14 @@
         <namedColor name="app.background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="app.selection">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="separatorColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.28999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemTealColor">
             <color red="0.35294117647058826" green="0.78431372549019607" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
