@@ -5,7 +5,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     
-    var editingHabit: Habit = Habit(name: "", color: "");
+    var editingHabit: Habit = Habit(name: "", color: "", count: 0, doneToday: false);
     var isEditingHabit = false
     var editHabitIndex = 0
     
@@ -74,7 +74,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             name = String(nameInputField.text ?? "New Habit")
         }
         if (!isEditingHabit) {
-            delegate?.addHabit(name: name, color: currentSelectedColor)
+            delegate?.addHabit(name: name, color: currentSelectedColor, count: 0, doneToday: false)
         } else {
             delegate?.editHabit(habitIndex: editHabitIndex, name: name, color: currentSelectedColor)
         }
@@ -172,14 +172,9 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         button.addTarget(self, action: #selector(pickColor), for: .touchUpInside)
         button.layer.cornerRadius = cell.frame.height / 2
         button.accessibilityLabel = color
+        button.leftColor = UIColor(named: color + ".main")!
+        button.rightColor = UIColor(named: color + ".secondary")!
         
-        if (color.contains("pastel")) {
-            button.leftColor = UIColor(named: color)!
-            button.rightColor = UIColor(named: "pastel.grey")!
-        } else {
-            button.leftColor = UIColor(named: color + ".main")!
-            button.rightColor = UIColor(named: color + ".secondary")!
-        }
         cell.addSubview(button)
         allColorButtons.append(button)
         
@@ -208,7 +203,7 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
 }
 
 protocol AddHabitDelegate: class {
-    func addHabit(name: String, color: String)
+    func addHabit(name: String, color: String, count: Int, doneToday: Bool)
     func editHabit(habitIndex: Int, name: String, color: String)
 }
 

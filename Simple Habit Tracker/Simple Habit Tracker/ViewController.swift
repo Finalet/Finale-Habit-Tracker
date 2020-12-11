@@ -14,9 +14,12 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     @IBOutlet weak var tableView: UITableView!
     
     var habits = [Habit]()
+    var sliders = [MTSlideToOpenView]()
     
     let sliderHeight: CGFloat = 60.0
     let slidersGap: CGFloat = 20
+    
+    var lastDay: Int = 0
     
     @IBOutlet weak var motivationalPhrasesLable: UILabel!
     var motivationalPhrases = ["Ready to change your habits?", "A small move forward every day.", "Don't let 'later' become 'never'.", "Little things make big days.", "Habits change into character.", "Life is a succession of habits.", "Winning is a habit", "Out of routine comes inspiratoin.", "God habits are the key to success.", "Once you learn to win, it becomes a habit."]
@@ -32,6 +35,11 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         initializeTitle()
 
         self.hideKeyboardWhenTappedAround()
+        
+        lastDay = UserDefaults.standard.integer(forKey: "lastDay")
+        let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            self.checkDate()
+        }
     }
 
     func initializeTable () {
@@ -75,32 +83,56 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         slide.swiftDelegate = self
         slide.labelText = habit.name
         slide.textLabel.textColor = .white
+        slide.showSliderText = true
+        slide.sliderTextLabel.textColor = .white
         slide.habit = habit
         slide.sliderHolderView.layer.borderWidth = 3
         slide.sliderHolderView.layer.borderColor = UIColor.systemGray2.withAlphaComponent(0.5).cgColor
-        
-        if (habit.color.contains("pastel")) {
-            slide.draggedView.backgroundColor = UIColor(named: habit.color)
-            slide.sliderBackgroundColor = UIColor(named: "pastel.grey") ?? UIColor.systemTeal
-        } else {
-            slide.draggedView.backgroundColor = UIColor(named: habit.color + ".main")
-            slide.sliderBackgroundColor = UIColor(named: habit.color + ".secondary") ?? UIColor.systemTeal
-        }
+        slide.draggedView.backgroundColor = UIColor(named: habit.color + ".main")
+        slide.sliderBackgroundColor = UIColor(named: habit.color + ".secondary")!
         
         slide.thumnailImageView.layer.shadowRadius = 4
         slide.thumnailImageView.layer.shadowOpacity = 0.3
         slide.thumnailImageView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        
+        slide.counterText.frame = CGRect(x: slide.bounds.width - sliderHeight/2, y: 0, width: sliderHeight, height: sliderHeight)
+        slide.counterText.text = String(habit.count)
+        slide.counterText.textColor = .white
+        
+        
+        if (habit.doneToday == true) {
+            DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
+                slide.updateThumbnailXPosition(slide.xEndingPoint)
+                slide.isFinished = true
+                slide.textLabel.alpha = 0
+            }
+        }
+        
+        sliders.append(slide)
         
         return slide
     }
     
 
     func mtSlideToOpenDelegateDidFinish(_ sender: MTSlideToOpenView) {
-        sender.resetStateWithAnimation(false)
-        
         let generator = UINotificationFeedbackGenerator()
             generator.notificationOccurred(.error)
         
+        for x in 0..<habits.count {
+            if (habits[x] == sender.habit) {
+                habits[x].count += 1
+                habits[x].doneToday = true
+                sender.habit = habits[x]
+                break
+            }
+        }
+        for x in 0..<sliders.count {
+            if (sliders[x] == sender) {
+                sliders[x].counterText.text = String(sender.habit.count)
+                break
+            }
+        }
+        saveHabits()
         PlayConfetti()
     }
     
@@ -168,8 +200,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         tableView.reloadData()
         saveHabits()
     }
-    func addHabit(name: String, color: String) {
-        let newHabit = Habit(name: name, color: color)
+    func addHabit(name: String, color: String, count: Int, doneToday: Bool) {
+        let newHabit = Habit(name: name, color: color, count: count, doneToday: false)
         habits.append(newHabit)
         
         tableView.reloadData()
@@ -187,12 +219,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         currentBlue = CGFloat(colorComponents?.blue ?? 1) * 255.0
     }
     func lerpBackgroundColor(progress: CGFloat, habit: Habit) {
-        var futureColor = UIColor.clear.components
-        if (habit.color.contains("pastel")) {
-            futureColor = UIColor(named: habit.color)!.components
-        } else {
-            futureColor = UIColor(named: habit.color + ".main")!.components
-        }
+        let futureColor = UIColor(named: habit.color + ".main")!.components
         let futureRed = CGFloat(futureColor.red ) * 255.0
         let futureGreen = CGFloat(futureColor.green ) * 255.0
         let futureBlue = CGFloat(futureColor.blue ) * 255.0
@@ -219,6 +246,25 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         }
     }
     
+    func checkDate () {
+        //if (lastDay != Date().dayNumberOfWeek()) {
+        if (lastDay != Calendar.current.component(.minute, from: Date())) {
+            
+            print(habits[0])
+            for x in 0..<habits.count {
+                if (habits[x].doneToday == true) {
+                    sliders[x].resetStateWithAnimation(true)
+                    habits[x].doneToday = false
+                    sliders[x].habit = habits[x]
+                }
+            }
+            //lastDay = Date().dayNumberOfWeek()!
+            lastDay = Calendar.current.component(.minute, from: Date())
+            UserDefaults.standard.set(lastDay, forKey: "lastDay")
+            saveHabits()
+            print(habits[0])
+        }
+    }
 }
 
 extension UIColor {
@@ -325,7 +371,15 @@ extension UIViewController {
     }
 }
 
-struct Habit: Codable {
+struct Habit: Codable, Equatable {
     var name: String
     var color: String
+    var count: Int
+    var doneToday: Bool
+}
+
+extension Date {
+    func dayNumberOfWeek() -> Int? {
+        return Calendar.current.dateComponents([.weekday], from: self).weekday
+    }
 }

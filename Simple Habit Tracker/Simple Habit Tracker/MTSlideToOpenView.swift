@@ -21,6 +21,10 @@ protocol MTSlideToOpenSwiftDelegate: class {
 @objcMembers public class MTSlideToOpenView: UIView {
     var habit: Habit!
     // MARK: All Views
+    public let counterText: UILabel = {
+        let label = UILabel.init()
+        return label
+    }()
     public let textLabel: UILabel = {
         let label = UILabel.init()
         return label
@@ -97,7 +101,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
     public var sliderBackgroundColor: UIColor = UIColor(red:0.1, green:0.61, blue:0.84, alpha:0.1) {
         didSet {
             sliderHolderView.backgroundColor = sliderBackgroundColor
-            sliderTextLabel.textColor = sliderBackgroundColor
+            //sliderTextLabel.textColor = sliderBackgroundColor
         }
     }
     
@@ -136,12 +140,12 @@ protocol MTSlideToOpenSwiftDelegate: class {
     private var topThumbnailViewConstraint: NSLayoutConstraint?
     private var trailingDraggedViewConstraint: NSLayoutConstraint?
     private var xPositionInThumbnailView: CGFloat = 0
-    private var xEndingPoint: CGFloat {
+    public var xEndingPoint: CGFloat {
         get {
             return (self.view.frame.maxX - thumnailImageView.bounds.width - thumbnailViewStartingDistance)
         }
     }
-    private var isFinished: Bool = false
+    public var isFinished: Bool = false
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -161,6 +165,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
         view.addSubview(draggedView)
         draggedView.addSubview(sliderTextLabel)
         sliderHolderView.addSubview(textLabel)
+        sliderHolderView.addSubview(counterText)
         view.bringSubviewToFront(self.thumnailImageView)
         setupConstraint()
         setStyle()
@@ -223,7 +228,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
 
         sliderTextLabel.text = labelText
         sliderTextLabel.font = textFont
-        sliderTextLabel.textColor = sliderBackgroundColor
+        //sliderTextLabel.textColor = sliderBackgroundColor
         sliderTextLabel.textAlignment = .center
         sliderTextLabel.isHidden = !showSliderText
         
@@ -244,7 +249,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
         return self.thumnailImageView.frame.contains(point)
     }
     
-    private func updateThumbnailXPosition(_ x: CGFloat) {
+    public func updateThumbnailXPosition(_ x: CGFloat) {
         leadingThumbnailViewConstraint?.constant = x
         setNeedsLayout()
     }
@@ -273,7 +278,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
                 return
             }
             updateThumbnailXPosition(translatedPoint)
-            textLabel.alpha = (xEndingPoint - translatedPoint) / xEndingPoint
+            textLabel.alpha =  (xEndingPoint - translatedPoint * 2.5) / xEndingPoint
             
             swiftDelegate?.lerpBackgroundColor(progress: 1 - ((xEndingPoint-translatedPoint)/xEndingPoint), habit: habit)
             lastPreciseProgress = 1 - ((xEndingPoint-translatedPoint)/xEndingPoint)
