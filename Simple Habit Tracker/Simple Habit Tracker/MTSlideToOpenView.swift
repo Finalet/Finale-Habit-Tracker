@@ -14,14 +14,18 @@ import UIKit
 
 protocol MTSlideToOpenSwiftDelegate: class {
     func lerpBackgroundColor (progress: CGFloat, habit: Habit)
-    func resetBackgroundColor (progress: CGFloat, habit: Habit)
+    func resetBackgroundColor (progress: CGFloat, habit: Habit, done: Bool)
     func startColorLerp()
 }
 
 @objcMembers public class MTSlideToOpenView: UIView {
     var habit: Habit!
     // MARK: All Views
-    public let counterText: UILabel = {
+    public let totalCountText: UILabel = {
+        let label = UILabel.init()
+        return label
+    }()
+    public let streakCountText: UILabel = {
         let label = UILabel.init()
         return label
     }()
@@ -164,8 +168,9 @@ protocol MTSlideToOpenSwiftDelegate: class {
         view.addSubview(sliderHolderView)
         view.addSubview(draggedView)
         draggedView.addSubview(sliderTextLabel)
+        draggedView.addSubview(totalCountText)
         sliderHolderView.addSubview(textLabel)
-        sliderHolderView.addSubview(counterText)
+        sliderHolderView.addSubview(streakCountText)
         view.bringSubviewToFront(self.thumnailImageView)
         setupConstraint()
         setStyle()
@@ -300,13 +305,13 @@ protocol MTSlideToOpenSwiftDelegate: class {
                 // Finish action
                 isFinished = true
                 delegate?.mtSlideToOpenDelegateDidFinish(self)
-                swiftDelegate?.resetBackgroundColor(progress: 1.0, habit: habit)
+                swiftDelegate?.resetBackgroundColor(progress: 1.0, habit: habit, done: true)
                 return
             }
             if translatedPoint <= thumbnailViewStartingDistance {
                 textLabel.alpha = 1
                 updateThumbnailXPosition(thumbnailViewStartingDistance)
-                swiftDelegate?.resetBackgroundColor(progress: lastPreciseProgress, habit: habit)
+                swiftDelegate?.resetBackgroundColor(progress: lastPreciseProgress, habit: habit, done: false)
                 return
             }
             UIView.animate(withDuration: animationVelocity) {
@@ -314,7 +319,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
                 self.textLabel.alpha = 1
                 self.layoutIfNeeded()
             }
-            swiftDelegate?.resetBackgroundColor(progress: lastPreciseProgress, habit: habit)
+            swiftDelegate?.resetBackgroundColor(progress: lastPreciseProgress, habit: habit, done: false)
             break
         default:
             break

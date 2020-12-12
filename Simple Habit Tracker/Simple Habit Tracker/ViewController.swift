@@ -22,7 +22,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     var lastDay: Int = 0
     
     @IBOutlet weak var motivationalPhrasesLable: UILabel!
-    var motivationalPhrases = ["Ready to change your habits?", "A small move forward every day.", "Don't let 'later' become 'never'.", "Little things make big days.", "Habits change into character.", "Life is a succession of habits.", "Winning is a habit", "Out of routine comes inspiratoin.", "God habits are the key to success.", "Once you learn to win, it becomes a habit."]
+    var motivationalPhrases = ["Ready to change your habits?", "A small move forward every day.", "Don't let 'later' become 'never'.", "Little things make big days.", "Habits change into character.", "Life is a succession of habits.", "Winning is a habit", "Out of routine comes inspiration.", "Good habits are the key to success.", "Once you learn to win, it becomes a habit."]
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var hiText: UILabel!
@@ -37,7 +37,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         self.hideKeyboardWhenTappedAround()
         
         lastDay = UserDefaults.standard.integer(forKey: "lastDay")
-        let timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+        _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             self.checkDate()
         }
     }
@@ -83,8 +83,10 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         slide.swiftDelegate = self
         slide.labelText = habit.name
         slide.textLabel.textColor = .white
+        slide.textLabel.font = motivationalPhrasesLable.font
         slide.showSliderText = true
         slide.sliderTextLabel.textColor = .white
+        slide.sliderTextLabel.font = slide.textLabel.font
         slide.habit = habit
         slide.sliderHolderView.layer.borderWidth = 3
         slide.sliderHolderView.layer.borderColor = UIColor.systemGray2.withAlphaComponent(0.5).cgColor
@@ -95,10 +97,17 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         slide.thumnailImageView.layer.shadowOpacity = 0.3
         slide.thumnailImageView.layer.shadowOffset = CGSize(width: 0, height: 0)
         
-        slide.counterText.frame = CGRect(x: slide.bounds.width - sliderHeight/2, y: 0, width: sliderHeight, height: sliderHeight)
-        slide.counterText.text = String(habit.count)
-        slide.counterText.textColor = .white
+        slide.totalCountText.frame = CGRect(x: sliderHeight/2, y: 0, width: sliderHeight*2, height: sliderHeight)
+        slide.totalCountText.text = String(habit.count)
+        slide.totalCountText.textAlignment = .left
+        slide.totalCountText.textColor = .white
+        slide.totalCountText.font = slide.textLabel.font
         
+        slide.streakCountText.frame = CGRect(x: slide.bounds.width - sliderHeight * 2.5, y: 0, width: sliderHeight*2, height: sliderHeight)
+        slide.streakCountText.text = String(habit.streakCount)
+        slide.streakCountText.textAlignment = .right
+        slide.streakCountText.textColor = .white
+        slide.streakCountText.font = slide.textLabel.font
         
         if (habit.doneToday == true) {
             DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
@@ -121,14 +130,19 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         for x in 0..<habits.count {
             if (habits[x] == sender.habit) {
                 habits[x].count += 1
+                if (!habits[x].doneToday) {
+                    habits[x].streakCount += 1
+                }
                 habits[x].doneToday = true
+                habits[x].lastDone = Calendar.current.component(.minute, from: Date())
                 sender.habit = habits[x]
                 break
             }
         }
         for x in 0..<sliders.count {
             if (sliders[x] == sender) {
-                sliders[x].counterText.text = String(sender.habit.count)
+                sliders[x].totalCountText.text = String(sender.habit.count)
+                sliders[x].streakCountText.text = String(sender.habit.streakCount)
                 break
             }
         }
@@ -178,6 +192,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     
     func removeHabit (index: Int) {
         habits.remove(at: index)
+        sliders.removeAll()
         tableView.reloadData()
         
         saveHabits()
@@ -197,13 +212,16 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     func editHabit (habitIndex: Int, name: String, color: String) {
         habits[habitIndex].name = name
         habits[habitIndex].color = color
+        sliders.removeAll()
         tableView.reloadData()
         saveHabits()
     }
-    func addHabit(name: String, color: String, count: Int, doneToday: Bool) {
-        let newHabit = Habit(name: name, color: color, count: count, doneToday: false)
+    func addHabit(name: String, color: String) {
+        //let newHabit = Habit(name: name, color: color, count: 0, streakCount: 0, doneToday: false, lastDone: Date.today)
+        let newHabit = Habit(name: name, color: color, count: 0, streakCount: 0, doneToday: false, lastDone: Calendar.current.component(.minute, from: Date()))
         habits.append(newHabit)
         
+        sliders.removeAll()
         tableView.reloadData()
         
         saveHabits()
@@ -231,8 +249,18 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         let newColor: UIColor = UIColor(red: newRed/255, green: newGreen/255, blue: newBlue/255, alpha: 1.0)
         self.view.backgroundColor = newColor
     }
-    func resetBackgroundColor(progress: CGFloat, habit: Habit) {
-        self.view.backgroundColor = UIColor.systemBackground
+    func resetBackgroundColor(progress: CGFloat, habit: Habit, done: Bool) {
+        if (done == true) {
+            let currectColor = self.view.backgroundColor
+            self.view.backgroundColor = UIColor.systemBackground
+            DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.2) {
+                self.view.backgroundColor = currectColor
+            }
+            DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 1) {
+                self.resetBackgroundColor(progress: progress, habit: habit, done: false)
+            }
+            return
+        }
         var reduceVar: CGFloat = progress
         let velocity = progress/20
         Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { timer in
@@ -249,20 +277,28 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     func checkDate () {
         //if (lastDay != Date().dayNumberOfWeek()) {
         if (lastDay != Calendar.current.component(.minute, from: Date())) {
-            
-            print(habits[0])
             for x in 0..<habits.count {
                 if (habits[x].doneToday == true) {
                     sliders[x].resetStateWithAnimation(true)
                     habits[x].doneToday = false
                     sliders[x].habit = habits[x]
                 }
+                //if (habits[x].lastDone != Date.yesterday && habits[x].lastDone != Date.today) {
+                if (habits[x].lastDone != Calendar.current.component(.minute, from: Date()) - 1 && habits[x].lastDone != Calendar.current.component(.minute, from: Date())) {
+                    for i in 0..<sliders.count {
+                        if (sliders[i].habit == habits[x]) {
+                            sliders[i].streakCountText.text = "0"
+                            habits[x].streakCount = 0
+                            sliders[i].habit = habits[x]
+                            break
+                        }
+                    }
+                }
             }
             //lastDay = Date().dayNumberOfWeek()!
             lastDay = Calendar.current.component(.minute, from: Date())
             UserDefaults.standard.set(lastDay, forKey: "lastDay")
             saveHabits()
-            print(habits[0])
         }
     }
 }
@@ -303,7 +339,6 @@ extension ViewController: UITableViewDataSource {
         if (indexPath.row != habits.count) { //Create empty row at the bottom to add space
             cell.contentView.addSubview(createNewSlider(habit: habits[indexPath.row]))
         }
-        
         return cell
     }
     
@@ -375,11 +410,35 @@ struct Habit: Codable, Equatable {
     var name: String
     var color: String
     var count: Int
+    var streakCount: Int
     var doneToday: Bool
+    var lastDone: Int
+    //var lastDone: Date
 }
 
 extension Date {
     func dayNumberOfWeek() -> Int? {
         return Calendar.current.dateComponents([.weekday], from: self).weekday
+    }
+    static var yesterday: Date { return Date().dayBefore }
+    static var tomorrow:  Date { return Date().dayAfter }
+    static var today:  Date { return Date().thisDay }
+    var dayBefore: Date {
+        return Calendar.current.date(byAdding: .day, value: -1, to: noon)!
+    }
+    var dayAfter: Date {
+        return Calendar.current.date(byAdding: .day, value: 1, to: noon)!
+    }
+    var thisDay: Date {
+        return Calendar.current.date(byAdding: .day, value: 0, to: noon)!
+    }
+    var noon: Date {
+        return Calendar.current.date(bySettingHour: 12, minute: 0, second: 0, of: self)!
+    }
+    var month: Int {
+        return Calendar.current.component(.month,  from: self)
+    }
+    var isLastDayOfMonth: Bool {
+        return dayAfter.month != month
     }
 }

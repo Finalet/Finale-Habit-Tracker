@@ -5,7 +5,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     
-    var editingHabit: Habit = Habit(name: "", color: "", count: 0, doneToday: false);
+    var editingHabit: Habit = Habit(name: "", color: "", count: 0, streakCount: 0, doneToday: false, lastDone: Calendar.current.component(.minute, from: Date()));
     var isEditingHabit = false
     var editHabitIndex = 0
     
@@ -23,7 +23,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     
     var currentSelectedColor: String = ""
     
-    let colors = ["green", "lightpurple", "lightgreen", "purple", "yellow", "deeppurple", "orange", "bluepurple", "darkorange", "blue", "lightred", "lightblue", "red", "cyan", "pastel.lightgreen", "pastel.pink", "pastel.green", "pastel.lightpurple", "pastel.darkgreen", "pastel.purple", "pastel.yellow", "pastel.darkpurple", "pastel.orange", "pastel.lightblue", "pastel.darkorange", "pastel.blue", "pastel.red", "pastel.darkblue"]
+    let colors = ["lightgreen", "lightpurple", "green", "purple", "yellow", "deeppurple", "orange", "bluepurple", "darkorange", "blue", "lightred", "lightblue", "red", "cyan", "pastel.lightgreen", "pastel.pink", "pastel.green", "pastel.lightpurple", "pastel.darkgreen", "pastel.purple", "pastel.yellow", "pastel.darkpurple", "pastel.orange", "pastel.lightblue", "pastel.darkorange", "pastel.blue", "pastel.red", "pastel.darkblue", "dark.darkgreen", "dark.purple", "dark.green", "dark.darkpurple", "dark.yellowgreen", "dark.bluepurple", "dark.darkyellow", "dark.trueblue", "dark.brown", "dark.darkblue", "dark.darkbrown", "dark.bluegreen", "dark.darkred", "dark.lakegreen"]
     
     
     
@@ -49,6 +49,16 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             createButton.setTitle("Confirm", for: .normal)
             createButton.isUserInteractionEnabled = true
             createButton.alpha = 1
+            
+            if (editingHabit.color.contains("pastel.")) {
+                DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
+                    self.colorCollectionView.scrollToItem(at: IndexPath(item: 0, section: 1), at: .left, animated: false)
+                }
+            } else if (editingHabit.color.contains("dark.")) {
+                DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
+                    self.colorCollectionView.scrollToItem(at: IndexPath(item: 0, section: 2), at: .left, animated: false)
+                }
+            }
         } else {
             viewTitle.text = "New Habit"
             nameInputField.text = ""
@@ -56,7 +66,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             createButton.isUserInteractionEnabled = false
             createButton.alpha = 0.5
         }
-        
+
         self.hideKeyboardWhenTappedAround()
     }
     
@@ -74,7 +84,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             name = String(nameInputField.text ?? "New Habit")
         }
         if (!isEditingHabit) {
-            delegate?.addHabit(name: name, color: currentSelectedColor, count: 0, doneToday: false)
+            delegate?.addHabit(name: name, color: currentSelectedColor)
         } else {
             delegate?.editHabit(habitIndex: editHabitIndex, name: name, color: currentSelectedColor)
         }
@@ -134,10 +144,10 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
 
 extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        2
+        3
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return colors.count/2
+        return colors.count/3
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (colorCollectionView.bounds.width - 40) / 9, height: (colorCollectionView.bounds.width - 40) / 9)
@@ -164,7 +174,9 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         if indexPath.section == 0 {
             color = colors[indexPath.row]
         } else if indexPath.section == 1 {
-            color = colors[indexPath.row + colors.count/2]
+            color = colors[indexPath.row + colors.count/3]
+        } else if indexPath.section == 2 {
+            color = colors[indexPath.row + 2 * colors.count/3]
         }
         
         let button: HorizontalSplitButton = HorizontalSplitButton(type: UIButton.ButtonType.custom)
@@ -203,7 +215,7 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
 }
 
 protocol AddHabitDelegate: class {
-    func addHabit(name: String, color: String, count: Int, doneToday: Bool)
+    func addHabit(name: String, color: String)
     func editHabit(habitIndex: Int, name: String, color: String)
 }
 
