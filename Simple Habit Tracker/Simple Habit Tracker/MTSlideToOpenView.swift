@@ -14,19 +14,45 @@ import UIKit
 
 protocol MTSlideToOpenSwiftDelegate: class {
     func lerpBackgroundColor (progress: CGFloat, habit: Habit)
-    func resetBackgroundColor (progress: CGFloat, habit: Habit, done: Bool)
+    func resetBackgroundColor (sender: MTSlideToOpenView, progress: CGFloat, habit: Habit, done: Bool, showLabel: Bool)
     func startColorLerp()
 }
 
 @objcMembers public class MTSlideToOpenView: UIView {
     var habit: Habit!
     // MARK: All Views
+    public let emojiText: UILabel = {
+        let label = UILabel.init()
+        label.font = label.font.withSize(12)
+        return label
+    }()
     public let totalCountText: UILabel = {
         let label = UILabel.init()
+        label.textAlignment = .left
+        label.textColor = .white
+        return label
+    }()
+    public let totalCountLabel: UILabel = {
+        let label = UILabel.init()
+        label.textAlignment = .left
+        label.text = "Total days"
+        label.textColor = UIColor.white
+        label.font = label.font.withSize(12)
+        label.alpha = 0
         return label
     }()
     public let streakCountText: UILabel = {
         let label = UILabel.init()
+        label.textAlignment = .right
+        label.textColor = .white
+        return label
+    }()
+    public let streakLabel: UILabel = {
+        let label = UILabel.init()
+        label.textAlignment = .right
+        label.text = "Streak"
+        label.textColor = UIColor.white
+        label.font = label.font.withSize(12)
         return label
     }()
     public let textLabel: UILabel = {
@@ -169,8 +195,11 @@ protocol MTSlideToOpenSwiftDelegate: class {
         view.addSubview(draggedView)
         draggedView.addSubview(sliderTextLabel)
         draggedView.addSubview(totalCountText)
+        draggedView.addSubview(totalCountLabel)
         sliderHolderView.addSubview(textLabel)
         sliderHolderView.addSubview(streakCountText)
+        sliderHolderView.addSubview(streakLabel)
+        sliderHolderView.addSubview(emojiText)
         view.bringSubviewToFront(self.thumnailImageView)
         setupConstraint()
         setStyle()
@@ -210,7 +239,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
         textLabel.centerYAnchor.constraint(equalTo: sliderHolderView.centerYAnchor).isActive = true
         leadingTextLabelConstraint = textLabel.leadingAnchor.constraint(equalTo: sliderHolderView.leadingAnchor, constant: textLabelLeadingDistance)
         leadingTextLabelConstraint?.isActive = true
-        textLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: CGFloat(-8)).isActive = true
+        textLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: CGFloat(-60)).isActive = true
         // Setup for sliderTextLabel
         sliderTextLabel.topAnchor.constraint(equalTo: textLabel.topAnchor).isActive = true
         sliderTextLabel.centerYAnchor.constraint(equalTo: textLabel.centerYAnchor).isActive = true
@@ -283,7 +312,8 @@ protocol MTSlideToOpenSwiftDelegate: class {
                 return
             }
             updateThumbnailXPosition(translatedPoint)
-            textLabel.alpha =  (xEndingPoint - translatedPoint * 2.5) / xEndingPoint
+            //textLabel.alpha =  (xEndingPoint - translatedPoint * 2.5) / xEndingPoint
+            totalCountLabel.alpha = 1 - (xEndingPoint - translatedPoint * 2.5) / xEndingPoint
             
             swiftDelegate?.lerpBackgroundColor(progress: 1 - ((xEndingPoint-translatedPoint)/xEndingPoint), habit: habit)
             lastPreciseProgress = 1 - ((xEndingPoint-translatedPoint)/xEndingPoint)
@@ -305,13 +335,13 @@ protocol MTSlideToOpenSwiftDelegate: class {
                 // Finish action
                 isFinished = true
                 delegate?.mtSlideToOpenDelegateDidFinish(self)
-                swiftDelegate?.resetBackgroundColor(progress: 1.0, habit: habit, done: true)
+                swiftDelegate?.resetBackgroundColor(sender: self, progress: 1.0, habit: habit, done: true, showLabel: true)
                 return
             }
             if translatedPoint <= thumbnailViewStartingDistance {
                 textLabel.alpha = 1
                 updateThumbnailXPosition(thumbnailViewStartingDistance)
-                swiftDelegate?.resetBackgroundColor(progress: lastPreciseProgress, habit: habit, done: false)
+                swiftDelegate?.resetBackgroundColor(sender: self, progress: lastPreciseProgress, habit: habit, done: false, showLabel: false)
                 return
             }
             UIView.animate(withDuration: animationVelocity) {
@@ -319,7 +349,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
                 self.textLabel.alpha = 1
                 self.layoutIfNeeded()
             }
-            swiftDelegate?.resetBackgroundColor(progress: lastPreciseProgress, habit: habit, done: false)
+            swiftDelegate?.resetBackgroundColor(sender: self, progress: lastPreciseProgress, habit: habit, done: false, showLabel: false)
             break
         default:
             break
@@ -330,6 +360,8 @@ protocol MTSlideToOpenSwiftDelegate: class {
         let action = {
             self.leadingThumbnailViewConstraint?.constant = self.thumbnailViewStartingDistance
             self.textLabel.alpha = 1
+            self.sliderTextLabel.alpha = 0
+            self.totalCountLabel.alpha = 0
             self.layoutIfNeeded()
             //
             self.isFinished = false

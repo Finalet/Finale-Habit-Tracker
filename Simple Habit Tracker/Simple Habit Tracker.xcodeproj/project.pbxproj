@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8802ED752585AB2200ABE4FF /* Images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8802ED742585AB2200ABE4FF /* Images.bundle */; };
 		8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8845133225803337006F8BD0 /* ColorViewCell.xib */; };
 		8845133B258038A1006F8BD0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8845133A258038A1006F8BD0 /* Colors.xcassets */; };
 		8847771E2578963700999250 /* UIColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8847771D2578963700999250 /* UIColor+Components.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8802ED742585AB2200ABE4FF /* Images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Images.bundle; sourceTree = "<group>"; };
 		8845133225803337006F8BD0 /* ColorViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorViewCell.xib; sourceTree = "<group>"; };
 		8845133A258038A1006F8BD0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8847771D2578963700999250 /* UIColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Components.swift"; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				88B6C18C257B27580045D022 /* ConfettiType.swift */,
 				889A69B4257EC5360016D3D0 /* PresentationController.swift */,
 				889A69B9257EC6210016D3D0 /* AddHabitView.xib */,
+				8802ED742585AB2200ABE4FF /* Images.bundle */,
 				889A69BE257EC6B50016D3D0 /* AddHabitView.swift */,
 				8845133225803337006F8BD0 /* ColorViewCell.xib */,
 				8845133A258038A1006F8BD0 /* Colors.xcassets */,
@@ -257,6 +260,7 @@
 			files = (
 				88B5596325785E4C00D64D1A /* LaunchScreen.storyboard in Resources */,
 				8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */,
+				8802ED752585AB2200ABE4FF /* Images.bundle in Resources */,
 				889A69BA257EC6210016D3D0 /* AddHabitView.xib in Resources */,
 				8845133B258038A1006F8BD0 /* Colors.xcassets in Resources */,
 				88B5596025785E4C00D64D1A /* Assets.xcassets in Resources */,

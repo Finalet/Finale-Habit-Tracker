@@ -5,7 +5,8 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     
-    var editingHabit: Habit = Habit(name: "", color: "", count: 0, streakCount: 0, doneToday: false, lastDone: Calendar.current.component(.minute, from: Date()));
+    //var editingHabit: Habit = Habit(name: "", color: "", icon: "", count: 0, streakCount: 0, doneToday: false, lastDone: Calendar.current.component(.minute, from: Date()));
+    var editingHabit: Habit = Habit(name: "", color: "", icon: "", count: 0, streakCount: 0, doneToday: false, lastDone: Date.today);
     var isEditingHabit = false
     var editHabitIndex = 0
     
@@ -17,18 +18,29 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var colorCollectionView: UICollectionView!
     @IBOutlet weak var pageDots: UIPageControl!
     
+    @IBOutlet weak var iconCollectionView: UICollectionView!
+    
     weak var delegate: AddHabitDelegate?
     
     var allColorButtons = [UIButton]()
+    var allIconButtons = [UIButton]()
     
     var currentSelectedColor: String = ""
+    var currentSelectedIcon: String = ""
+    var colors = [String]()
+    var icons = [String]()
     
-    let colors = ["lightgreen", "lightpurple", "green", "purple", "yellow", "deeppurple", "orange", "bluepurple", "darkorange", "blue", "lightred", "lightblue", "red", "cyan", "pastel.lightgreen", "pastel.pink", "pastel.green", "pastel.lightpurple", "pastel.darkgreen", "pastel.purple", "pastel.yellow", "pastel.darkpurple", "pastel.orange", "pastel.lightblue", "pastel.darkorange", "pastel.blue", "pastel.red", "pastel.darkblue", "dark.darkgreen", "dark.purple", "dark.green", "dark.darkpurple", "dark.yellowgreen", "dark.bluepurple", "dark.darkyellow", "dark.trueblue", "dark.brown", "dark.darkblue", "dark.darkbrown", "dark.bluegreen", "dark.darkred", "dark.lakegreen"]
-    
+    let baseColors = ["green", "redpurple", "greenyellow", "purple", "yellowgreen", "purpleblue", "yellow", "trueblue", "orange", "skyblue", "orangered", "cyan", "red", "mint"]
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        colorCollectionView.tag = 0
+        iconCollectionView.tag = 1
+        
+        loadColors()
+        loadImages()
+        
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(panGestureRecognizerAction))
         view.addGestureRecognizer(panGesture)
         
@@ -41,6 +53,10 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         colorCollectionView.delegate = self
         colorCollectionView.dataSource = self
         
+        iconCollectionView.register(nibName, forCellWithReuseIdentifier: "colorCell")
+        iconCollectionView.delegate = self
+        iconCollectionView.dataSource = self
+        
         self.nameInputField.delegate = self
         
         if (isEditingHabit) {
@@ -50,7 +66,11 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             createButton.isUserInteractionEnabled = true
             createButton.alpha = 1
             
-            if (editingHabit.color.contains("pastel.")) {
+            if (editingHabit.color.contains("bright.")) {
+               DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
+                   self.colorCollectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .left, animated: false)
+               }
+           } else if (editingHabit.color.contains("pastel.")) {
                 DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
                     self.colorCollectionView.scrollToItem(at: IndexPath(item: 0, section: 1), at: .left, animated: false)
                 }
@@ -69,6 +89,41 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
 
         self.hideKeyboardWhenTappedAround()
     }
+    func loadColors () {
+        let firstSection = "bright"
+        let secondSection = "pastel"
+        let thirdSection = "dark"
+        var section = ""
+        for i in 0..<42 {
+            if (i < 14) {
+                section = firstSection
+                colors.append(section + "." + baseColors[i])
+            } else if (i >= 14 && i < 28) {
+                section = secondSection
+                colors.append(section + "." + baseColors[i-14])
+            } else if (i >= 28) {
+                section = thirdSection
+                colors.append(section + "." + baseColors[i-28])
+            }
+        }
+    }
+    func loadImages () {
+        let fileManager = FileManager.default
+        let bundleURL = Bundle.main.bundleURL
+        let assetURL = bundleURL.appendingPathComponent("Images.bundle")
+
+        do {
+          let contents = try fileManager.contentsOfDirectory(at: assetURL, includingPropertiesForKeys: [URLResourceKey.nameKey, URLResourceKey.isDirectoryKey], options: .skipsHiddenFiles)
+
+          for item in contents
+          {
+            icons.append(item.lastPathComponent)
+          }
+        }
+        catch let error as NSError {
+          print(error)
+        }
+    }
     
     override func viewDidLayoutSubviews() {
         if !hasSetPointOrigin {
@@ -84,9 +139,9 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             name = String(nameInputField.text ?? "New Habit")
         }
         if (!isEditingHabit) {
-            delegate?.addHabit(name: name, color: currentSelectedColor)
+            delegate?.addHabit(name: name, color: currentSelectedColor, icon: currentSelectedIcon)
         } else {
-            delegate?.editHabit(habitIndex: editHabitIndex, name: name, color: currentSelectedColor)
+            delegate?.editHabit(habitIndex: editHabitIndex, name: name, color: currentSelectedColor, icon: currentSelectedIcon)
         }
         
         self.dismiss(animated: true, completion: nil)
@@ -100,7 +155,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
 
         let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
 
-        if !text.isEmpty && currentSelectedColor != "" {
+        if !text.isEmpty && currentSelectedColor != "" && currentSelectedIcon != "" {
             createButton.isUserInteractionEnabled = true
             createButton.alpha = 1.0
         } else {
@@ -110,7 +165,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         return true
     }
     func checkCompletion() {
-        if nameInputField.text!.isEmpty || currentSelectedColor == "" {
+        if nameInputField.text!.isEmpty || currentSelectedColor == "" || currentSelectedIcon == ""{
             createButton.isUserInteractionEnabled = false
             createButton.alpha = 0.5
         } else {
@@ -144,19 +199,33 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
 
 extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        3
+        if collectionView.tag == 0 {
+            return 3
+        } else {
+            return 1
+        }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return colors.count/3
+        if collectionView.tag == 0 {
+            return colors.count/3
+        } else {
+            return icons.count
+        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: (colorCollectionView.bounds.width - 40) / 9, height: (colorCollectionView.bounds.width - 40) / 9)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        if collectionView.tag == 0 {
+            return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        } else {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        self.pageDots.currentPage = indexPath.section
+        if collectionView.tag == 0 {
+            self.pageDots.currentPage = indexPath.section
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -165,39 +234,63 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = colorCollectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath) //as colorCell
-        
-        cell.backgroundColor = UIColor.clear
-        cell.layer.cornerRadius = cell.frame.height / 2
-        
-        var color = ""
-        if indexPath.section == 0 {
-            color = colors[indexPath.row]
-        } else if indexPath.section == 1 {
-            color = colors[indexPath.row + colors.count/3]
-        } else if indexPath.section == 2 {
-            color = colors[indexPath.row + 2 * colors.count/3]
-        }
-        
-        let button: HorizontalSplitButton = HorizontalSplitButton(type: UIButton.ButtonType.custom)
-        button.frame.size = cell.frame.size
-        button.addTarget(self, action: #selector(pickColor), for: .touchUpInside)
-        button.layer.cornerRadius = cell.frame.height / 2
-        button.accessibilityLabel = color
-        button.leftColor = UIColor(named: color + ".main")!
-        button.rightColor = UIColor(named: color + ".secondary")!
-        
-        cell.addSubview(button)
-        allColorButtons.append(button)
-        
-        if isEditingHabit {
-            if editingHabit.color == color {
-                pickColor(sender: button)
+        if collectionView.tag == 0 {
+            let cell = colorCollectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath) //as colorCell
+            
+            cell.backgroundColor = UIColor.clear
+            cell.layer.cornerRadius = cell.frame.height / 2
+            
+            var color = ""
+            if indexPath.section == 0 {
+                color = colors[indexPath.row]
+            } else if indexPath.section == 1 {
+                color = colors[indexPath.row + colors.count/3]
+            } else if indexPath.section == 2 {
+                color = colors[indexPath.row + 2 * colors.count/3]
             }
+            
+            let button: HorizontalSplitButton = HorizontalSplitButton(type: UIButton.ButtonType.custom)
+            button.frame.size = cell.frame.size
+            button.addTarget(self, action: #selector(pickColor), for: .touchUpInside)
+            button.layer.cornerRadius = cell.frame.height / 2
+            button.accessibilityLabel = color
+            button.leftColor = UIColor(named: color + ".main")!
+            button.rightColor = UIColor(named: color + ".secondary")!
+            
+            cell.addSubview(button)
+            allColorButtons.append(button)
+            
+            if isEditingHabit {
+                if editingHabit.color == color {
+                    pickColor(sender: button)
+                }
+            }
+            
+            
+            return cell
+        } else {
+            let cell = iconCollectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath)
+            let icon = UIImageView(image: UIImage(named: "Images.bundle/" + icons[indexPath.row]))
+            icon.frame.size = CGSize(width: cell.frame.width, height: cell.frame.height)
+            cell.backgroundColor = .clear
+            cell.addSubview(icon)
+            
+            let button: UIButton = UIButton()
+            button.frame.size = cell.frame.size
+            button.addTarget(self, action: #selector(pickIcon), for: .touchUpInside)
+            button.layer.cornerRadius = cell.frame.height/2
+            button.accessibilityLabel = icons[indexPath.row]
+            cell.addSubview(button)
+            allIconButtons.append(button)
+            
+            if isEditingHabit {
+                if editingHabit.icon == icons[indexPath.row] {
+                    pickIcon(sender: button)
+                }
+            }
+            
+            return cell
         }
-        
-        
-        return cell
     }
     
     @objc func pickColor (sender: UIButton) {
@@ -212,11 +305,23 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         checkCompletion()
         self.view.endEditing(true)
     }
+    @objc func pickIcon (sender: UIButton) {
+        for button in allIconButtons {
+            button.layer.borderWidth = 0
+        }
+        
+        currentSelectedIcon = sender.accessibilityLabel ?? "dog.png"
+        sender.layer.borderWidth = 3
+        sender.layer.borderColor = UIColor(named: "app.selection")?.cgColor
+        
+        checkCompletion()
+        self.view.endEditing(true)
+    }
 }
 
 protocol AddHabitDelegate: class {
-    func addHabit(name: String, color: String)
-    func editHabit(habitIndex: Int, name: String, color: String)
+    func addHabit(name: String, color: String, icon: String)
+    func editHabit(habitIndex: Int, name: String, color: String, icon: String)
 }
 
 class HorizontalSplitButton: UIButton {
