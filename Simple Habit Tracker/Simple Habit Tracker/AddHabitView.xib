@@ -98,9 +98,9 @@
                     <color key="currentPageIndicatorTintColor" name="app.selection"/>
                 </pageControl>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="WjO-zF-Rbe">
-                    <rect key="frame" x="20" y="369" width="374" height="357"/>
+                    <rect key="frame" x="0.0" y="369" width="414" height="347"/>
                     <color key="backgroundColor" name="app.background"/>
-                    <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dgx-cB-FrW">
+                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="dgx-cB-FrW">
                         <size key="itemSize" width="128" height="128"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -111,10 +111,10 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="app.background"/>
             <constraints>
-                <constraint firstItem="WjO-zF-Rbe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="3e2-jo-8rn"/>
+                <constraint firstItem="WjO-zF-Rbe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="3e2-jo-8rn"/>
                 <constraint firstItem="O5q-XV-udy" firstAttribute="top" secondItem="gq6-ee-QVj" secondAttribute="bottom" constant="20" id="BgF-7i-uoE"/>
                 <constraint firstItem="UtR-Ft-Dd8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Dp3-BU-93e"/>
-                <constraint firstItem="hfh-Cq-XkT" firstAttribute="top" secondItem="WjO-zF-Rbe" secondAttribute="bottom" constant="50" id="EI9-o9-mzU"/>
+                <constraint firstItem="hfh-Cq-XkT" firstAttribute="top" secondItem="WjO-zF-Rbe" secondAttribute="bottom" constant="60" id="EI9-o9-mzU"/>
                 <constraint firstItem="WjO-zF-Rbe" firstAttribute="top" secondItem="UCO-rk-CGn" secondAttribute="bottom" constant="10" id="F7D-B1-Xj5"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="GYh-dp-41U" secondAttribute="trailing" constant="20" id="FJ0-2v-qpd"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hfh-Cq-XkT" secondAttribute="trailing" constant="20" id="GJ2-2R-pSg"/>
@@ -134,7 +134,7 @@
                 <constraint firstItem="GHL-hM-pTe" firstAttribute="top" secondItem="UtR-Ft-Dd8" secondAttribute="bottom" constant="20" id="kmj-EA-JOe"/>
                 <constraint firstItem="O5q-XV-udy" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="nOe-kf-0mc"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gq6-ee-QVj" secondAttribute="trailing" constant="20" id="oCE-Y5-x95"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="WjO-zF-Rbe" secondAttribute="trailing" constant="20" id="qJX-dT-4pP"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="WjO-zF-Rbe" secondAttribute="trailing" id="qJX-dT-4pP"/>
                 <constraint firstItem="iDx-dC-rN8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="qdc-si-BTG"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HWt-aF-tKF" secondAttribute="trailing" id="sRB-Gn-DGi"/>
                 <constraint firstItem="UCO-rk-CGn" firstAttribute="top" secondItem="HWt-aF-tKF" secondAttribute="bottom" constant="20" id="tib-dR-Gja"/>

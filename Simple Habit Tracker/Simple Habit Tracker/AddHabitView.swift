@@ -79,6 +79,14 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
                     self.colorCollectionView.scrollToItem(at: IndexPath(item: 0, section: 2), at: .left, animated: false)
                 }
             }
+            for i in 1..<icons.count {
+                if (icons[i] == editingHabit.icon) {
+                    DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
+                        self.iconCollectionView.scrollToItem(at: IndexPath(row: i, section: 0), at: .left, animated: false)
+                    }
+                    break
+                }
+            }
         } else {
             viewTitle.text = "New Habit"
             nameInputField.text = ""
@@ -123,6 +131,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         catch let error as NSError {
           print(error)
         }
+        icons.sort()
     }
     
     override func viewDidLayoutSubviews() {
@@ -219,7 +228,7 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         if collectionView.tag == 0 {
             return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         } else {
-            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            return UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 0)
         }
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
