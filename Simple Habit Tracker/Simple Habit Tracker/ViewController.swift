@@ -26,6 +26,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var hiText: UILabel!
+    @IBOutlet weak var suggestionLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -402,6 +403,11 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if (habits.count == 0) {
+            suggestionLabel.alpha = 1
+        } else {
+            suggestionLabel.alpha = 0
+        }
         return habits.count + 1
     }
     
