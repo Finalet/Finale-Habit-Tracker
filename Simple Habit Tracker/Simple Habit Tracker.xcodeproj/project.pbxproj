@@ -11,6 +11,8 @@
 		8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8845133225803337006F8BD0 /* ColorViewCell.xib */; };
 		8845133B258038A1006F8BD0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8845133A258038A1006F8BD0 /* Colors.xcassets */; };
 		8847771E2578963700999250 /* UIColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8847771D2578963700999250 /* UIColor+Components.swift */; };
+		889A05CE2590530B00A7EABF /* icon.dark_60pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889A05CC2590530B00A7EABF /* icon.dark_60pt@2x.png */; };
+		889A05CF2590530B00A7EABF /* icon.dark_60pt@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 889A05CD2590530B00A7EABF /* icon.dark_60pt@3x.png */; };
 		889A69B5257EC5360016D3D0 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A69B4257EC5360016D3D0 /* PresentationController.swift */; };
 		889A69BA257EC6210016D3D0 /* AddHabitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 889A69B9257EC6210016D3D0 /* AddHabitView.xib */; };
 		889A69BF257EC6B50016D3D0 /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A69BE257EC6B50016D3D0 /* AddHabitView.swift */; };
@@ -21,6 +23,8 @@
 		88A2AE0D2585D209005D7753 /* Habit_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 88A2AE092585D207005D7753 /* Habit_Widget.intentdefinition */; };
 		88A2AE0E2585D209005D7753 /* Habit_Widget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 88A2AE092585D207005D7753 /* Habit_Widget.intentdefinition */; };
 		88A2AE112585D209005D7753 /* Habit WidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 88A2AE002585D207005D7753 /* Habit WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		88A5320625901BE5008BD5E9 /* SettingsView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88A5320525901BE5008BD5E9 /* SettingsView.xib */; };
+		88A5321025901D9A008BD5E9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A5320F25901D9A008BD5E9 /* SettingsView.swift */; };
 		88B5595725785E4B00D64D1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5595625785E4B00D64D1A /* AppDelegate.swift */; };
 		88B5595925785E4B00D64D1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5595825785E4B00D64D1A /* SceneDelegate.swift */; };
 		88B5595B25785E4B00D64D1A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5595A25785E4B00D64D1A /* ViewController.swift */; };
@@ -76,6 +80,8 @@
 		8845133225803337006F8BD0 /* ColorViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorViewCell.xib; sourceTree = "<group>"; };
 		8845133A258038A1006F8BD0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8847771D2578963700999250 /* UIColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Components.swift"; sourceTree = "<group>"; };
+		889A05CC2590530B00A7EABF /* icon.dark_60pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon.dark_60pt@2x.png"; sourceTree = "<group>"; };
+		889A05CD2590530B00A7EABF /* icon.dark_60pt@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon.dark_60pt@3x.png"; sourceTree = "<group>"; };
 		889A69B4257EC5360016D3D0 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		889A69B9257EC6210016D3D0 /* AddHabitView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddHabitView.xib; sourceTree = "<group>"; };
 		889A69BE257EC6B50016D3D0 /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
@@ -86,6 +92,8 @@
 		88A2AE092585D207005D7753 /* Habit_Widget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Habit_Widget.intentdefinition; sourceTree = "<group>"; };
 		88A2AE0A2585D209005D7753 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		88A2AE0C2585D209005D7753 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88A5320525901BE5008BD5E9 /* SettingsView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsView.xib; sourceTree = "<group>"; };
+		88A5320F25901D9A008BD5E9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		88B5595325785E4B00D64D1A /* Simple Habit Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Simple Habit Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88B5595625785E4B00D64D1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88B5595825785E4B00D64D1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -140,6 +148,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		889A05A12590422300A7EABF /* Alternate Icons */ = {
+			isa = PBXGroup;
+			children = (
+				889A05CC2590530B00A7EABF /* icon.dark_60pt@2x.png */,
+				889A05CD2590530B00A7EABF /* icon.dark_60pt@3x.png */,
+			);
+			path = "Alternate Icons";
+			sourceTree = "<group>";
+		};
 		88A2AE012585D207005D7753 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -187,6 +204,7 @@
 		88B5595525785E4B00D64D1A /* Simple Habit Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				889A05A12590422300A7EABF /* Alternate Icons */,
 				88B970992586E01F00084C6E /* Simple Habit Tracker.entitlements */,
 				88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */,
 				88B5595625785E4B00D64D1A /* AppDelegate.swift */,
@@ -199,7 +217,9 @@
 				8847771D2578963700999250 /* UIColor+Components.swift */,
 				88B6C18C257B27580045D022 /* ConfettiType.swift */,
 				889A69B4257EC5360016D3D0 /* PresentationController.swift */,
+				88A5320525901BE5008BD5E9 /* SettingsView.xib */,
 				889A69B9257EC6210016D3D0 /* AddHabitView.xib */,
+				88A5320F25901D9A008BD5E9 /* SettingsView.swift */,
 				8802ED742585AB2200ABE4FF /* Images.bundle */,
 				889A69BE257EC6B50016D3D0 /* AddHabitView.swift */,
 				8845133225803337006F8BD0 /* ColorViewCell.xib */,
@@ -364,7 +384,10 @@
 				8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */,
 				8802ED752585AB2200ABE4FF /* Images.bundle in Resources */,
 				889A69BA257EC6210016D3D0 /* AddHabitView.xib in Resources */,
+				889A05CE2590530B00A7EABF /* icon.dark_60pt@2x.png in Resources */,
+				889A05CF2590530B00A7EABF /* icon.dark_60pt@3x.png in Resources */,
 				8845133B258038A1006F8BD0 /* Colors.xcassets in Resources */,
+				88A5320625901BE5008BD5E9 /* SettingsView.xib in Resources */,
 				88B5596025785E4C00D64D1A /* Assets.xcassets in Resources */,
 				88B5595E25785E4B00D64D1A /* Main.storyboard in Resources */,
 			);
@@ -405,6 +428,7 @@
 				889A69BF257EC6B50016D3D0 /* AddHabitView.swift in Sources */,
 				88B5595B25785E4B00D64D1A /* ViewController.swift in Sources */,
 				889A69B5257EC5360016D3D0 /* PresentationController.swift in Sources */,
+				88A5321025901D9A008BD5E9 /* SettingsView.swift in Sources */,
 				88B5595725785E4B00D64D1A /* AppDelegate.swift in Sources */,
 				8847771E2578963700999250 /* UIColor+Components.swift in Sources */,
 				88B5595925785E4B00D64D1A /* SceneDelegate.swift in Sources */,

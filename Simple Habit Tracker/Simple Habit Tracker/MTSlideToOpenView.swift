@@ -19,6 +19,8 @@ protocol MTSlideToOpenSwiftDelegate: class {
 }
 
 @objcMembers public class MTSlideToOpenView: UIView {
+    var hapticsEnabled = true
+    
     var habit: Habit!
     // MARK: All Views
     public let emojiText: UILabel = {
@@ -300,6 +302,13 @@ protocol MTSlideToOpenSwiftDelegate: class {
         switch sender.state {
         case .began:
             swiftDelegate?.startColorLerp()
+            if (UserDefaults.standard.object(forKey: "haptics") == nil) {
+                hapticsEnabled = true
+                UserDefaults.standard.set(hapticsEnabled, forKey: "haptics")
+            } else {
+                hapticsEnabled = UserDefaults.standard.bool(forKey: "haptics")
+            }
+            
             break
         case .changed:
             if translatedPoint >= xEndingPoint {
@@ -321,7 +330,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
             var progress = 10 * (translatedPoint - xEndingPoint) / xEndingPoint
             progress.round()
             
-            if progress != lastProgress {
+            if progress != lastProgress && hapticsEnabled == true {
                 let generator = UIImpactFeedbackGenerator(style: .medium)
                     generator.impactOccurred()
             }

@@ -228,7 +228,7 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
         if collectionView.tag == 0 {
             return UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         } else {
-            return UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 0)
+            return UIEdgeInsets(top: 0, left: 20, bottom: 20, right: 20)
         }
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {

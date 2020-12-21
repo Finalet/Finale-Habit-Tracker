@@ -16,9 +16,14 @@ class PresentationController: UIPresentationController {
   }
   
   override var frameOfPresentedViewInContainerView: CGRect {
-      CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * 0.2),
+    var height: CGFloat = 0.8
+    if (presentedViewController.nibName == "SettingsView") {
+        height = 0.4
+    }
+    
+    return CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * (1-height)),
              size: CGSize(width: self.containerView!.frame.width, height: self.containerView!.frame.height *
-              0.8))
+              height))
   }
 
   override func presentationTransitionWillBegin() {

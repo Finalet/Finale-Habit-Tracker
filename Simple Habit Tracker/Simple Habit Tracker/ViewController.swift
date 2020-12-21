@@ -27,6 +27,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var hiText: UILabel!
     @IBOutlet weak var suggestionLabel: UILabel!
+    @IBOutlet weak var suggestionLabel1: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,6 +37,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         initializeTitle()
 
         self.hideKeyboardWhenTappedAround()
+        let holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(openSettings))
+        view.addGestureRecognizer(holdRecognizer)
         
         lastDay = UserDefaults.standard.integer(forKey: "lastDay")
         _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
@@ -133,8 +136,10 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     
 
     func mtSlideToOpenDelegateDidFinish(_ sender: MTSlideToOpenView) {
-        let generator = UINotificationFeedbackGenerator()
-            generator.notificationOccurred(.error)
+        if (sender.hapticsEnabled == true) {
+            let generator = UINotificationFeedbackGenerator()
+                generator.notificationOccurred(.error)
+        }
         
         for x in 0..<habits.count {
             if (habits[x] == sender.habit) {
@@ -383,6 +388,17 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             return "🃏"
         }
     }
+    
+    @objc func openSettings (sender: UILongPressGestureRecognizer) {
+        if (sender.state == .began) {
+            let slideVC = SettingsView()
+            slideVC.modalPresentationStyle = .custom
+            slideVC.transitioningDelegate = self
+            self.present(slideVC, animated: true, completion: nil)
+            
+            UISelectionFeedbackGenerator().selectionChanged()
+        }
+    }
 }
 
 extension UIColor {
@@ -405,8 +421,10 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (habits.count == 0) {
             suggestionLabel.alpha = 1
+            suggestionLabel1.alpha = 1
         } else {
             suggestionLabel.alpha = 0
+            suggestionLabel1.alpha = 0
         }
         return habits.count + 1
     }
