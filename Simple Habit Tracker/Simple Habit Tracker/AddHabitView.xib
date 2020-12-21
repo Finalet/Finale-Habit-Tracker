@@ -16,6 +16,8 @@
                 <outlet property="createButton" destination="hfh-Cq-XkT" id="076-1t-jKD"/>
                 <outlet property="iconCollectionView" destination="WjO-zF-Rbe" id="VQ5-Dp-aDy"/>
                 <outlet property="nameInputField" destination="gq6-ee-QVj" id="jbb-Jq-9pO"/>
+                <outlet property="notificationSwitch" destination="YhX-rw-4Nz" id="Jl9-HE-0Ci"/>
+                <outlet property="notificationTime" destination="pr6-CX-ewT" id="JsO-2z-Srh"/>
                 <outlet property="pageDots" destination="GYh-dp-41U" id="kK8-lp-3bX"/>
                 <outlet property="slideIndicator" destination="iDx-dC-rN8" id="3T5-V9-W4r"/>
                 <outlet property="view" destination="iN0-l3-epB" id="3W1-fb-7ZF"/>
@@ -54,10 +56,10 @@
                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hfh-Cq-XkT">
-                    <rect key="frame" x="20" y="776" width="374" height="60"/>
+                    <rect key="frame" x="20" y="812" width="374" height="50"/>
                     <color key="backgroundColor" systemColor="systemTealColor"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="60" id="SSX-z7-TJC"/>
+                        <constraint firstAttribute="height" constant="50" id="SSX-z7-TJC"/>
                     </constraints>
                     <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                     <state key="normal" title="Create">
@@ -98,8 +100,11 @@
                     <color key="currentPageIndicatorTintColor" name="app.selection"/>
                 </pageControl>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="WjO-zF-Rbe">
-                    <rect key="frame" x="0.0" y="369" width="414" height="347"/>
+                    <rect key="frame" x="0.0" y="369" width="414" height="227.66666666666663"/>
                     <color key="backgroundColor" name="app.background"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="WjO-zF-Rbe" secondAttribute="height" multiplier="20:11" id="v0G-v8-inC"/>
+                    </constraints>
                     <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="5" id="dgx-cB-FrW">
                         <size key="itemSize" width="128" height="128"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -107,6 +112,25 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2xp-Zx-6Up">
+                    <rect key="frame" x="20" y="601.66666666666663" width="374" height="21"/>
+                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <datePicker contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="trailing" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="5" style="compact" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pr6-CX-ewT">
+                    <rect key="frame" x="225" y="597" width="90" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="90" id="mq2-qT-cNr"/>
+                        <constraint firstAttribute="height" constant="30" id="z7m-eC-eoF"/>
+                    </constraints>
+                    <date key="date" timeIntervalSinceReferenceDate="630288000.85978305">
+                        <!--2020-12-22 00:00:00 +0000-->
+                    </date>
+                </datePicker>
+                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="YhX-rw-4Nz">
+                    <rect key="frame" x="345" y="596.66666666666663" width="51" height="31"/>
+                </switch>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="app.background"/>
@@ -114,17 +138,21 @@
                 <constraint firstItem="WjO-zF-Rbe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="3e2-jo-8rn"/>
                 <constraint firstItem="O5q-XV-udy" firstAttribute="top" secondItem="gq6-ee-QVj" secondAttribute="bottom" constant="20" id="BgF-7i-uoE"/>
                 <constraint firstItem="UtR-Ft-Dd8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Dp3-BU-93e"/>
-                <constraint firstItem="hfh-Cq-XkT" firstAttribute="top" secondItem="WjO-zF-Rbe" secondAttribute="bottom" constant="60" id="EI9-o9-mzU"/>
                 <constraint firstItem="WjO-zF-Rbe" firstAttribute="top" secondItem="UCO-rk-CGn" secondAttribute="bottom" constant="10" id="F7D-B1-Xj5"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="GYh-dp-41U" secondAttribute="trailing" constant="20" id="FJ0-2v-qpd"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="hfh-Cq-XkT" secondAttribute="trailing" constant="20" id="GJ2-2R-pSg"/>
                 <constraint firstItem="UtR-Ft-Dd8" firstAttribute="top" secondItem="iDx-dC-rN8" secondAttribute="bottom" constant="10" id="GbP-Wf-z3N"/>
                 <constraint firstItem="GHL-hM-pTe" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="MaJ-po-4cb"/>
-                <constraint firstAttribute="bottom" secondItem="hfh-Cq-XkT" secondAttribute="bottom" constant="60" id="Msb-ad-faj"/>
+                <constraint firstAttribute="bottom" secondItem="hfh-Cq-XkT" secondAttribute="bottom" constant="34" id="Msb-ad-faj"/>
                 <constraint firstItem="HWt-aF-tKF" firstAttribute="top" secondItem="O5q-XV-udy" secondAttribute="bottom" constant="10" id="OI8-mJ-ra0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="YhX-rw-4Nz" secondAttribute="trailing" constant="20" id="PhF-kZ-KJQ"/>
+                <constraint firstItem="pr6-CX-ewT" firstAttribute="centerY" secondItem="2xp-Zx-6Up" secondAttribute="centerY" id="QEK-1S-8xt"/>
+                <constraint firstItem="2xp-Zx-6Up" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="SRk-sO-OU7"/>
                 <constraint firstItem="iDx-dC-rN8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="WZR-jd-lJb"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="UCO-rk-CGn" secondAttribute="trailing" constant="20" id="YBV-UR-ZKD"/>
+                <constraint firstItem="YhX-rw-4Nz" firstAttribute="centerY" secondItem="2xp-Zx-6Up" secondAttribute="centerY" id="YdB-oe-kHM"/>
                 <constraint firstItem="hfh-Cq-XkT" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="YvZ-d0-NaN"/>
+                <constraint firstItem="2xp-Zx-6Up" firstAttribute="top" secondItem="WjO-zF-Rbe" secondAttribute="bottom" constant="5" id="cEI-Zk-5Q3"/>
                 <constraint firstItem="gq6-ee-QVj" firstAttribute="top" secondItem="GHL-hM-pTe" secondAttribute="bottom" constant="5" id="cJW-DQ-vA9"/>
                 <constraint firstItem="HWt-aF-tKF" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="dOR-cZ-cU2"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="leading" secondItem="hfh-Cq-XkT" secondAttribute="leading" constant="-20" id="gLk-H3-iXu"/>
@@ -136,10 +164,12 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="gq6-ee-QVj" secondAttribute="trailing" constant="20" id="oCE-Y5-x95"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="WjO-zF-Rbe" secondAttribute="trailing" id="qJX-dT-4pP"/>
                 <constraint firstItem="iDx-dC-rN8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="qdc-si-BTG"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="2xp-Zx-6Up" secondAttribute="trailing" constant="20" id="r5j-OM-yub"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="HWt-aF-tKF" secondAttribute="trailing" id="sRB-Gn-DGi"/>
                 <constraint firstItem="UCO-rk-CGn" firstAttribute="top" secondItem="HWt-aF-tKF" secondAttribute="bottom" constant="20" id="tib-dR-Gja"/>
                 <constraint firstItem="UCO-rk-CGn" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="trc-Jm-aLb"/>
                 <constraint firstItem="gq6-ee-QVj" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="vaV-IL-5FR"/>
+                <constraint firstItem="YhX-rw-4Nz" firstAttribute="leading" secondItem="pr6-CX-ewT" secondAttribute="trailing" constant="30" id="wsT-lY-6pb"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="173.4375"/>
         </view>

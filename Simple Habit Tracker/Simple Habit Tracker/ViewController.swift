@@ -44,8 +44,22 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             self.checkDate()
         }
+        
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
+        requestNotificationAccess()
     }
 
+    func requestNotificationAccess() {
+        let center = UNUserNotificationCenter.current()
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in 
+            if granted {
+                print("Notification Access Granted")
+            } else {
+                print("Notification Access Denied")
+            }
+        }
+    }
+    
     func initializeTable () {
         tableView.delegate = self
         tableView.dataSource = self
@@ -262,16 +276,17 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         
         UISelectionFeedbackGenerator().selectionChanged()
     }
-    func editHabit (habitIndex: Int, name: String, color: String, icon: String) {
+    func editHabit (habitIndex: Int, name: String, color: String, icon: String, notificationTime: String) {
         habits[habitIndex].name = name
         habits[habitIndex].color = color
         habits[habitIndex].icon = icon
+        habits[habitIndex].notificationTime = notificationTime
         sliders.removeAll()
         tableView.reloadData()
         saveHabits()
     }
-    func addHabit(name: String, color: String, icon: String) {
-        let newHabit = Habit(name: name, color: color, icon: icon, count: 0, streakCount: 0, doneToday: false, lastDone: Date.today)
+    func addHabit(name: String, color: String, icon: String, notificationTime: String) {
+        let newHabit = Habit(name: name, color: color, icon: icon, count: 0, streakCount: 0, doneToday: false, lastDone: Date.today, notificationTime: notificationTime)
         //let newHabit = Habit(name: name, color: color, icon: icon, count: 0, streakCount: 0, doneToday: false, lastDone: Calendar.current.component(.minute, from: Date()))
         habits.append(newHabit)
         
@@ -394,6 +409,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             let slideVC = SettingsView()
             slideVC.modalPresentationStyle = .custom
             slideVC.transitioningDelegate = self
+            slideVC.delegate = self
             self.present(slideVC, animated: true, completion: nil)
             
             UISelectionFeedbackGenerator().selectionChanged()
@@ -542,6 +558,7 @@ struct Habit: Codable, Equatable {
     var doneToday: Bool
     //var lastDone: Int
     var lastDone: Date
+    var notificationTime: String
 
 }
 

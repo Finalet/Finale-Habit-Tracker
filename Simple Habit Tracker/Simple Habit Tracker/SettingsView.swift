@@ -9,9 +9,12 @@ import UIKit
 
 class SettingsView: UIViewController {
     
+    weak var delegate: ViewController?
+    
     var hasSetPointOrigin = false
     var pointOrigin: CGPoint?
     
+    var notificationsEnabled: Bool = true
     var hapticsEnabled: Bool = true
     
     @IBOutlet weak var slideIndicator: UIView!
@@ -30,12 +33,19 @@ class SettingsView: UIViewController {
         view.addGestureRecognizer(panGesture)
         
 
-        if (UserDefaults.standard.object(forKey: "haptics") == nil) {
+        if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_haptics") == nil) {
             hapticsEnabled = true
-            UserDefaults.standard.set(hapticsEnabled, forKey: "haptics")
+            UserDefaults.standard.set(hapticsEnabled, forKey: "FINALE_DEV_APP_haptics")
         } else {
-            hapticsEnabled = UserDefaults.standard.bool(forKey: "haptics")
+            hapticsEnabled = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_haptics")
         }
+        if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_notifications") == nil) {
+            notificationsEnabled = true
+            UserDefaults.standard.set(notificationsEnabled, forKey: "FINALE_DEV_APP_notifications")
+        } else {
+            notificationsEnabled = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_notifications")
+        }
+        notificationsSwitch.setOn(notificationsEnabled, animated: false)
         hapticsSwitch.setOn(hapticsEnabled, animated: false)
     }
     
@@ -55,6 +65,7 @@ class SettingsView: UIViewController {
         AppIconLight.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         hapticsSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
+        notificationsSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
         AppIconDark.addTarget(self, action: #selector(changeIcon), for: .touchUpInside)
     }
     
@@ -79,8 +90,37 @@ class SettingsView: UIViewController {
     @objc func switchValueChanged (sender: UISwitch) {
         if (sender == hapticsSwitch) {
             hapticsEnabled = sender.isOn
-            UserDefaults.standard.set(hapticsEnabled, forKey: "haptics")
+            UserDefaults.standard.set(hapticsEnabled, forKey: "FINALE_DEV_APP_haptics")
+        } else if (sender == notificationsSwitch) {
+            notificationsEnabled = sender.isOn
+            UserDefaults.standard.set(notificationsEnabled, forKey: "FINALE_DEV_APP_notifications")
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            if (sender.isOn == true) {
+                scheduleAllNotifications()
+            }
         }
+    }
+    
+    func scheduleAllNotifications () {
+        for i in 0..<(delegate?.habits.count)! {
+            scheduleNotification(habit: (delegate?.habits[i])!)
+        }
+    }
+    
+    func scheduleNotification (habit: Habit) {
+        var dateComponents = DateComponents()
+        let time = habit.notificationTime
+        dateComponents.hour = Int(time.components(separatedBy: ":")[0])
+        dateComponents.minute = Int(time.components(separatedBy: ":")[1])
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Ready to " + habit.name + "?"
+        content.body = "Did you " + habit.name + " today? Track your habits every day to build your streak!"
+        content.sound = UNNotificationSound.default
+        
+        let request = UNNotificationRequest(identifier: habit.name, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
     }
     
     override func viewDidLayoutSubviews() {

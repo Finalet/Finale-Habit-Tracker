@@ -6,7 +6,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     var pointOrigin: CGPoint?
     
     //var editingHabit: Habit = Habit(name: "", color: "", icon: "", count: 0, streakCount: 0, doneToday: false, lastDone: Calendar.current.component(.minute, from: Date()));
-    var editingHabit: Habit = Habit(name: "", color: "", icon: "", count: 0, streakCount: 0, doneToday: false, lastDone: Date.today);
+    var editingHabit: Habit = Habit(name: "", color: "", icon: "", count: 0, streakCount: 0, doneToday: false, lastDone: Date.today, notificationTime: "");
     var isEditingHabit = false
     var editHabitIndex = 0
     
@@ -19,6 +19,9 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var pageDots: UIPageControl!
     
     @IBOutlet weak var iconCollectionView: UICollectionView!
+   
+    @IBOutlet weak var notificationTime: UIDatePicker!
+    @IBOutlet weak var notificationSwitch: UISwitch!
     
     weak var delegate: AddHabitDelegate?
     
@@ -27,6 +30,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     
     var currentSelectedColor: String = ""
     var currentSelectedIcon: String = ""
+    var enableNotification: Bool = true
     var colors = [String]()
     var icons = [String]()
     
@@ -47,6 +51,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         slideIndicator.roundCorners(.allCorners, radius: 10)
         createButton.layer.cornerRadius = 10
         
+        notificationSwitch.addTarget(self, action: #selector(notificationSwitchChanged), for: .valueChanged)
         
         let nibName = UINib(nibName: "ColorViewCell", bundle: nil)
         colorCollectionView.register(nibName, forCellWithReuseIdentifier: "colorCell")
@@ -65,6 +70,18 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             createButton.setTitle("Confirm", for: .normal)
             createButton.isUserInteractionEnabled = true
             createButton.alpha = 1
+            notificationTime.setDate(setNotificationTime(), animated: false)
+            cancelNotification(id: editingHabit.name)
+            
+            if (editingHabit.notificationTime == "") {
+                enableNotification = false
+                notificationSwitch.isOn = false
+                notificationTime.isEnabled = false
+            } else {
+                enableNotification = true
+                notificationSwitch.isOn = true
+                notificationTime.isEnabled = true
+            }
             
             if (editingHabit.color.contains("bright.")) {
                DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
@@ -148,9 +165,13 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             name = String(nameInputField.text ?? "New Habit")
         }
         if (!isEditingHabit) {
-            delegate?.addHabit(name: name, color: currentSelectedColor, icon: currentSelectedIcon)
+            delegate?.addHabit(name: name, color: currentSelectedColor, icon: currentSelectedIcon, notificationTime: getNotificationTime())
         } else {
-            delegate?.editHabit(habitIndex: editHabitIndex, name: name, color: currentSelectedColor, icon: currentSelectedIcon)
+            delegate?.editHabit(habitIndex: editHabitIndex, name: name, color: currentSelectedColor, icon: currentSelectedIcon, notificationTime: getNotificationTime())
+        }
+        
+        if (enableNotification) {
+            scheduleNotification()
         }
         
         self.dismiss(animated: true, completion: nil)
@@ -202,6 +223,59 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
                     self.view.frame.origin = self.pointOrigin ?? CGPoint(x: 0, y: 400)
                 }
             }
+        }
+    }
+    
+    @objc func notificationSwitchChanged (sender: UISwitch) {
+        notificationTime.isEnabled = sender.isOn
+        enableNotification = sender.isOn
+    }
+    
+    func scheduleNotification () {
+        if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_notifications") != nil) {
+            if (UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_notifications") == false) {
+                return
+            }
+        }
+        
+        var dateComponents = DateComponents()
+        let time = getNotificationTime()
+        dateComponents.hour = Int(time.components(separatedBy: ":")[0])
+        dateComponents.minute = Int(time.components(separatedBy: ":")[1])
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        
+        let content = UNMutableNotificationContent()
+        content.title = "Ready to " + nameInputField.text! + "?"
+        content.body = "Did you " + nameInputField.text! + " today? Track your habits every day to build your streak!"
+        content.sound = UNNotificationSound.default
+        
+        let request = UNNotificationRequest(identifier: nameInputField.text!, content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request)
+    }
+    
+    func cancelNotification (id: String) {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [id])
+    }
+    
+    func getNotificationTime () -> String {
+        if (enableNotification) {
+            let dateFormatter = DateFormatter()
+            dateFormatter.timeStyle = DateFormatter.Style.short
+            dateFormatter.timeZone = TimeZone.current
+            dateFormatter.dateFormat = "H:mm"
+            return dateFormatter.string(from: notificationTime.date)
+        } else {
+            return ""
+        }
+    }
+    
+    func setNotificationTime () -> Date {
+        if (editingHabit.notificationTime != "") {
+            let hour = Int(editingHabit.notificationTime.components(separatedBy: ":")[0]) ?? 19
+            let min = Int(editingHabit.notificationTime.components(separatedBy: ":")[1]) ?? 00
+            return Calendar.current.date(bySettingHour: hour, minute: min, second: 0, of: Date())!
+        } else {
+            return Calendar.current.date(bySettingHour: 19, minute: 0, second: 0, of: Date())!
         }
     }
 }
@@ -329,8 +403,8 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
 }
 
 protocol AddHabitDelegate: class {
-    func addHabit(name: String, color: String, icon: String)
-    func editHabit(habitIndex: Int, name: String, color: String, icon: String)
+    func addHabit(name: String, color: String, icon: String, notificationTime: String)
+    func editHabit(habitIndex: Int, name: String, color: String, icon: String, notificationTime: String)
 }
 
 class HorizontalSplitButton: UIButton {
