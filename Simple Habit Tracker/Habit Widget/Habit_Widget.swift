@@ -41,68 +41,26 @@ struct SimpleEntry: TimelineEntry {
 }
 
 struct Habit_WidgetEntryView : View {
+    var habits = ["Rotate eyes", "Kiss QQ"]
+    
     var entry: Provider.Entry
 
     var body: some View {
-        
         GeometryReader { geo in
             Rectangle()
                 .fill(Color("app.background"))
-            Group {
-                Rectangle()
-                    .fill(Color("pastel.green.secondary"))
-                    .frame(width: geo.size.width * 0.9, height: geo.size.height / 3.5, alignment: .center)
-                    .cornerRadius(geo.size.height / 7)
-                    .position(x: geo.size.width * 0.5, y: geo.size.height/5)
-                Image("pan")
-                    .resizable()
-                    .position(x: geo.size.width * 0.05 + geo.size.height / 8 + 4, y: geo.size.height/5)
-                    .frame(width: geo.size.height / 4, height: geo.size.height / 4, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .shadow(radius: 4)
-                Text("Rotate Eyes")
-                    .frame(width: geo.size.width * 0.55, height: geo.size.height / 10, alignment: .leading)
-                    .position(x: geo.size.width * 0.63, y: geo.size.height/5)
-                    .foregroundColor(.white)
-                    .truncationMode(.tail)
-                    .font(.system(size:15))
-            }
-            Group {
-                Rectangle()
-                    .fill(Color("bright.trueblue.secondary"))
-                    .frame(width: geo.size.width * 0.9, height: geo.size.height / 3.5, alignment: .center)
-                    .cornerRadius(geo.size.height / 7)
-                    .position(x: geo.size.width * 0.5, y: geo.size.height/2)
-                Image("pan")
-                    .resizable()
-                    .position(x: geo.size.width * 0.05 + geo.size.height / 8 + 4, y: geo.size.height/2)
-                    .frame(width: geo.size.height / 4, height: geo.size.height / 4, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .shadow(radius: 4)
-                Text("Rotate Eyes")
-                    .frame(width: geo.size.width * 0.55, height: geo.size.height / 10, alignment: .leading)
-                    .position(x: geo.size.width * 0.63, y: geo.size.height/2)
-                    .foregroundColor(.white)
-                    .truncationMode(.tail)
-                    .font(.system(size:15))
-            }
-            Group {
-                Rectangle()
-                    .fill(Color("dark.red.secondary"))
-                    .frame(width: geo.size.width * 0.9, height: geo.size.height / 3.5, alignment: .center)
-                    .cornerRadius(geo.size.height / 7)
-                    .position(x: geo.size.width * 0.5, y: geo.size.height/1.25)
-                Image("pan")
-                    .resizable()
-                    .position(x: geo.size.width * 0.05 + geo.size.height / 8 + 4, y: geo.size.height/1.25)
-                    .frame(width: geo.size.height / 4, height: geo.size.height / 4, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .shadow(radius: 4)
-                Text("Rotate Eyes")
-                    .frame(width: geo.size.width * 0.55, height: geo.size.height / 10, alignment: .leading)
-                    .position(x: geo.size.width * 0.63, y: geo.size.height/1.25)
-                    .foregroundColor(.white)
-                    .truncationMode(.tail)
-                    .font(.system(size:15))
-            }
-            
+            Text("Hi, Grant")
+                .frame(width: geo.size.width - 10, height: 30, alignment: .leading)
+                .position(x: 95, y: geo.size.width/7)
+                .font(.custom("MuktaMahee Bold",size: 25))
+            VStack (alignment: .leading, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
+                ForEach(0 ..< habits.count) { index in
+                    Text(habits[index])
+                        .font(.system(size: 12))
+                }
+            })
+            .frame(width: geo.size.width - 10, height: geo.size.height - 80, alignment: .topLeading)
+            .position(x: 95, y: geo.size.width/2)
         }
     }
     func getEmoji (streakCount: Int) -> String {

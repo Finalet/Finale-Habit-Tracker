@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		8802ED752585AB2200ABE4FF /* Images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8802ED742585AB2200ABE4FF /* Images.bundle */; };
+		881FFF342595522600743347 /* icon_60pt@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881FFF332595522600743347 /* icon_60pt@2x.png */; };
+		881FFF3A2595524E00743347 /* icon_60pt@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 881FFF392595524E00743347 /* icon_60pt@3x.png */; };
 		8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8845133225803337006F8BD0 /* ColorViewCell.xib */; };
 		8845133B258038A1006F8BD0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8845133A258038A1006F8BD0 /* Colors.xcassets */; };
 		8847771E2578963700999250 /* UIColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8847771D2578963700999250 /* UIColor+Components.swift */; };
@@ -77,6 +79,8 @@
 
 /* Begin PBXFileReference section */
 		8802ED742585AB2200ABE4FF /* Images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Images.bundle; sourceTree = "<group>"; };
+		881FFF332595522600743347 /* icon_60pt@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_60pt@2x.png"; sourceTree = "<group>"; };
+		881FFF392595524E00743347 /* icon_60pt@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_60pt@3x.png"; sourceTree = "<group>"; };
 		8845133225803337006F8BD0 /* ColorViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorViewCell.xib; sourceTree = "<group>"; };
 		8845133A258038A1006F8BD0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8847771D2578963700999250 /* UIColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Components.swift"; sourceTree = "<group>"; };
@@ -151,6 +155,8 @@
 		889A05A12590422300A7EABF /* Alternate Icons */ = {
 			isa = PBXGroup;
 			children = (
+				881FFF392595524E00743347 /* icon_60pt@3x.png */,
+				881FFF332595522600743347 /* icon_60pt@2x.png */,
 				889A05CC2590530B00A7EABF /* icon.dark_60pt@2x.png */,
 				889A05CD2590530B00A7EABF /* icon.dark_60pt@3x.png */,
 			);
@@ -384,8 +390,10 @@
 				8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */,
 				8802ED752585AB2200ABE4FF /* Images.bundle in Resources */,
 				889A69BA257EC6210016D3D0 /* AddHabitView.xib in Resources */,
+				881FFF342595522600743347 /* icon_60pt@2x.png in Resources */,
 				889A05CE2590530B00A7EABF /* icon.dark_60pt@2x.png in Resources */,
 				889A05CF2590530B00A7EABF /* icon.dark_60pt@3x.png in Resources */,
+				881FFF3A2595524E00743347 /* icon_60pt@3x.png in Resources */,
 				8845133B258038A1006F8BD0 /* Colors.xcassets in Resources */,
 				88A5320625901BE5008BD5E9 /* SettingsView.xib in Resources */,
 				88B5596025785E4C00D64D1A /* Assets.xcassets in Resources */,

@@ -24,6 +24,8 @@ class SettingsView: UIViewController {
     @IBOutlet weak var notificationsSwitch: UISwitch!
     @IBOutlet weak var hapticsSwitch: UISwitch!
     
+    @IBOutlet weak var interfaceSwitch: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,18 +49,24 @@ class SettingsView: UIViewController {
         }
         notificationsSwitch.setOn(notificationsEnabled, animated: false)
         hapticsSwitch.setOn(hapticsEnabled, animated: false)
+        
+        loadInterface()
     }
     
     func initializeView () {
         slideIndicator.roundCorners(.allCorners, radius: 10)
         
         AppIconDark.imageView?.layer.cornerRadius = 15
+        AppIconDark.imageView?.layer.borderWidth = 2
+        AppIconDark.imageView?.layer.borderColor = UIColor.systemGray.cgColor
         AppIconDark.layer.shadowColor = UIColor.black.cgColor
         AppIconDark.layer.shadowRadius = 4
         AppIconDark.layer.shadowOpacity = 0.3
         AppIconDark.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         AppIconLight.imageView?.layer.cornerRadius = 15
+        AppIconLight.imageView?.layer.borderWidth = 2
+        AppIconLight.imageView?.layer.borderColor = UIColor.systemGray.cgColor
         AppIconLight.layer.shadowColor = UIColor.black.cgColor
         AppIconLight.layer.shadowRadius = 4
         AppIconLight.layer.shadowOpacity = 0.3
@@ -67,23 +75,60 @@ class SettingsView: UIViewController {
         hapticsSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
         notificationsSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
         AppIconDark.addTarget(self, action: #selector(changeIcon), for: .touchUpInside)
+        AppIconLight.addTarget(self, action: #selector(changeIcon), for: .touchUpInside)
+        interfaceSwitch.addTarget(self, action: #selector(changeInterface), for: .valueChanged)
+        
+        interfaceSwitch.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_interface")
     }
     
-    @objc func changeIcon() {
+    @objc func changeInterface () {
+        UserDefaults.standard.set(interfaceSwitch.selectedSegmentIndex, forKey: "FINALE_DEV_APP_interface")
+        loadInterface()
+    }
+    
+    func loadInterface () {
+        let i = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_interface")
+        switch i {
+        case 0:
+            overrideUserInterfaceStyle = .unspecified
+            delegate?.overrideUserInterfaceStyle = .unspecified
+        case 1:
+            overrideUserInterfaceStyle = .light
+            delegate?.overrideUserInterfaceStyle = .light
+        case 2:
+            overrideUserInterfaceStyle = .dark
+            delegate?.overrideUserInterfaceStyle = .dark
+        default:
+            overrideUserInterfaceStyle = .unspecified
+            delegate?.overrideUserInterfaceStyle = .unspecified
+        }
+    }
+    
+    @objc func changeIcon(sender: UIButton) {
         //Check if the app supports alternating icons
         guard UIApplication.shared.supportsAlternateIcons else {
             return;
         }
         
-        let name = "icon.dark_60pt"
-        //Change the icon to a specific image with given name
-        UIApplication.shared.setAlternateIconName(name) { (error) in
-            //After app icon changed, print our error or success message
-            if let error = error {
-                print("App icon failed to due to \(error)")
-            } else {
-                print("App icon changed successfully.")
+        if (sender == AppIconDark) {
+            setIcon(name: "AppIcon-2")
+        } else if (sender == AppIconLight) {
+            setIcon(name: "")
+        }
+    }
+    
+    func setIcon (name: String) {
+        if (name != "") {
+            UIApplication.shared.setAlternateIconName(name) { (error) in
+                //After app icon changed, print our error or success message
+                if let error = error {
+                    print("App icon failed to due to \(error)")
+                } else {
+                    print("App icon changed successfully.")
+                }
             }
+        } else {
+            UIApplication.shared.setAlternateIconName(nil)
         }
     }
     
@@ -115,8 +160,7 @@ class SettingsView: UIViewController {
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
         let content = UNMutableNotificationContent()
-        content.title = "Ready to " + habit.name + "?"
-        content.body = "Did you " + habit.name + " today? Track your habits every day to build your streak!"
+        content.body = "Did you complete \"" + habit.name + "\" today?"
         content.sound = UNNotificationSound.default
         
         let request = UNNotificationRequest(identifier: habit.name, content: content, trigger: trigger)

@@ -40,15 +40,30 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         let holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(openSettings))
         view.addGestureRecognizer(holdRecognizer)
         
-        lastDay = UserDefaults.standard.integer(forKey: "lastDay")
+        lastDay = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_lastDay")
         _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             self.checkDate()
         }
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         requestNotificationAccess()
+        loadInterface()
     }
 
+    func loadInterface () {
+        let i = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_interface")
+        switch i {
+        case 0:
+            overrideUserInterfaceStyle = .unspecified
+        case 1:
+            overrideUserInterfaceStyle = .light
+        case 2:
+            overrideUserInterfaceStyle = .dark
+        default:
+            overrideUserInterfaceStyle = .unspecified
+        }
+    }
+    
     func requestNotificationAccess() {
         let center = UNUserNotificationCenter.current()
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in 
@@ -84,9 +99,9 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         
         nameTextField.delegate = self
         
-        hiText.font = nameTextField.font?.withSize(CGFloat(UserDefaults.standard.float(forKey: "displayNameFontSize")))
+        hiText.font = nameTextField.font?.withSize(CGFloat(UserDefaults.standard.float(forKey: "FINALE_DEV_APP_displayNameFontSize")))
         DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1){
-            self.nameTextField.text = UserDefaults.standard.string(forKey: "displayName") ?? ""
+            self.nameTextField.text = UserDefaults.standard.string(forKey: "FINALE_DEV_APP_displayName") ?? ""
         }
     }
     func createNewSlider(habit: Habit) -> MTSlideToOpenView {
@@ -262,6 +277,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         sliders.removeAll()
         tableView.reloadData()
         
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [habits[index].name])
+        
         saveHabits()
     }
     func openEditHabit (index: Int) {
@@ -353,12 +370,16 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         if (lastDay != Date().dayNumberOfWeek()) {
         //if (lastDay != Calendar.current.component(.minute, from: Date())) {
             for x in 0..<habits.count {
+                print(habits[x].lastDone)
+                print(Date.today)
+                print(Date.yesterday)
                 if (habits[x].doneToday == true) {
                     sliders[x].resetStateWithAnimation(true)
                     habits[x].doneToday = false
                     sliders[x].habit = habits[x]
                 }
-                if (habits[x].lastDone != Date.yesterday && habits[x].lastDone != Date.today) {
+                if (Calendar.current.isDateInYesterday(habits[x].lastDone) != true && Calendar.current.isDateInToday(habits[x].lastDone) != true && Calendar.current.isDateInTomorrow(habits[x].lastDone) != true) {
+                //if (habits[x].lastDone != Date.yesterday && habits[x].lastDone != Date.today && habits[x].lastDone != Date.tomorrow) {
                 //if (habits[x].lastDone != Calendar.current.component(.minute, from: Date()) - 1 && habits[x].lastDone != Calendar.current.component(.minute, from: Date())) {
                     for i in 0..<sliders.count {
                         if (sliders[i].habit == habits[x]) {
@@ -373,7 +394,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             }
             lastDay = Date().dayNumberOfWeek()!
             //lastDay = Calendar.current.component(.minute, from: Date())
-            UserDefaults.standard.set(lastDay, forKey: "lastDay")
+            UserDefaults.standard.set(lastDay, forKey: "FINALE_DEV_APP_lastDay")
             saveHabits()
         }
     }
@@ -464,10 +485,10 @@ extension ViewController: UITableViewDataSource {
     }
     
     func saveHabits () {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(habits), forKey:"savedHabits")
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(habits), forKey:"FINALE_DEV_APP_savedHabits")
     }
     func loadHabits () {
-        if let data = UserDefaults.standard.value(forKey:"savedHabits") as? Data {
+        if let data = UserDefaults.standard.value(forKey:"FINALE_DEV_APP_savedHabits") as? Data {
             let loadedHabits = try? PropertyListDecoder().decode(Array<Habit>.self, from: data)
             habits = loadedHabits ?? [Habit]()
         }
@@ -525,8 +546,8 @@ extension ViewController: UIViewControllerTransitioningDelegate {
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
-        UserDefaults.standard.set(nameTextField.text, forKey: "displayName")
-        UserDefaults.standard.set(hiText.font.pointSize, forKey: "displayNameFontSize")
+        UserDefaults.standard.set(nameTextField.text, forKey: "FINALE_DEV_APP_displayName")
+        UserDefaults.standard.set(hiText.font.pointSize, forKey: "FINALE_DEV_APP_displayNameFontSize")
         return false
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

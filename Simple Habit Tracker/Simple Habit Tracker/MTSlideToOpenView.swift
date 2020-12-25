@@ -302,11 +302,11 @@ protocol MTSlideToOpenSwiftDelegate: class {
         switch sender.state {
         case .began:
             swiftDelegate?.startColorLerp()
-            if (UserDefaults.standard.object(forKey: "haptics") == nil) {
+            if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_haptics") == nil) {
                 hapticsEnabled = true
-                UserDefaults.standard.set(hapticsEnabled, forKey: "haptics")
+                UserDefaults.standard.set(hapticsEnabled, forKey: "FINALE_DEV_APP_haptics")
             } else {
-                hapticsEnabled = UserDefaults.standard.bool(forKey: "haptics")
+                hapticsEnabled = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_haptics")
             }
             
             break

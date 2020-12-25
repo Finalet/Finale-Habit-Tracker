@@ -113,6 +113,21 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         }
 
         self.hideKeyboardWhenTappedAround()
+        loadInterface()
+    }
+    
+    func loadInterface () {
+        let i = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_interface")
+        switch i {
+        case 0:
+            overrideUserInterfaceStyle = .unspecified
+        case 1:
+            overrideUserInterfaceStyle = .light
+        case 2:
+            overrideUserInterfaceStyle = .dark
+        default:
+            overrideUserInterfaceStyle = .unspecified
+        }
     }
     func loadColors () {
         let firstSection = "bright"
@@ -245,8 +260,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
         let content = UNMutableNotificationContent()
-        content.title = "Ready to " + nameInputField.text! + "?"
-        content.body = "Did you " + nameInputField.text! + " today? Track your habits every day to build your streak!"
+        content.body = "Did you complete \"" + nameInputField.text! + "\" today?"
         content.sound = UNNotificationSound.default
         
         let request = UNNotificationRequest(identifier: nameInputField.text!, content: content, trigger: trigger)
