@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import WidgetKit
 import Foundation
 
 class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwiftDelegate, AddHabitDelegate {
@@ -47,20 +48,50 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         requestNotificationAccess()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(passDataToWidget), name: UIApplication.willResignActiveNotification, object: nil)
+        
         loadInterface()
     }
-
+    
+    
     func loadInterface () {
         let i = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_interface")
         switch i {
         case 0:
-            overrideUserInterfaceStyle = .unspecified
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .unspecified
+            self.overrideUserInterfaceStyle = .unspecified
         case 1:
-            overrideUserInterfaceStyle = .light
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .light
+            self.overrideUserInterfaceStyle = .light
         case 2:
-            overrideUserInterfaceStyle = .dark
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
+            self.overrideUserInterfaceStyle = .dark
         default:
-            overrideUserInterfaceStyle = .unspecified
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .unspecified
+            self.overrideUserInterfaceStyle = .unspecified
+        }
+    }
+    
+    @objc func passDataToWidget () {
+        let userDefaults = UserDefaults(suiteName: "group.finale-habit-widget-cache")
+        var habitsNames = [String]()
+        var habitsIcons = [String]()
+        var habitsStreaks = [Int]()
+        for habit in habits {
+            if (habitsNames.count >= 5) {
+                break
+            }
+            habitsNames.append(habit.name)
+            habitsIcons.append(habit.icon.replacingOccurrences(of: ".png", with: ""))
+            habitsStreaks.append(habit.streakCount)
+        }
+        userDefaults?.setValue(habitsNames, forKey: "FINALE_DEV_APP_widgetCache")
+        userDefaults?.setValue(habitsIcons, forKey: "FINALE_DEV_APP_widgetCacheIcons")
+        userDefaults?.setValue(nameTextField.text, forKey: "FINALE_DEV_APP_widgetCacheName")
+        userDefaults?.setValue(habitsStreaks, forKey: "FINALE_DEV_APP_widgetCacheStreak")
+        if #available(iOS 14.0, *) {
+            WidgetCenter.shared.reloadAllTimelines()
         }
     }
     
@@ -273,11 +304,19 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         saveHabits()
     }
     func removeHabit (index: Int) {
+        let name = String(habits[index].name)
+        UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { requests in
+            for request in requests {
+                if(request.identifier == name) {
+                    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [name])
+                    print(request)
+                }
+            }
+        })
+        
         habits.remove(at: index)
         sliders.removeAll()
         tableView.reloadData()
-        
-        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [habits[index].name])
         
         saveHabits()
     }

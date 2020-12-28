@@ -30,7 +30,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     
     var currentSelectedColor: String = ""
     var currentSelectedIcon: String = ""
-    var enableNotification: Bool = true
+    var enableNotification: Bool = false
     var colors = [String]()
     var icons = [String]()
     
@@ -39,6 +39,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadInterface()
         colorCollectionView.tag = 0
         iconCollectionView.tag = 1
         
@@ -105,6 +106,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
                 }
             }
         } else {
+            enableNotification = notificationSwitch.isOn
             viewTitle.text = "New Habit"
             nameInputField.text = ""
             createButton.setTitle("Create", for: .normal)
@@ -113,7 +115,6 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         }
 
         self.hideKeyboardWhenTappedAround()
-        loadInterface()
     }
     
     func loadInterface () {
@@ -121,12 +122,16 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         switch i {
         case 0:
             overrideUserInterfaceStyle = .unspecified
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .unspecified
         case 1:
             overrideUserInterfaceStyle = .light
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .light
         case 2:
             overrideUserInterfaceStyle = .dark
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
         default:
             overrideUserInterfaceStyle = .unspecified
+            UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .unspecified
         }
     }
     func loadColors () {
@@ -260,7 +265,7 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
         let content = UNMutableNotificationContent()
-        content.body = "Did you complete \"" + nameInputField.text! + "\" today?"
+        content.body = "Are you ready to \"" + nameInputField.text! + "\" today?"
         content.sound = UNNotificationSound.default
         
         let request = UNNotificationRequest(identifier: nameInputField.text!, content: content, trigger: trigger)
@@ -363,7 +368,6 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
                 }
             }
             
-            
             return cell
         } else {
             let cell = iconCollectionView.dequeueReusableCell(withReuseIdentifier: "colorCell", for: indexPath)
@@ -377,6 +381,7 @@ extension AddHabitView: UICollectionViewDelegate, UICollectionViewDataSource, UI
             button.addTarget(self, action: #selector(pickIcon), for: .touchUpInside)
             button.layer.cornerRadius = cell.frame.height/2
             button.accessibilityLabel = icons[indexPath.row]
+            
             cell.addSubview(button)
             allIconButtons.append(button)
             

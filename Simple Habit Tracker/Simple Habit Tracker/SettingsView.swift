@@ -28,6 +28,7 @@ class SettingsView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        delegate?.loadInterface()
         
         initializeView()
         
@@ -49,8 +50,6 @@ class SettingsView: UIViewController {
         }
         notificationsSwitch.setOn(notificationsEnabled, animated: false)
         hapticsSwitch.setOn(hapticsEnabled, animated: false)
-        
-        loadInterface()
     }
     
     func initializeView () {
@@ -83,25 +82,7 @@ class SettingsView: UIViewController {
     
     @objc func changeInterface () {
         UserDefaults.standard.set(interfaceSwitch.selectedSegmentIndex, forKey: "FINALE_DEV_APP_interface")
-        loadInterface()
-    }
-    
-    func loadInterface () {
-        let i = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_interface")
-        switch i {
-        case 0:
-            overrideUserInterfaceStyle = .unspecified
-            delegate?.overrideUserInterfaceStyle = .unspecified
-        case 1:
-            overrideUserInterfaceStyle = .light
-            delegate?.overrideUserInterfaceStyle = .light
-        case 2:
-            overrideUserInterfaceStyle = .dark
-            delegate?.overrideUserInterfaceStyle = .dark
-        default:
-            overrideUserInterfaceStyle = .unspecified
-            delegate?.overrideUserInterfaceStyle = .unspecified
-        }
+        delegate?.loadInterface()
     }
     
     @objc func changeIcon(sender: UIButton) {
@@ -160,7 +141,7 @@ class SettingsView: UIViewController {
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
         let content = UNMutableNotificationContent()
-        content.body = "Did you complete \"" + habit.name + "\" today?"
+        content.body = "Are you ready to \"" + habit.name + "\" today?"
         content.sound = UNNotificationSound.default
         
         let request = UNNotificationRequest(identifier: habit.name, content: content, trigger: trigger)

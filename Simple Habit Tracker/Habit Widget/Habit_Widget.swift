@@ -11,22 +11,33 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent())
+        SimpleEntry(date: Date(), name: "", habits: [""], icons: [""], streak: [0], configuration: ConfigurationIntent())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
+        let userDefaults = UserDefaults(suiteName: "group.finale-habit-widget-cache")
+        let habits = userDefaults?.stringArray(forKey: "FINALE_DEV_APP_widgetCache") ?? [""]
+        let icons = userDefaults?.stringArray(forKey: "FINALE_DEV_APP_widgetCacheIcons") ?? [""]
+        let name = userDefaults?.string(forKey: "FINALE_DEV_APP_widgetCacheName") ?? ""
+        let streak = userDefaults?.array(forKey: "FINALE_DEV_APP_widgetCacheStreak") as! [Int]
+        
+        let entry = SimpleEntry(date: Date(), name: name, habits: habits, icons: icons, streak: streak, configuration: configuration)
         completion(entry)
     }
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
         var entries: [SimpleEntry] = []
 
+        let userDefaults = UserDefaults(suiteName: "group.finale-habit-widget-cache")
+        let habits = userDefaults?.stringArray(forKey: "FINALE_DEV_APP_widgetCache") ?? [""]
+        let icons = userDefaults?.stringArray(forKey: "FINALE_DEV_APP_widgetCacheIcons") ?? [""]
+        let name = userDefaults?.string(forKey: "FINALE_DEV_APP_widgetCacheName") ?? ""
+        let streak = userDefaults?.array(forKey: "FINALE_DEV_APP_widgetCacheStreak") as! [Int]
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
+            let entry = SimpleEntry(date: entryDate, name: name, habits: habits, icons: icons, streak: streak, configuration: configuration)
             entries.append(entry)
         }
 
@@ -37,32 +48,56 @@ struct Provider: IntentTimelineProvider {
 
 struct SimpleEntry: TimelineEntry {
     let date: Date
+    let name: String
+    let habits: [String]
+    let icons: [String]
+    let streak: [Int]
     let configuration: ConfigurationIntent
 }
 
-struct Habit_WidgetEntryView : View {
-    var habits = ["Rotate eyes", "Kiss QQ"]
-    
-    var entry: Provider.Entry
+struct Habit_WidgetEntryView : View {var entry: Provider.Entry
 
     var body: some View {
-        GeometryReader { geo in
-            Rectangle()
-                .fill(Color("app.background"))
-            Text("Hi, Grant")
-                .frame(width: geo.size.width - 10, height: 30, alignment: .leading)
-                .position(x: 95, y: geo.size.width/7)
-                .font(.custom("MuktaMahee Bold",size: 25))
-            VStack (alignment: .leading, spacing: /*@START_MENU_TOKEN@*/nil/*@END_MENU_TOKEN@*/, content: {
-                ForEach(0 ..< habits.count) { index in
-                    Text(habits[index])
-                        .font(.system(size: 12))
-                }
-            })
-            .frame(width: geo.size.width - 10, height: geo.size.height - 80, alignment: .topLeading)
-            .position(x: 95, y: geo.size.width/2)
+        if (entry.habits.count != 0 || entry.icons.count != 0) {
+            GeometryReader { geo in
+                Rectangle()
+                    .fill(Color("app.background"))
+                Text("Hi, " + entry.name)
+                    .frame(width: geo.size.width - 16, height: 30, alignment: .leading)
+                    .font(.custom("MuktaMahee Bold",size: 25))
+                    .padding(.leading, 16)
+                    .padding(.top, 12)
+                VStack (alignment: .leading, spacing: 4, content: {
+                    ForEach(0 ..< entry.habits.count) { index in
+                        HStack {
+                            Image(entry.icons[index]).resizable()
+                                .frame(width: 16, height: 16, alignment: .center)
+                            Text(entry.habits[index])
+                                .font(.system(size: 12))
+                                .frame(height: 16)
+                            Spacer()
+                            Text(getEmoji(streakCount: entry.streak[index]))
+                                .font(.system(size: 12))
+                        }
+                        .padding(.trailing, 16)
+                    }
+                })
+                .frame(width: geo.size.width - 10, height: geo.size.height - 90, alignment: .topLeading)
+                .padding(.leading, 16)
+                .padding(.top, 46)
+            }
+        } else {
+            GeometryReader { geo in
+                Text("Add habits in the app to display them here")
+                    .foregroundColor(Color(UIColor.systemGray2))
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 12))
+                    .frame(width: geo.size.width - 20, height: geo.size.height - 20, alignment: .center)
+                    .position(x: geo.size.width/2, y: geo.size.height/2)
+            }
         }
     }
+    
     func getEmoji (streakCount: Int) -> String {
         if (streakCount <= 1) {
             return ""
@@ -99,13 +134,14 @@ struct Habit_Widget: Widget {
             Habit_WidgetEntryView(entry: entry)
         }
         .configurationDisplayName("Your habits")
-        .description("Display three top habits on the home screen")
+        .description("Track your habits and streaks on the home screen")
+        .supportedFamilies([.systemSmall, .systemMedium])
     }
 }
 
 struct Habit_Widget_Previews: PreviewProvider {
     static var previews: some View {
-        Habit_WidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
+        Habit_WidgetEntryView(entry: SimpleEntry(date: Date(), name: "", habits: [], icons: [], streak: [], configuration: ConfigurationIntent()))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }
