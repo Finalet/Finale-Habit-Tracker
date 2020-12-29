@@ -67,7 +67,7 @@ struct Habit_WidgetEntryView : View {var entry: Provider.Entry
                     .font(.custom("MuktaMahee Bold",size: 25))
                     .padding(.leading, 16)
                     .padding(.top, 12)
-                VStack (alignment: .leading, spacing: 4, content: {
+                VStack (alignment: .leading, spacing: 6, content: {
                     ForEach(0 ..< entry.habits.count) { index in
                         HStack {
                             Image(entry.icons[index]).resizable()
@@ -84,7 +84,7 @@ struct Habit_WidgetEntryView : View {var entry: Provider.Entry
                 })
                 .frame(width: geo.size.width - 10, height: geo.size.height - 90, alignment: .topLeading)
                 .padding(.leading, 16)
-                .padding(.top, 46)
+                .padding(.top, 48)
             }
         } else {
             GeometryReader { geo in

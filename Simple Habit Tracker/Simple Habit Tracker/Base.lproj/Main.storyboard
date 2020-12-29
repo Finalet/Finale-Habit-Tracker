@@ -69,14 +69,8 @@
                                 <fontDescription key="fontDescription" name="MuktaMahee-Bold" family="Mukta Mahee" pointSize="50"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap &quot;+&quot; button to add a new habit" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQb-uc-q4g">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap &quot;+&quot; button to add new habit" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gQb-uc-q4g">
                                 <rect key="frame" x="80" y="439" width="268" height="48"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" systemColor="systemGray3Color"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hold anywhere to open settings" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="agi-YT-AW1">
-                                <rect key="frame" x="75.666666666666686" y="507" width="277" height="24"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" systemColor="systemGray3Color"/>
                                 <nil key="highlightedColor"/>
@@ -92,8 +86,6 @@
                             <constraint firstItem="gQb-uc-q4g" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ghs-pS-EC9"/>
                             <constraint firstItem="Geg-Pz-xnh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="HBF-Wg-LRS"/>
                             <constraint firstAttribute="trailing" secondItem="gQb-uc-q4g" secondAttribute="trailing" constant="80" id="LrW-Ys-QWt"/>
-                            <constraint firstItem="agi-YT-AW1" firstAttribute="top" secondItem="gQb-uc-q4g" secondAttribute="bottom" constant="20" id="R8c-tn-f7W"/>
-                            <constraint firstItem="agi-YT-AW1" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="UzD-9o-ahy"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Geg-Pz-xnh" secondAttribute="trailing" constant="20" id="We2-KU-KgP"/>
                             <constraint firstItem="gQb-uc-q4g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="80" id="aa4-OQ-ORQ"/>
                             <constraint firstItem="FpT-i0-Xkl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="c4F-qb-wB5"/>
@@ -113,7 +105,6 @@
                         <outlet property="motivationalPhrasesLable" destination="B5w-4P-HiD" id="FxK-N3-zcC"/>
                         <outlet property="nameTextField" destination="Pzk-zH-sU4" id="nUu-bL-7hg"/>
                         <outlet property="suggestionLabel" destination="gQb-uc-q4g" id="cHQ-7d-lXJ"/>
-                        <outlet property="suggestionLabel1" destination="agi-YT-AW1" id="rPc-bd-Pxx"/>
                         <outlet property="tableView" destination="Geg-Pz-xnh" id="kYK-9o-dNJ"/>
                     </connections>
                 </viewController>

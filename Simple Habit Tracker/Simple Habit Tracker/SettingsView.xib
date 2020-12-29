@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -95,12 +96,22 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="J5u-r9-NE9">
+                    <rect key="frame" x="369.66666666666669" y="67.666666666666671" width="24.333333333333314" height="23.666666666666671"/>
+                    <state key="normal">
+                        <imageReference key="image" image="questionmark.circle" catalog="system" symbolScale="large"/>
+                    </state>
+                    <connections>
+                        <action selector="tutorialButton:" destination="-1" eventType="touchUpInside" id="4D3-oT-GYI"/>
+                    </connections>
+                </button>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" name="app.background"/>
             <constraints>
                 <constraint firstItem="mIA-YR-F6h" firstAttribute="centerY" secondItem="u3A-UF-ZXw" secondAttribute="centerY" id="1h6-qL-rOg"/>
                 <constraint firstItem="3ix-3Z-iab" firstAttribute="top" secondItem="kz2-bT-67U" secondAttribute="bottom" constant="30" id="2Xd-4q-jy5"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="J5u-r9-NE9" secondAttribute="trailing" constant="20" id="8wP-jC-1pw"/>
                 <constraint firstItem="UtR-Ft-Dd8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Dp3-BU-93e"/>
                 <constraint firstItem="UtR-Ft-Dd8" firstAttribute="top" secondItem="iDx-dC-rN8" secondAttribute="bottom" constant="10" id="GbP-Wf-z3N"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="mIA-YR-F6h" secondAttribute="trailing" constant="20" id="Llh-LG-QMY"/>
@@ -109,6 +120,7 @@
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="jKx-n8-oju" secondAttribute="trailing" constant="20" id="SkJ-hV-2Oc"/>
                 <constraint firstItem="iDx-dC-rN8" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="WZR-jd-lJb"/>
                 <constraint firstItem="RtL-WY-bxN" firstAttribute="top" secondItem="u3A-UF-ZXw" secondAttribute="bottom" constant="30" id="WZS-ZQ-zX3"/>
+                <constraint firstItem="J5u-r9-NE9" firstAttribute="centerY" secondItem="UtR-Ft-Dd8" secondAttribute="centerY" id="WhQ-KC-WDq"/>
                 <constraint firstItem="u3A-UF-ZXw" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="Y7G-kL-sRf"/>
                 <constraint firstItem="kz2-bT-67U" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="YvF-GP-L7o"/>
                 <constraint firstItem="3ix-3Z-iab" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="a89-Up-ofQ"/>
@@ -128,6 +140,7 @@
     <resources>
         <image name="icon" width="2048" height="2048"/>
         <image name="icon.dark" width="2048" height="2048"/>
+        <image name="questionmark.circle" catalog="system" width="128" height="121"/>
         <namedColor name="app.background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -194,6 +194,9 @@ class AddHabitView: UIViewController, UITextFieldDelegate {
             scheduleNotification()
         }
         
+        let generator = UISelectionFeedbackGenerator()
+        generator.selectionChanged()
+        
         self.dismiss(animated: true, completion: nil)
     }
     

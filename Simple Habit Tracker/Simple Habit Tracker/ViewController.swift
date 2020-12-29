@@ -28,7 +28,6 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var hiText: UILabel!
     @IBOutlet weak var suggestionLabel: UILabel!
-    @IBOutlet weak var suggestionLabel1: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,13 +46,28 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         }
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        requestNotificationAccess()
         
         NotificationCenter.default.addObserver(self, selector: #selector(passDataToWidget), name: UIApplication.willResignActiveNotification, object: nil)
         
         loadInterface()
     }
+    override func viewDidAppear(_ animated: Bool) {
+        let tutorialShown = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_tutorialDone")
+        if (tutorialShown != true) {
+            presentTutorial()
+        } else {
+            requestNotificationAccess()
+        }
+    }
     
+    func presentTutorial() {
+        let slideVC = TutorialView()
+        slideVC.modalPresentationStyle = .overCurrentContext
+        slideVC.modalTransitionStyle = .crossDissolve
+        slideVC.transitioningDelegate = self
+        slideVC.delegate = self
+        self.present(slideVC, animated: true, completion: nil)
+    }
     
     func loadInterface () {
         let i = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_interface")
@@ -303,6 +317,13 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         tableView.reloadData()
         saveHabits()
     }
+    func addStreak (index: Int) {
+        let i = Int.random(in: 3...10)
+        habits[index].streakCount += i
+        habits[index].count += i
+        tableView.reloadData()
+        saveHabits()
+    }
     func removeHabit (index: Int) {
         let name = String(habits[index].name)
         UNUserNotificationCenter.current().getPendingNotificationRequests(completionHandler: { requests in
@@ -497,10 +518,8 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (habits.count == 0) {
             suggestionLabel.alpha = 1
-            suggestionLabel1.alpha = 1
         } else {
             suggestionLabel.alpha = 0
-            suggestionLabel1.alpha = 0
         }
         return habits.count + 1
     }
@@ -557,6 +576,10 @@ extension ViewController: UITableViewDataSource {
             let moveDown = UIAction(title: "Move down", image: UIImage(systemName: "arrow.down.circle")) { action in
                 self.moveDown(index: indexPath.row)
             }
+            let DEBUG_CHEAT = UIAction(title: "Add streak", image: UIImage(systemName: "plus")) { action in
+                self.addStreak(index: indexPath.row)
+            }
+
 
             var contextMenu = [UIAction]()
             if (self.habits[indexPath.row].doneToday) {

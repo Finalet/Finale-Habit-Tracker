@@ -330,7 +330,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
             var progress = 10 * (translatedPoint - xEndingPoint) / xEndingPoint
             progress.round()
             
-            if progress != lastProgress && hapticsEnabled == true {
+            if progress != lastProgress && hapticsEnabled == true && progress.remainder(dividingBy: 2) == 0{
                 let generator = UIImpactFeedbackGenerator(style: .medium)
                     generator.impactOccurred()
             }

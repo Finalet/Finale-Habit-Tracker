@@ -36,6 +36,8 @@
 		88B5596E25785E4D00D64D1A /* Simple_Habit_TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5596D25785E4D00D64D1A /* Simple_Habit_TrackerTests.swift */; };
 		88B5597925785E4D00D64D1A /* Simple_Habit_TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5597825785E4D00D64D1A /* Simple_Habit_TrackerUITests.swift */; };
 		88B6C18D257B27580045D022 /* ConfettiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6C18C257B27580045D022 /* ConfettiType.swift */; };
+		88CD2CC8259AD35500C06B13 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2CC7259AD35500C06B13 /* TutorialView.swift */; };
+		88CD2CD2259AD84700C06B13 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CD2CD1259AD84700C06B13 /* TutorialView.xib */; };
 		88D11F7E257B1CD30040C61F /* MTSlideToOpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */; };
 /* End PBXBuildFile section */
 
@@ -115,6 +117,8 @@
 		88B6C18C257B27580045D022 /* ConfettiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiType.swift; sourceTree = "<group>"; };
 		88B970992586E01F00084C6E /* Simple Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Simple Habit Tracker.entitlements"; sourceTree = "<group>"; };
 		88B9709E2586E03100084C6E /* Habit WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit WidgetExtension.entitlements"; sourceTree = "<group>"; };
+		88CD2CC7259AD35500C06B13 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
+		88CD2CD1259AD84700C06B13 /* TutorialView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTSlideToOpenView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -230,6 +234,8 @@
 				889A69BE257EC6B50016D3D0 /* AddHabitView.swift */,
 				8845133225803337006F8BD0 /* ColorViewCell.xib */,
 				8845133A258038A1006F8BD0 /* Colors.xcassets */,
+				88CD2CD1259AD84700C06B13 /* TutorialView.xib */,
+				88CD2CC7259AD35500C06B13 /* TutorialView.swift */,
 			);
 			path = "Simple Habit Tracker";
 			sourceTree = "<group>";
@@ -389,6 +395,7 @@
 				88B5596325785E4C00D64D1A /* LaunchScreen.storyboard in Resources */,
 				8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */,
 				8802ED752585AB2200ABE4FF /* Images.bundle in Resources */,
+				88CD2CD2259AD84700C06B13 /* TutorialView.xib in Resources */,
 				889A69BA257EC6210016D3D0 /* AddHabitView.xib in Resources */,
 				881FFF342595522600743347 /* icon_60pt@2x.png in Resources */,
 				889A05CE2590530B00A7EABF /* icon.dark_60pt@2x.png in Resources */,
@@ -438,6 +445,7 @@
 				889A69B5257EC5360016D3D0 /* PresentationController.swift in Sources */,
 				88A5321025901D9A008BD5E9 /* SettingsView.swift in Sources */,
 				88B5595725785E4B00D64D1A /* AppDelegate.swift in Sources */,
+				88CD2CC8259AD35500C06B13 /* TutorialView.swift in Sources */,
 				8847771E2578963700999250 /* UIColor+Components.swift in Sources */,
 				88B5595925785E4B00D64D1A /* SceneDelegate.swift in Sources */,
 				88B6C18D257B27580045D022 /* ConfettiType.swift in Sources */,
@@ -519,7 +527,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -542,7 +550,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -681,7 +689,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -702,7 +710,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

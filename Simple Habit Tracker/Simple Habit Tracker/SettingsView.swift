@@ -98,6 +98,11 @@ class SettingsView: UIViewController {
         }
     }
     
+    @IBAction func tutorialButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+        delegate?.presentTutorial()
+    }
+    
     func setIcon (name: String) {
         if (name != "") {
             UIApplication.shared.setAlternateIconName(name) { (error) in
@@ -134,10 +139,13 @@ class SettingsView: UIViewController {
     }
     
     func scheduleNotification (habit: Habit) {
+        if (habit.notificationTime == "") {
+            return
+        }
         var dateComponents = DateComponents()
         let time = habit.notificationTime
-        dateComponents.hour = Int(time.components(separatedBy: ":")[0])
-        dateComponents.minute = Int(time.components(separatedBy: ":")[1])
+        dateComponents.hour = Int(time.components(separatedBy: ":")[0]) ?? 19
+        dateComponents.minute = Int(time.components(separatedBy: ":")[1]) ?? 00
         let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
         
         let content = UNMutableNotificationContent()
