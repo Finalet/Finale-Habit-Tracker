@@ -8,6 +8,7 @@
 import UIKit
 import WidgetKit
 import Foundation
+import Firebase
 
 class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwiftDelegate, AddHabitDelegate {
 
@@ -47,10 +48,11 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(passDataToWidget), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appWentToBackground), name: UIApplication.willResignActiveNotification, object: nil)
         
         loadInterface()
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         let tutorialShown = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_tutorialDone")
         if (tutorialShown != true) {
@@ -87,7 +89,12 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         }
     }
     
-    @objc func passDataToWidget () {
+    @objc func appWentToBackground () {
+        Analytics.logEvent("app_in_background", parameters: ["app_habits_count": habits.count])
+        passDataToWidget()
+    }
+    
+    func passDataToWidget () {
         let userDefaults = UserDefaults(suiteName: "group.finale-habit-widget-cache")
         var habitsNames = [String]()
         var habitsIcons = [String]()
@@ -238,6 +245,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         }
         saveHabits()
         PlayConfetti()
+        
+        Analytics.logEvent("habit_done", parameters: ["habit_total_count" : sender.habit.count, "habit_streak_count" : sender.habit.streakCount])
     }
     
     func PlayConfetti () {
@@ -340,6 +349,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         tableView.reloadData()
         
         saveHabits()
+        
+        Analytics.logEvent("habit_removed", parameters: nil)
     }
     func openEditHabit (index: Int) {
         let slideVC = AddHabitView()
@@ -361,6 +372,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         sliders.removeAll()
         tableView.reloadData()
         saveHabits()
+        
+        Analytics.logEvent("habit_edited", parameters: ["habit_name" : name, "habit_color" : color, "habit_icon" : icon, "habit_notification_time" : notificationTime])
     }
     func addHabit(name: String, color: String, icon: String, notificationTime: String) {
         let newHabit = Habit(name: name, color: color, icon: icon, count: 0, streakCount: 0, doneToday: false, lastDone: Date.today, notificationTime: notificationTime)
@@ -371,6 +384,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         tableView.reloadData()
         
         saveHabits()
+        
+        Analytics.logEvent("habit_added", parameters: ["habit_name" : name, "habit_color" : color, "habit_icon" : icon, "habit_notification_time" : notificationTime])
     }
     
     var currentRed: CGFloat = 0
@@ -610,6 +625,8 @@ extension ViewController: UITextFieldDelegate {
         self.view.endEditing(true)
         UserDefaults.standard.set(nameTextField.text, forKey: "FINALE_DEV_APP_displayName")
         UserDefaults.standard.set(hiText.font.pointSize, forKey: "FINALE_DEV_APP_displayNameFontSize")
+        
+        Analytics.logEvent("app_username_set", parameters: ["app_username" : nameTextField.text])
         return false
     }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {

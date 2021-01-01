@@ -5,6 +5,7 @@
 //  Created by Grant Oganyan on 20.12.2020.
 //
 
+import Firebase
 import UIKit
 
 class SettingsView: UIViewController {
@@ -50,6 +51,8 @@ class SettingsView: UIViewController {
         }
         notificationsSwitch.setOn(notificationsEnabled, animated: false)
         hapticsSwitch.setOn(hapticsEnabled, animated: false)
+        
+        Analytics.logEvent("settings_open", parameters: nil)
     }
     
     func initializeView () {
@@ -83,6 +86,20 @@ class SettingsView: UIViewController {
     @objc func changeInterface () {
         UserDefaults.standard.set(interfaceSwitch.selectedSegmentIndex, forKey: "FINALE_DEV_APP_interface")
         delegate?.loadInterface()
+        
+        var i = ""
+        switch interfaceSwitch.selectedSegmentIndex {
+        case 0:
+            i = "unspecified"
+        case 1:
+            i = "dark"
+        case 2:
+            i = "light"
+        default:
+            i = "unspecified"
+        }
+        
+        Analytics.logEvent("app_interface_changed", parameters: ["interface" : i])
     }
     
     @objc func changeIcon(sender: UIButton) {
@@ -93,8 +110,10 @@ class SettingsView: UIViewController {
         
         if (sender == AppIconDark) {
             setIcon(name: "AppIcon-2")
+            Analytics.logEvent("app_icon_changed", parameters: ["icon_style" : "dark"])
         } else if (sender == AppIconLight) {
             setIcon(name: "")
+            Analytics.logEvent("app_icon_changed", parameters: ["icon_style" : "standard"])
         }
     }
     
@@ -122,6 +141,8 @@ class SettingsView: UIViewController {
         if (sender == hapticsSwitch) {
             hapticsEnabled = sender.isOn
             UserDefaults.standard.set(hapticsEnabled, forKey: "FINALE_DEV_APP_haptics")
+            
+            Analytics.logEvent("app_haptics_switched", parameters: ["state" : sender.isOn ? "true" : "false"])
         } else if (sender == notificationsSwitch) {
             notificationsEnabled = sender.isOn
             UserDefaults.standard.set(notificationsEnabled, forKey: "FINALE_DEV_APP_notifications")
@@ -129,6 +150,8 @@ class SettingsView: UIViewController {
             if (sender.isOn == true) {
                 scheduleAllNotifications()
             }
+            
+            Analytics.logEvent("app_notification_switched", parameters: ["state" : sender.isOn ? "true" : "false"])
         }
     }
     

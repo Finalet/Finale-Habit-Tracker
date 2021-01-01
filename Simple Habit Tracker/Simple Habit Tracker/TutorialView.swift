@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 class TutorialView: UIViewController, MTSlideToOpenDelegate {
     func mtSlideToOpenDelegateDidFinish(_ sender: MTSlideToOpenView) {
@@ -14,7 +15,6 @@ class TutorialView: UIViewController, MTSlideToOpenDelegate {
             let generator = UINotificationFeedbackGenerator()
                 generator.notificationOccurred(.error)
         }
-        delegate?.PlayConfetti()
     }
     
     
@@ -44,7 +44,7 @@ class TutorialView: UIViewController, MTSlideToOpenDelegate {
         
         fakeAddButton.layer.cornerRadius = fakeAddButton.frame.width/2
         
-        let slider = MTSlideToOpenView(frame: CGRect(x: 20, y: swipeText.frame.origin.y + 30, width: UIScreen.main.bounds.width - 80, height: 50))
+        let slider = MTSlideToOpenView(frame: CGRect(x: 20, y: swipeText.frame.origin.y + 35, width: UIScreen.main.bounds.width - 80, height: 50))
         slider.delegate = self
         slider.sliderViewTopDistance = 0
         slider.sliderCornerRadius = 25
@@ -54,7 +54,7 @@ class TutorialView: UIViewController, MTSlideToOpenDelegate {
         slider.textLabelLeadingDistance = 60
         slider.textColor = .white
         slider.showSliderText = true
-        slider.sliderTextLabel.text = "Try it out!"
+        slider.sliderTextLabel.text = "Try it out"
         slider.sliderTextLabel.textColor = .white
         slider.draggedView.backgroundColor = .systemTeal
         slider.sliderBackgroundColor = UIColor.systemTeal.withAlphaComponent(0.5)
@@ -71,6 +71,8 @@ class TutorialView: UIViewController, MTSlideToOpenDelegate {
         
         let holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(openSettings))
         view.addGestureRecognizer(holdRecognizer)
+        
+        Analytics.logEvent("tutorial_open", parameters: nil)
     }
     @IBAction func doneButtonPress(_ sender: Any) {
         requestNotificationAccess()

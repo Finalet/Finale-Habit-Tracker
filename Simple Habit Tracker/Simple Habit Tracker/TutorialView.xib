@@ -46,17 +46,18 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Long press habit to edit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3N0-XD-nGl">
-                            <rect key="frame" x="20" y="217" width="334" height="21"/>
+                            <rect key="frame" x="20" y="227" width="334" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ctf-UH-I8T">
-                            <rect key="frame" x="20" y="309.5" width="334" height="50"/>
+                            <rect key="frame" x="20" y="319.5" width="334" height="50"/>
                             <color key="backgroundColor" systemColor="systemTealColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="WiV-lb-anP"/>
                             </constraints>
+                            <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" title="Done"/>
                             <connections>
@@ -64,7 +65,7 @@
                             </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Long press anywhere to open settings" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P89-1X-idH">
-                            <rect key="frame" x="20" y="269" width="334" height="20.5"/>
+                            <rect key="frame" x="20" y="279" width="334" height="20.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
@@ -76,6 +77,7 @@
                                 <constraint firstAttribute="height" constant="50" id="PRl-0s-PDa"/>
                                 <constraint firstAttribute="width" constant="50" id="niR-tR-dEi"/>
                             </constraints>
+                            <fontDescription key="fontDescription" type="system" weight="black" pointSize="18"/>
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <state key="normal" image="plus" catalog="system"/>
                             <connections>
@@ -83,7 +85,7 @@
                             </connections>
                         </button>
                         <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DpG-eC-oFr">
-                            <rect key="frame" x="100" y="253" width="174" height="1"/>
+                            <rect key="frame" x="100" y="263" width="174" height="1"/>
                             <color key="backgroundColor" systemColor="systemTealColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="1" id="0Yx-zy-C2q"/>
@@ -101,7 +103,7 @@
                         <constraint firstAttribute="trailing" secondItem="ctf-UH-I8T" secondAttribute="trailing" constant="20" id="2VK-Jg-tND"/>
                         <constraint firstItem="Fac-Rc-axY" firstAttribute="leading" secondItem="IM3-xc-oAI" secondAttribute="leading" constant="20" id="Awv-ud-zlP"/>
                         <constraint firstItem="DpG-eC-oFr" firstAttribute="top" secondItem="3N0-XD-nGl" secondAttribute="bottom" constant="15" id="E7c-2x-0mV"/>
-                        <constraint firstItem="3N0-XD-nGl" firstAttribute="top" secondItem="wkm-Lv-K0s" secondAttribute="bottom" constant="70" id="ENa-QV-iya"/>
+                        <constraint firstItem="3N0-XD-nGl" firstAttribute="top" secondItem="wkm-Lv-K0s" secondAttribute="bottom" constant="80" id="ENa-QV-iya"/>
                         <constraint firstItem="3N0-XD-nGl" firstAttribute="leading" secondItem="IM3-xc-oAI" secondAttribute="leading" constant="20" id="HCv-fE-AeG"/>
                         <constraint firstAttribute="height" constant="400" id="HqX-8j-KOT"/>
                         <constraint firstItem="P89-1X-idH" firstAttribute="leading" secondItem="IM3-xc-oAI" secondAttribute="leading" constant="20" id="IGY-FE-bpa"/>

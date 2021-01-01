@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_Simple_Habit_Tracker_Simple_Habit_TrackerUITests : NSObject
+@end
+@implementation PodsDummy_Pods_Simple_Habit_Tracker_Simple_Habit_TrackerUITests
+@end
