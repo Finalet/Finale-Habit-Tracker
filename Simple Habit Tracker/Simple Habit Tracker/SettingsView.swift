@@ -16,6 +16,7 @@ class SettingsView: UIViewController {
     var pointOrigin: CGPoint?
     
     var notificationsEnabled: Bool = true
+    var soundsEnabled: Bool = true
     var hapticsEnabled: Bool = true
     
     @IBOutlet weak var slideIndicator: UIView!
@@ -23,7 +24,13 @@ class SettingsView: UIViewController {
     @IBOutlet weak var AppIconDark: UIButton!
     
     @IBOutlet weak var notificationsSwitch: UISwitch!
+    @IBOutlet weak var soundsSwitch: UISwitch!
     @IBOutlet weak var hapticsSwitch: UISwitch!
+    
+    @IBOutlet weak var startNewDayLabel: UILabel!
+    var currentTimeSelected = 0
+    let timeOptions24 = ["Midnight", "01:00", "02:00", "03:00", "04:00"]
+    let timeOptions12 = ["Midnight", "1am", "2am", "3am", "4am"]
     
     @IBOutlet weak var interfaceSwitch: UISegmentedControl!
     
@@ -43,6 +50,12 @@ class SettingsView: UIViewController {
         } else {
             hapticsEnabled = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_haptics")
         }
+        if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_sounds") == nil) {
+            soundsEnabled = true
+            UserDefaults.standard.set(soundsEnabled, forKey: "FINALE_DEV_APP_sounds")
+        } else {
+            soundsEnabled = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_sounds")
+        }
         if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_notifications") == nil) {
             notificationsEnabled = true
             UserDefaults.standard.set(notificationsEnabled, forKey: "FINALE_DEV_APP_notifications")
@@ -50,7 +63,16 @@ class SettingsView: UIViewController {
             notificationsEnabled = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_notifications")
         }
         notificationsSwitch.setOn(notificationsEnabled, animated: false)
+        soundsSwitch.setOn(soundsEnabled, animated: false)
         hapticsSwitch.setOn(hapticsEnabled, animated: false)
+        
+        if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_newDayTime") == nil) {
+            currentTimeSelected = 0
+            UserDefaults.standard.set(currentTimeSelected, forKey: "FINALE_DEV_APP_newDayTime")
+        } else {
+            currentTimeSelected = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_newDayTime")
+        }
+        changeStartNewDay()
         
         Analytics.logEvent("settings_open", parameters: nil)
     }
@@ -75,6 +97,7 @@ class SettingsView: UIViewController {
         AppIconLight.layer.shadowOffset = CGSize(width: 0, height: 0)
         
         hapticsSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
+        soundsSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
         notificationsSwitch.addTarget(self, action: #selector(switchValueChanged), for: .valueChanged)
         AppIconDark.addTarget(self, action: #selector(changeIcon), for: .touchUpInside)
         AppIconLight.addTarget(self, action: #selector(changeIcon), for: .touchUpInside)
@@ -152,6 +175,12 @@ class SettingsView: UIViewController {
             }
             
             Analytics.logEvent("app_notification_switched", parameters: ["state" : sender.isOn ? "true" : "false"])
+        } else if (sender == soundsSwitch) {
+            soundsEnabled = sender.isOn
+            UserDefaults.standard.set(soundsEnabled, forKey: "FINALE_DEV_APP_sounds")
+            UNUserNotificationCenter.current().removeAllPendingNotificationRequests()
+            
+            Analytics.logEvent("app_sounds_switched", parameters: ["state" : sender.isOn ? "true" : "false"])
         }
     }
     
@@ -185,6 +214,48 @@ class SettingsView: UIViewController {
             pointOrigin = self.view.frame.origin
         }
     }
+    @IBAction func startNewDayButton(_ sender: Any) {
+        let pickerView = pickStartNewDay()
+        pickerView.modalPresentationStyle = .pageSheet
+        pickerView.delegate = self
+        pickerView.timeOptions24 = timeOptions24
+        pickerView.timeOptions12 = timeOptions12
+        pickerView.currentOption = currentTimeSelected
+        present(pickerView, animated: true, completion: nil)
+    }
+    func changeStartNewDay (save: Bool = false) {
+        if (is24Hour()) {
+            startNewDayLabel.text = timeOptions24[currentTimeSelected]
+        } else {
+            startNewDayLabel.text = timeOptions12[currentTimeSelected]
+        }
+        
+        if (!save) {
+            return
+        }
+        UserDefaults.standard.set(currentTimeSelected, forKey: "FINALE_DEV_APP_newDayTime")
+
+        var time = ""
+        switch currentTimeSelected {
+        case 0:
+            time = "00:00"
+        case 1:
+            time = "01:00"
+        case 2:
+            time = "02:00"
+        case 3:
+            time = "03:00"
+        case 4:
+            time = "04:00"
+        default:
+            time = "00:00"
+        }
+        Analytics.logEvent("app_newDayTimeSet", parameters: ["time" : time])
+    }
+    func is24Hour() -> Bool {
+        let dateFormat = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)!
+        return dateFormat.firstIndex(of: "a") == nil
+    }
     
     @objc func panGestureRecognizerAction(sender: UIPanGestureRecognizer) {
         let translation = sender.translation(in: view)
@@ -206,5 +277,106 @@ class SettingsView: UIViewController {
                 }
             }
         }
+    }
+}
+
+
+class pickStartNewDay: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    var timeOptions24 = [String]()
+    var timeOptions12 = [String]()
+    
+    var currentOption = 0
+    
+    weak var delegate: SettingsView?
+    var UIPicker = UIPickerView()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "app.background")
+        
+        let title = UILabel()
+        title.text = "Choose when to start a new day"
+        title.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.textAlignment = .center
+        title.numberOfLines = 1
+        view.addSubview(title)
+        
+        title.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        title.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
+        title.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
+        
+        let explanation = UILabel()
+        explanation.text = "Your habits will be reset at the start of a new day."
+        explanation.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
+        explanation.textColor = UIColor.systemGray
+        explanation.translatesAutoresizingMaskIntoConstraints = false
+        explanation.textAlignment = .left
+        explanation.numberOfLines = 0
+        view.addSubview(explanation)
+        
+        explanation.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 20).isActive = true
+        explanation.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+        explanation.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+        
+        UIPicker.delegate = self as UIPickerViewDelegate
+        UIPicker.dataSource = self as UIPickerViewDataSource
+        UIPicker.backgroundColor = .systemGray6
+        UIPicker.layer.cornerRadius = 10
+        UIPicker.selectRow(currentOption, inComponent: 0, animated: false)
+        UIPicker.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(UIPicker)
+        
+        UIPicker.topAnchor.constraint(equalTo: explanation.bottomAnchor, constant: 20).isActive = true
+        UIPicker.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        UIPicker.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        
+        let confirmButton = UIButton()
+        confirmButton.layer.cornerRadius = 10
+        confirmButton.setTitle("Confirm", for: .normal)
+        confirmButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
+        confirmButton.backgroundColor = .systemTeal
+        confirmButton.tintColor = .white
+        confirmButton.center = view.center
+        confirmButton.translatesAutoresizingMaskIntoConstraints = false
+        confirmButton.addTarget(self, action: #selector(confirm), for: .touchUpInside)
+        
+        view.addSubview(confirmButton)
+        
+        confirmButton.topAnchor.constraint(equalTo: UIPicker.bottomAnchor, constant: 20).isActive = true
+        confirmButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 100).isActive = true
+        confirmButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -100).isActive = true
+        confirmButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+    }
+
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return 5
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if (is24Hour()) {
+            return timeOptions24[row]
+        } else {
+            return timeOptions12[row]
+        }
+    }
+    
+    func is24Hour() -> Bool {
+        let dateFormat = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)!
+        return dateFormat.firstIndex(of: "a") == nil
+    }
+    @objc func confirm() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        delegate?.currentTimeSelected = UIPicker.selectedRow(inComponent: 0)
+        delegate?.changeStartNewDay(save: true)
     }
 }

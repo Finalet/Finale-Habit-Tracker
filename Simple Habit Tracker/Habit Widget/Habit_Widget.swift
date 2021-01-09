@@ -11,7 +11,7 @@ import Intents
 
 struct Provider: IntentTimelineProvider {
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), name: "", habits: [""], icons: [""], streak: [0], configuration: ConfigurationIntent())
+        SimpleEntry(date: Date(), name: "", habits: [""], icons: [""], streak: [0], doneToday: [false], configuration: ConfigurationIntent())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
@@ -20,8 +20,9 @@ struct Provider: IntentTimelineProvider {
         let icons = userDefaults?.stringArray(forKey: "FINALE_DEV_APP_widgetCacheIcons") ?? [""]
         let name = userDefaults?.string(forKey: "FINALE_DEV_APP_widgetCacheName") ?? ""
         let streak = userDefaults?.array(forKey: "FINALE_DEV_APP_widgetCacheStreak") as! [Int]
+        let doneToday = userDefaults?.array(forKey: "FINALE_DEV_APP_widgetCacheDoneTodays") as! [Bool]
         
-        let entry = SimpleEntry(date: Date(), name: name, habits: habits, icons: icons, streak: streak, configuration: configuration)
+        let entry = SimpleEntry(date: Date(), name: name, habits: habits, icons: icons, streak: streak, doneToday: doneToday, configuration: configuration)
         completion(entry)
     }
 
@@ -33,14 +34,24 @@ struct Provider: IntentTimelineProvider {
         let icons = userDefaults?.stringArray(forKey: "FINALE_DEV_APP_widgetCacheIcons") ?? [""]
         let name = userDefaults?.string(forKey: "FINALE_DEV_APP_widgetCacheName") ?? ""
         let streak = userDefaults?.array(forKey: "FINALE_DEV_APP_widgetCacheStreak") as! [Int]
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, name: name, habits: habits, icons: icons, streak: streak, configuration: configuration)
-            entries.append(entry)
-        }
+        let doneToday = userDefaults?.array(forKey: "FINALE_DEV_APP_widgetCacheDoneTodays") as! [Bool]
 
+        let currentDate = Date()
+        let initialEntry = SimpleEntry(date: currentDate, name: name, habits: habits, icons: icons, streak: streak, doneToday: doneToday, configuration: configuration)
+        entries.append(initialEntry)
+        
+        let doneTodayReset = [Bool](repeating: false, count: doneToday.count)
+        var streakReset = streak
+        for i in 0..<streakReset.count {
+            if (streakReset[i] > 0 && !doneToday[i])  {
+                streakReset[i] = 0
+            }
+        }
+        let midnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
+        let resetDate = Calendar.current.date(byAdding: .day, value: 1, to: midnight)!
+        let resetEntry = SimpleEntry(date: resetDate, name: name, habits: habits, icons: icons, streak: streakReset, doneToday: doneTodayReset, configuration: configuration)
+        entries.append(resetEntry)
+        
         let timeline = Timeline(entries: entries, policy: .atEnd)
         completion(timeline)
     }
@@ -52,6 +63,7 @@ struct SimpleEntry: TimelineEntry {
     let habits: [String]
     let icons: [String]
     let streak: [Int]
+    let doneToday: [Bool]
     let configuration: ConfigurationIntent
 }
 
@@ -70,8 +82,15 @@ struct Habit_WidgetEntryView : View {var entry: Provider.Entry
                 VStack (alignment: .leading, spacing: 6, content: {
                     ForEach(0 ..< entry.habits.count) { index in
                         HStack {
-                            Image(entry.icons[index]).resizable()
-                                .frame(width: 16, height: 16, alignment: .center)
+                            if (entry.doneToday[index]) {
+                                Image(systemName: "checkmark.circle").resizable()
+                                    .frame(width: 16, height: 16, alignment: .center)
+                                    .foregroundColor(.green)
+                            } else {
+                                Image(entry.icons[index]).resizable()
+                                    .frame(width: 16, height: 16, alignment: .center)
+                                    .foregroundColor(.green)
+                            }                                
                             Text(entry.habits[index])
                                 .font(.system(size: 12))
                                 .frame(height: 16)
@@ -141,7 +160,7 @@ struct Habit_Widget: Widget {
 
 struct Habit_Widget_Previews: PreviewProvider {
     static var previews: some View {
-        Habit_WidgetEntryView(entry: SimpleEntry(date: Date(), name: "", habits: [], icons: [], streak: [], configuration: ConfigurationIntent()))
+        Habit_WidgetEntryView(entry: SimpleEntry(date: Date(), name: "", habits: [], icons: [], streak: [], doneToday: [], configuration: ConfigurationIntent()))
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
 }

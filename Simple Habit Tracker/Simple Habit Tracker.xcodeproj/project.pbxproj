@@ -10,6 +10,8 @@
 		0187129CE1876FAB0B5D98BE /* Pods_Simple_Habit_Tracker_Simple_Habit_TrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37011245DB9486154EEC81A4 /* Pods_Simple_Habit_Tracker_Simple_Habit_TrackerUITests.framework */; };
 		0D8A9FDADCFA15A729D74135 /* Pods_Habit_WidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C85F613899676357D7203639 /* Pods_Habit_WidgetExtension.framework */; };
 		8802ED752585AB2200ABE4FF /* Images.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8802ED742585AB2200ABE4FF /* Images.bundle */; };
+		8806A39F25A6361200D5797D /* DEBUG_CHEAT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8806A39E25A6361200D5797D /* DEBUG_CHEAT.xib */; };
+		8806A3A725A63AC200D5797D /* DEBUG_CHEAT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806A3A625A63AC200D5797D /* DEBUG_CHEAT.swift */; };
 		8821E633259FCE4A00A95261 /* AddHabitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8821E632259FCE4A00A95261 /* AddHabitView.xib */; };
 		8821E63D259FD0D200A95261 /* scrollviewtest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8821E63C259FD0D200A95261 /* scrollviewtest.xib */; };
 		8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8845133225803337006F8BD0 /* ColorViewCell.xib */; };
@@ -33,6 +35,8 @@
 		88784228259BBEAF00460645 /* dark_icon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784216259BBEAF00460645 /* dark_icon-29@3x.png */; };
 		88784229259BBEAF00460645 /* dark_icon-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784217259BBEAF00460645 /* dark_icon-20@2x.png */; };
 		8878422A259BBEAF00460645 /* dark_icon-83.5@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784218259BBEAF00460645 /* dark_icon-83.5@2x~ipad.png */; };
+		888CD50E25A3CF71007B237C /* tickSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 888CD50D25A3CF71007B237C /* tickSound.mp3 */; };
+		888CD51D25A3D1FA007B237C /* GSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CD51C25A3D1FA007B237C /* GSAudio.swift */; };
 		889A69B5257EC5360016D3D0 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A69B4257EC5360016D3D0 /* PresentationController.swift */; };
 		889A69BF257EC6B50016D3D0 /* AddHabitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A69BE257EC6B50016D3D0 /* AddHabitView.swift */; };
 		88A2AE032585D207005D7753 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88A2AE022585D207005D7753 /* WidgetKit.framework */; };
@@ -57,12 +61,22 @@
 		88CD2CD2259AD84700C06B13 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CD2CD1259AD84700C06B13 /* TutorialView.xib */; };
 		88D11F7E257B1CD30040C61F /* MTSlideToOpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */; };
 		88FC5171259D66C50045B20A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88FC5170259D66C50045B20A /* GoogleService-Info.plist */; };
+		88FF493025A21B3F007AC72A /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 88FF492E25A21B3F007AC72A /* Interface.storyboard */; };
+		88FF493225A21B40007AC72A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88FF493125A21B40007AC72A /* Assets.xcassets */; };
+		88FF493925A21B40007AC72A /* Habit Watch App Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 88FF493825A21B40007AC72A /* Habit Watch App Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		88FF493E25A21B40007AC72A /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FF493D25A21B40007AC72A /* InterfaceController.swift */; };
+		88FF494025A21B40007AC72A /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FF493F25A21B40007AC72A /* ExtensionDelegate.swift */; };
+		88FF494225A21B40007AC72A /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FF494125A21B40007AC72A /* NotificationController.swift */; };
+		88FF494425A21B40007AC72A /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FF494325A21B40007AC72A /* ComplicationController.swift */; };
+		88FF494625A21B41007AC72A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 88FF494525A21B41007AC72A /* Assets.xcassets */; };
+		88FF496925A2304C007AC72A /* RowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FF496825A2304C007AC72A /* RowController.swift */; };
+		88FF499B25A28C0B007AC72A /* ExpandedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88FF499A25A28C0B007AC72A /* ExpandedView.swift */; };
 		AA8A63B6C78F6DC896F7B437 /* Pods_Simple_Habit_TrackerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 900B18439F79217A30D65177 /* Pods_Simple_Habit_TrackerTests.framework */; };
 		B95E7DDAA42A921A1A2E0507 /* Pods_Simple_Habit_Tracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 60AACA2C029DE4F90E9C2309 /* Pods_Simple_Habit_Tracker.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		88A2AE0F2585D209005D7753 /* PBXContainerItemProxy */ = {
+		888CD57625A3FAEE007B237C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 88B5594B25785E4B00D64D1A /* Project object */;
 			proxyType = 1;
@@ -83,6 +97,13 @@
 			remoteGlobalIDString = 88B5595225785E4B00D64D1A;
 			remoteInfo = "Simple Habit Tracker";
 		};
+		88FF493A25A21B40007AC72A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88B5594B25785E4B00D64D1A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 88FF493725A21B40007AC72A;
+			remoteInfo = "Habit Watch App Extension";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -97,6 +118,27 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		88FF494C25A21B41007AC72A /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88FF494F25A21B41007AC72A /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				88FF493925A21B40007AC72A /* Habit Watch App Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +149,8 @@
 		60AACA2C029DE4F90E9C2309 /* Pods_Simple_Habit_Tracker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simple_Habit_Tracker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F58EC629994C7182253E577 /* Pods-Simple Habit Tracker-Simple Habit TrackerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Simple Habit Tracker-Simple Habit TrackerUITests.release.xcconfig"; path = "Target Support Files/Pods-Simple Habit Tracker-Simple Habit TrackerUITests/Pods-Simple Habit Tracker-Simple Habit TrackerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		8802ED742585AB2200ABE4FF /* Images.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Images.bundle; sourceTree = "<group>"; };
+		8806A39E25A6361200D5797D /* DEBUG_CHEAT.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DEBUG_CHEAT.xib; sourceTree = "<group>"; };
+		8806A3A625A63AC200D5797D /* DEBUG_CHEAT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEBUG_CHEAT.swift; sourceTree = "<group>"; };
 		8821E632259FCE4A00A95261 /* AddHabitView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddHabitView.xib; sourceTree = "<group>"; };
 		8821E63C259FD0D200A95261 /* scrollviewtest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = scrollviewtest.xib; sourceTree = "<group>"; };
 		8845133225803337006F8BD0 /* ColorViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorViewCell.xib; sourceTree = "<group>"; };
@@ -130,6 +174,9 @@
 		88784216259BBEAF00460645 /* dark_icon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-29@3x.png"; sourceTree = "<group>"; };
 		88784217259BBEAF00460645 /* dark_icon-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-20@2x.png"; sourceTree = "<group>"; };
 		88784218259BBEAF00460645 /* dark_icon-83.5@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-83.5@2x~ipad.png"; sourceTree = "<group>"; };
+		888CD50D25A3CF71007B237C /* tickSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tickSound.mp3; sourceTree = "<group>"; };
+		888CD51525A3D11C007B237C /* Habit Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Watch App.entitlements"; sourceTree = "<group>"; };
+		888CD51C25A3D1FA007B237C /* GSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAudio.swift; sourceTree = "<group>"; };
 		889A69B4257EC5360016D3D0 /* PresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationController.swift; sourceTree = "<group>"; };
 		889A69BE257EC6B50016D3D0 /* AddHabitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHabitView.swift; sourceTree = "<group>"; };
 		88A2AE002585D207005D7753 /* Habit WidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Habit WidgetExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,6 +209,21 @@
 		88CD2CD1259AD84700C06B13 /* TutorialView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTSlideToOpenView.swift; sourceTree = "<group>"; };
 		88FC5170259D66C50045B20A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		88FF492C25A21B3F007AC72A /* Habit Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Habit Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		88FF492F25A21B3F007AC72A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		88FF493125A21B40007AC72A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		88FF493325A21B40007AC72A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88FF493825A21B40007AC72A /* Habit Watch App Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Habit Watch App Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		88FF493D25A21B40007AC72A /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
+		88FF493F25A21B40007AC72A /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		88FF494125A21B40007AC72A /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
+		88FF494325A21B40007AC72A /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		88FF494525A21B41007AC72A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		88FF494725A21B41007AC72A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		88FF494825A21B41007AC72A /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
+		88FF496125A21DCC007AC72A /* Habit Watch App Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Watch App Extension.entitlements"; sourceTree = "<group>"; };
+		88FF496825A2304C007AC72A /* RowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowController.swift; sourceTree = "<group>"; };
+		88FF499A25A28C0B007AC72A /* ExpandedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExpandedView.swift; path = ../../../../Documents/ExpandedView.swift; sourceTree = "<group>"; };
 		900B18439F79217A30D65177 /* Pods_Simple_Habit_TrackerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Simple_Habit_TrackerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AEA62040D1D65AE887DD58FF /* Pods-Habit WidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Habit WidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-Habit WidgetExtension/Pods-Habit WidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		C85F613899676357D7203639 /* Pods_Habit_WidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Habit_WidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +267,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		88FF493525A21B40007AC72A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -221,6 +290,14 @@
 				2FFC22E950F0FEAE82C4B755 /* Pods-Simple Habit TrackerTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		888CD4E425A3C774007B237C /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				888CD50D25A3CF71007B237C /* tickSound.mp3 */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		889A05A12590422300A7EABF /* Alternate Icons */ = {
@@ -280,6 +357,8 @@
 				88B5596C25785E4D00D64D1A /* Simple Habit TrackerTests */,
 				88B5597725785E4D00D64D1A /* Simple Habit TrackerUITests */,
 				88A2AE062585D207005D7753 /* Habit Widget */,
+				88FF492D25A21B3F007AC72A /* Habit Watch App */,
+				88FF493C25A21B40007AC72A /* Habit Watch App Extension */,
 				88A2AE012585D207005D7753 /* Frameworks */,
 				88B5595425785E4B00D64D1A /* Products */,
 				63E48696AD4D099CBF0EAE70 /* Pods */,
@@ -293,6 +372,8 @@
 				88B5596925785E4D00D64D1A /* Simple Habit TrackerTests.xctest */,
 				88B5597425785E4D00D64D1A /* Simple Habit TrackerUITests.xctest */,
 				88A2AE002585D207005D7753 /* Habit WidgetExtension.appex */,
+				88FF492C25A21B3F007AC72A /* Habit Watch App.app */,
+				88FF493825A21B40007AC72A /* Habit Watch App Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -300,6 +381,7 @@
 		88B5595525785E4B00D64D1A /* Simple Habit Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				888CD4E425A3C774007B237C /* Sounds */,
 				88FC5170259D66C50045B20A /* GoogleService-Info.plist */,
 				889A05A12590422300A7EABF /* Alternate Icons */,
 				88B970992586E01F00084C6E /* Simple Habit Tracker.entitlements */,
@@ -313,6 +395,8 @@
 				88B5596425785E4C00D64D1A /* Info.plist */,
 				8847771D2578963700999250 /* UIColor+Components.swift */,
 				88B6C18C257B27580045D022 /* ConfettiType.swift */,
+				8806A39E25A6361200D5797D /* DEBUG_CHEAT.xib */,
+				8806A3A625A63AC200D5797D /* DEBUG_CHEAT.swift */,
 				889A69B4257EC5360016D3D0 /* PresentationController.swift */,
 				88A5320525901BE5008BD5E9 /* SettingsView.xib */,
 				8821E632259FCE4A00A95261 /* AddHabitView.xib */,
@@ -324,6 +408,7 @@
 				8845133A258038A1006F8BD0 /* Colors.xcassets */,
 				88CD2CD1259AD84700C06B13 /* TutorialView.xib */,
 				88CD2CC7259AD35500C06B13 /* TutorialView.swift */,
+				888CD51C25A3D1FA007B237C /* GSAudio.swift */,
 			);
 			path = "Simple Habit Tracker";
 			sourceTree = "<group>";
@@ -344,6 +429,34 @@
 				88B5597A25785E4D00D64D1A /* Info.plist */,
 			);
 			path = "Simple Habit TrackerUITests";
+			sourceTree = "<group>";
+		};
+		88FF492D25A21B3F007AC72A /* Habit Watch App */ = {
+			isa = PBXGroup;
+			children = (
+				888CD51525A3D11C007B237C /* Habit Watch App.entitlements */,
+				88FF492E25A21B3F007AC72A /* Interface.storyboard */,
+				88FF493125A21B40007AC72A /* Assets.xcassets */,
+				88FF493325A21B40007AC72A /* Info.plist */,
+			);
+			path = "Habit Watch App";
+			sourceTree = "<group>";
+		};
+		88FF493C25A21B40007AC72A /* Habit Watch App Extension */ = {
+			isa = PBXGroup;
+			children = (
+				88FF496125A21DCC007AC72A /* Habit Watch App Extension.entitlements */,
+				88FF493D25A21B40007AC72A /* InterfaceController.swift */,
+				88FF493F25A21B40007AC72A /* ExtensionDelegate.swift */,
+				88FF494125A21B40007AC72A /* NotificationController.swift */,
+				88FF494325A21B40007AC72A /* ComplicationController.swift */,
+				88FF494525A21B41007AC72A /* Assets.xcassets */,
+				88FF494725A21B41007AC72A /* Info.plist */,
+				88FF494825A21B41007AC72A /* PushNotificationPayload.apns */,
+				88FF496825A2304C007AC72A /* RowController.swift */,
+				88FF499A25A28C0B007AC72A /* ExpandedView.swift */,
+			);
+			path = "Habit Watch App Extension";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,11 +491,12 @@
 				88A2AE122585D209005D7753 /* Embed App Extensions */,
 				986D72E2C75E20444A52B0DB /* [CP] Embed Pods Frameworks */,
 				88FC5176259D68130045B20A /* ShellScript */,
+				88FF494C25A21B41007AC72A /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				88A2AE102585D209005D7753 /* PBXTargetDependency */,
+				888CD57725A3FAEE007B237C /* PBXTargetDependency */,
 			);
 			name = "Simple Habit Tracker";
 			productName = "Simple Habit Tracker";
@@ -428,6 +542,40 @@
 			productReference = 88B5597425785E4D00D64D1A /* Simple Habit TrackerUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		88FF492B25A21B3F007AC72A /* Habit Watch App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88FF495325A21B41007AC72A /* Build configuration list for PBXNativeTarget "Habit Watch App" */;
+			buildPhases = (
+				88FF492A25A21B3F007AC72A /* Resources */,
+				88FF494F25A21B41007AC72A /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				88FF493B25A21B40007AC72A /* PBXTargetDependency */,
+			);
+			name = "Habit Watch App";
+			productName = "Habit Watch App";
+			productReference = 88FF492C25A21B3F007AC72A /* Habit Watch App.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		88FF493725A21B40007AC72A /* Habit Watch App Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88FF495225A21B41007AC72A /* Build configuration list for PBXNativeTarget "Habit Watch App Extension" */;
+			buildPhases = (
+				88FF493425A21B40007AC72A /* Sources */,
+				88FF493525A21B40007AC72A /* Frameworks */,
+				88FF493625A21B40007AC72A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Habit Watch App Extension";
+			productName = "Habit Watch App Extension";
+			productReference = 88FF493825A21B40007AC72A /* Habit Watch App Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -451,6 +599,12 @@
 						CreatedOnToolsVersion = 12.2;
 						TestTargetID = 88B5595225785E4B00D64D1A;
 					};
+					88FF492B25A21B3F007AC72A = {
+						CreatedOnToolsVersion = 12.2;
+					};
+					88FF493725A21B40007AC72A = {
+						CreatedOnToolsVersion = 12.2;
+					};
 				};
 			};
 			buildConfigurationList = 88B5594E25785E4B00D64D1A /* Build configuration list for PBXProject "Simple Habit Tracker" */;
@@ -470,6 +624,8 @@
 				88B5596825785E4D00D64D1A /* Simple Habit TrackerTests */,
 				88B5597325785E4D00D64D1A /* Simple Habit TrackerUITests */,
 				88A2ADFF2585D207005D7753 /* Habit WidgetExtension */,
+				88FF492B25A21B3F007AC72A /* Habit Watch App */,
+				88FF493725A21B40007AC72A /* Habit Watch App Extension */,
 			);
 		};
 /* End PBXProject section */
@@ -513,9 +669,11 @@
 				8878421D259BBEAF00460645 /* dark_icon@3x.png in Resources */,
 				88784227259BBEAF00460645 /* dark_icon-40@2x~ipad.png in Resources */,
 				88784225259BBEAF00460645 /* dark_icon-40~ipad.png in Resources */,
+				8806A39F25A6361200D5797D /* DEBUG_CHEAT.xib in Resources */,
 				88B5595E25785E4B00D64D1A /* Main.storyboard in Resources */,
 				8821E633259FCE4A00A95261 /* AddHabitView.xib in Resources */,
 				8878421E259BBEAF00460645 /* dark_icon~ipad.png in Resources */,
+				888CD50E25A3CF71007B237C /* tickSound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,6 +688,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88FF492A25A21B3F007AC72A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88FF493225A21B40007AC72A /* Assets.xcassets in Resources */,
+				88FF493025A21B3F007AC72A /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		88FF493625A21B40007AC72A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88FF494625A21B41007AC72A /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,7 +874,9 @@
 				88A5321025901D9A008BD5E9 /* SettingsView.swift in Sources */,
 				88B5595725785E4B00D64D1A /* AppDelegate.swift in Sources */,
 				88CD2CC8259AD35500C06B13 /* TutorialView.swift in Sources */,
+				888CD51D25A3D1FA007B237C /* GSAudio.swift in Sources */,
 				8847771E2578963700999250 /* UIColor+Components.swift in Sources */,
+				8806A3A725A63AC200D5797D /* DEBUG_CHEAT.swift in Sources */,
 				88B5595925785E4B00D64D1A /* SceneDelegate.swift in Sources */,
 				88B6C18D257B27580045D022 /* ConfettiType.swift in Sources */,
 			);
@@ -721,13 +898,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		88FF493425A21B40007AC72A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88FF496925A2304C007AC72A /* RowController.swift in Sources */,
+				88FF494225A21B40007AC72A /* NotificationController.swift in Sources */,
+				88FF494425A21B40007AC72A /* ComplicationController.swift in Sources */,
+				88FF494025A21B40007AC72A /* ExtensionDelegate.swift in Sources */,
+				88FF493E25A21B40007AC72A /* InterfaceController.swift in Sources */,
+				88FF499B25A28C0B007AC72A /* ExpandedView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		88A2AE102585D209005D7753 /* PBXTargetDependency */ = {
+		888CD57725A3FAEE007B237C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 88A2ADFF2585D207005D7753 /* Habit WidgetExtension */;
-			targetProxy = 88A2AE0F2585D209005D7753 /* PBXContainerItemProxy */;
+			targetProxy = 888CD57625A3FAEE007B237C /* PBXContainerItemProxy */;
 		};
 		88B5596B25785E4D00D64D1A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -738,6 +928,11 @@
 			isa = PBXTargetDependency;
 			target = 88B5595225785E4B00D64D1A /* Simple Habit Tracker */;
 			targetProxy = 88B5597525785E4D00D64D1A /* PBXContainerItemProxy */;
+		};
+		88FF493B25A21B40007AC72A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 88FF493725A21B40007AC72A /* Habit Watch App Extension */;
+			targetProxy = 88FF493A25A21B40007AC72A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -758,6 +953,14 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		88FF492E25A21B3F007AC72A /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88FF492F25A21B3F007AC72A /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -769,7 +972,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Habit WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = AYPPAXMRMG;
 				INFOPLIST_FILE = "Habit Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -778,7 +981,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.031;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -795,7 +998,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Habit WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = AYPPAXMRMG;
 				INFOPLIST_FILE = "Habit Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -804,7 +1007,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.031;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -940,14 +1143,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Simple Habit Tracker/Simple Habit Tracker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = AYPPAXMRMG;
 				INFOPLIST_FILE = "Simple Habit Tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.031;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -964,14 +1167,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Simple Habit Tracker/Simple Habit Tracker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = AYPPAXMRMG;
 				INFOPLIST_FILE = "Simple Habit Tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.02;
+				MARKETING_VERSION = 1.031;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1067,6 +1270,102 @@
 			};
 			name = Release;
 		};
+		88FF494D25A21B41007AC72A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Watch App/Habit Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = AYPPAXMRMG;
+				IBSC_MODULE = Habit_Watch_App_Extension;
+				INFOPLIST_FILE = "Habit Watch App/Info.plist";
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Debug;
+		};
+		88FF494E25A21B41007AC72A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Habit Watch App/Habit Watch App.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = AYPPAXMRMG;
+				IBSC_MODULE = Habit_Watch_App_Extension;
+				INFOPLIST_FILE = "Habit Watch App/Info.plist";
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker.watchkitapp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Release;
+		};
+		88FF495025A21B41007AC72A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "Habit Watch App Extension/Habit Watch App Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = AYPPAXMRMG;
+				INFOPLIST_FILE = "Habit Watch App Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Debug;
+		};
+		88FF495125A21B41007AC72A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "Habit Watch App Extension/Habit Watch App Extension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 3;
+				DEVELOPMENT_TEAM = AYPPAXMRMG;
+				INFOPLIST_FILE = "Habit Watch App Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker.watchkitapp.watchkitextension";
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 7.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1111,6 +1410,24 @@
 			buildConfigurations = (
 				88B5598425785E4D00D64D1A /* Debug */,
 				88B5598525785E4D00D64D1A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88FF495225A21B41007AC72A /* Build configuration list for PBXNativeTarget "Habit Watch App Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88FF495025A21B41007AC72A /* Debug */,
+				88FF495125A21B41007AC72A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88FF495325A21B41007AC72A /* Build configuration list for PBXNativeTarget "Habit Watch App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88FF494D25A21B41007AC72A /* Debug */,
+				88FF494E25A21B41007AC72A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

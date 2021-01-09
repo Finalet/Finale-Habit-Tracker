@@ -18,7 +18,7 @@ class PresentationController: UIPresentationController {
   override var frameOfPresentedViewInContainerView: CGRect {
     var height: CGFloat = 0.8
     if (presentedViewController.nibName == "SettingsView") {
-        height = 0.4
+        height = 0.45
     }
     
     return CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * (1-height)),

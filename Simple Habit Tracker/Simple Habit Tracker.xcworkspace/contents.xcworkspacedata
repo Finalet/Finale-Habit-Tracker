@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Simple Habit Tracker.xcodeproj">
+      location = "group:/Users/finale/GitHub/Habit-Tracker/Simple Habit Tracker/Simple Habit Tracker.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

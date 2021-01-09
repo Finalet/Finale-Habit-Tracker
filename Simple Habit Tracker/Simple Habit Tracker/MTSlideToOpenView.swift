@@ -15,7 +15,6 @@ import UIKit
 protocol MTSlideToOpenSwiftDelegate: class {
     func lerpBackgroundColor (progress: CGFloat, habit: Habit)
     func resetBackgroundColor (sender: MTSlideToOpenView, progress: CGFloat, habit: Habit, done: Bool, showLabel: Bool)
-    func startColorLerp()
 }
 
 @objcMembers public class MTSlideToOpenView: UIView {
@@ -86,6 +85,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
     // MARK: Public properties
     public weak var delegate: MTSlideToOpenDelegate?
     weak var swiftDelegate: MTSlideToOpenSwiftDelegate?
+    weak var ViewControllerDelegate: ViewController?
     public var animationVelocity: Double = 0.2
     public var sliderViewTopDistance: CGFloat = 8.0 {
         didSet {
@@ -301,7 +301,7 @@ protocol MTSlideToOpenSwiftDelegate: class {
         
         switch sender.state {
         case .began:
-            swiftDelegate?.startColorLerp()
+            ViewControllerDelegate?.startColorLerp()
             if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_haptics") == nil) {
                 hapticsEnabled = true
                 UserDefaults.standard.set(hapticsEnabled, forKey: "FINALE_DEV_APP_haptics")

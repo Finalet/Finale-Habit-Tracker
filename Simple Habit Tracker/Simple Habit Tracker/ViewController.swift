@@ -9,9 +9,12 @@ import UIKit
 import WidgetKit
 import Foundation
 import Firebase
+import WatchConnectivity
+import AVFoundation
+import StoreKit
 
-class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwiftDelegate, AddHabitDelegate {
-
+class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwiftDelegate, AddHabitDelegate { //WATCH wcsessiondelegate
+    
     @IBOutlet weak var addButtonUI: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
@@ -30,13 +33,16 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     @IBOutlet weak var hiText: UILabel!
     @IBOutlet weak var suggestionLabel: UILabel!
     
+    // var wcSession : WCSession? WATCH
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         initializeTable()
         initializedAddButton()
         initializeTitle()
-
+        GSAudio.sharedInstance.preloadSound(soundFileName: "tickSound")
+        
         self.hideKeyboardWhenTappedAround()
         let holdRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(openSettings))
         view.addGestureRecognizer(holdRecognizer)
@@ -49,11 +55,26 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         
         NotificationCenter.default.addObserver(self, selector: #selector(appWentToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        
-        loadInterface()
+                
+        // watch() WATCH
+    }
+    
+    func watch () {
+        if(WCSession.isSupported()) {
+            //wcSession = WCSession.default WATCH
+            //wcSession?.delegate = self
+            //wcSession?.activate()
+        }
+
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.1) {
+            //self.watch_updateName()
+            //self.watch_updateTable()
+            //self.watch_updateLastDay()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        loadInterface()
         let tutorialShown = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_tutorialDone")
         if (tutorialShown != true) {
             presentTutorial()
@@ -76,16 +97,20 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         switch i {
         case 0:
             UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .unspecified
-            self.overrideUserInterfaceStyle = .unspecified
+            view.overrideUserInterfaceStyle = .unspecified
+            overrideUserInterfaceStyle = .unspecified
         case 1:
             UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .light
-            self.overrideUserInterfaceStyle = .light
+            view.overrideUserInterfaceStyle = .light
+            overrideUserInterfaceStyle = .light
         case 2:
             UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .dark
-            self.overrideUserInterfaceStyle = .dark
+            view.overrideUserInterfaceStyle = .dark
+            overrideUserInterfaceStyle = .dark
         default:
             UIApplication.shared.keyWindow?.overrideUserInterfaceStyle = .unspecified
-            self.overrideUserInterfaceStyle = .unspecified
+            view.overrideUserInterfaceStyle = .unspecified
+            overrideUserInterfaceStyle = .unspecified
         }
     }
     
@@ -99,6 +124,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         var habitsNames = [String]()
         var habitsIcons = [String]()
         var habitsStreaks = [Int]()
+        var habitsDoneTodays = [Bool]()
         for habit in habits {
             if (habitsNames.count >= 5) {
                 break
@@ -106,11 +132,13 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             habitsNames.append(habit.name)
             habitsIcons.append(habit.icon.replacingOccurrences(of: ".png", with: ""))
             habitsStreaks.append(habit.streakCount)
+            habitsDoneTodays.append(habit.doneToday)
         }
         userDefaults?.setValue(habitsNames, forKey: "FINALE_DEV_APP_widgetCache")
         userDefaults?.setValue(habitsIcons, forKey: "FINALE_DEV_APP_widgetCacheIcons")
         userDefaults?.setValue(nameTextField.text, forKey: "FINALE_DEV_APP_widgetCacheName")
         userDefaults?.setValue(habitsStreaks, forKey: "FINALE_DEV_APP_widgetCacheStreak")
+        userDefaults?.setValue(habitsDoneTodays, forKey: "FINALE_DEV_APP_widgetCacheDoneTodays")
         if #available(iOS 14.0, *) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -166,6 +194,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         slide.backgroundColor = UIColor.clear
         slide.delegate = self
         slide.swiftDelegate = self
+        slide.ViewControllerDelegate = self
         slide.labelText = habit.name
         slide.textLabel.textColor = .white
         slide.textLabel.font = slide.textLabel.font.withSize(18)
@@ -221,6 +250,13 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             let generator = UINotificationFeedbackGenerator()
                 generator.notificationOccurred(.error)
         }
+        var soundsEnabled = true
+        if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_sounds") != nil) {
+            soundsEnabled = UserDefaults.standard.bool(forKey: "FINALE_DEV_APP_sounds")
+        }
+        if (soundsEnabled) {
+            GSAudio.sharedInstance.playSound(soundFileName: "tickSound")
+        }
         
         for x in 0..<habits.count {
             if (habits[x] == sender.habit) {
@@ -229,9 +265,12 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
                     habits[x].streakCount += 1
                 }
                 habits[x].doneToday = true
-                //habits[x].lastDone = Calendar.current.component(.minute, from: Date())
                 habits[x].lastDone = Date.today 
                 sender.habit = habits[x]
+                
+                if (habits[x].count >= 3) {
+                    SKStoreReviewController.requestReview()
+                }
                 break
             }
         }
@@ -326,10 +365,9 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         tableView.reloadData()
         saveHabits()
     }
-    func addStreak (index: Int) {
-        let i = Int.random(in: 3...10)
-        habits[index].streakCount += i
-        habits[index].count += i
+    func fixHabitNumbers (habitIndex: Int, totalDays: Int, streakCount: Int) {
+        habits[habitIndex].count = totalDays
+        habits[habitIndex].streakCount = streakCount
         tableView.reloadData()
         saveHabits()
     }
@@ -377,7 +415,6 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     }
     func addHabit(name: String, color: String, icon: String, notificationTime: String) {
         let newHabit = Habit(name: name, color: color, icon: icon, count: 0, streakCount: 0, doneToday: false, lastDone: Date.today, notificationTime: notificationTime)
-        //let newHabit = Habit(name: name, color: color, icon: icon, count: 0, streakCount: 0, doneToday: false, lastDone: Calendar.current.component(.minute, from: Date()))
         habits.append(newHabit)
         
         sliders.removeAll()
@@ -437,25 +474,20 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             
             if reduceVar <= 0 {
                 timer.invalidate()
+                self.view.backgroundColor = UIColor(named: "app.background")
             }
         }
     }
     
     func checkDate () {
         if (lastDay != Date().dayNumberOfWeek()) {
-        //if (lastDay != Calendar.current.component(.minute, from: Date())) {
             for x in 0..<habits.count {
-                print(habits[x].lastDone)
-                print(Date.today)
-                print(Date.yesterday)
                 if (habits[x].doneToday == true) {
                     sliders[x].resetStateWithAnimation(true)
                     habits[x].doneToday = false
                     sliders[x].habit = habits[x]
                 }
                 if (Calendar.current.isDateInYesterday(habits[x].lastDone) != true && Calendar.current.isDateInToday(habits[x].lastDone) != true && Calendar.current.isDateInTomorrow(habits[x].lastDone) != true) {
-                //if (habits[x].lastDone != Date.yesterday && habits[x].lastDone != Date.today && habits[x].lastDone != Date.tomorrow) {
-                //if (habits[x].lastDone != Calendar.current.component(.minute, from: Date()) - 1 && habits[x].lastDone != Calendar.current.component(.minute, from: Date())) {
                     for i in 0..<sliders.count {
                         if (sliders[i].habit == habits[x]) {
                             sliders[i].streakCountText.text = "0"
@@ -468,7 +500,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
                 }
             }
             lastDay = Date().dayNumberOfWeek()!
-            //lastDay = Calendar.current.component(.minute, from: Date())
+            // watch_updateLastDay() WATCH
             UserDefaults.standard.set(lastDay, forKey: "FINALE_DEV_APP_lastDay")
             saveHabits()
         }
@@ -511,6 +543,103 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             UISelectionFeedbackGenerator().selectionChanged()
         }
     }
+    /*
+    //MARK: Watch stuff
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        
+    }
+
+    func watch_updateName () {
+        do {
+            try wcSession?.updateApplicationContext(["name" : nameTextField.text!])
+        } catch {
+            print(error)
+        }
+    }
+    func watch_updateLastDay() {
+        do {
+            try wcSession?.updateApplicationContext(["lastDay" : lastDay])
+        } catch {
+            print(error)
+        }
+    }
+    
+    func watch_updateTable () {
+        var habitsNames = [String]()
+        var habitsIcons = [String]()
+        var habitsCounts = [Int]()
+        var habitsStreaks = [Int]()
+        var habitsDoneTodays = [Bool]()
+        var habitsLastDones = [Date]()
+        
+        for i in 0..<habits.count {
+            habitsNames.append(habits[i].name)
+            habitsIcons.append(habits[i].icon)
+            habitsCounts.append(habits[i].count)
+            habitsStreaks.append(habits[i].streakCount)
+            habitsDoneTodays.append(habits[i].doneToday)
+            habitsLastDones.append(habits[i].lastDone)
+        }
+        wcSession?.transferUserInfo(["habitsNames" : habitsNames])
+        wcSession?.transferUserInfo(["habitsIcons" : habitsIcons])
+        wcSession?.transferUserInfo(["habitsCounts" : habitsCounts])
+        wcSession?.transferUserInfo(["habitsStreaks" : habitsStreaks])
+        wcSession?.transferUserInfo(["habitsDoneTodays" : habitsDoneTodays])
+        wcSession?.transferUserInfo(["habitsLastDones" : habitsLastDones])
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 10) {
+            print(self.wcSession?.outstandingUserInfoTransfers)
+        }
+//        DispatchQueue.main.async {
+//            do {
+//                try self.wcSession?.updateApplicationContext(["habitsNames" : habitsNames])
+//            } catch {
+//                print(error)
+//            }
+//        }
+//        DispatchQueue.main.async {
+//            do {
+//                try self.wcSession?.updateApplicationContext(["habitsIcons" : habitsIcons])
+//            } catch {
+//                print(error)
+//            }
+//        }
+//        DispatchQueue.main.async {
+//            do {
+//                try self.wcSession?.updateApplicationContext(["habitsCounts" : habitsCounts])
+//            } catch {
+//                print(error)
+//            }
+//        }
+//        DispatchQueue.main.async {
+//            do {
+//                try self.wcSession?.updateApplicationContext(["habitsStreaks" : habitsStreaks])
+//            } catch {
+//                print(error)
+//            }
+//        }
+//        DispatchQueue.main.async {
+//            do {
+//                try self.wcSession?.updateApplicationContext(["habitsDoneTodays" : habitsDoneTodays])
+//            } catch {
+//                print(error)
+//            }
+//        }
+//        DispatchQueue.main.async {
+//            do {
+//                try self.wcSession?.updateApplicationContext(["habitsLastDones" : habitsLastDones])
+//            } catch {
+//                print(error)
+//            }
+//        }
+    } */
 }
 
 extension UIColor {
@@ -525,7 +654,6 @@ extension UIColor {
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //print("cell tapped")
     }
 }
 
@@ -557,8 +685,12 @@ extension ViewController: UITableViewDataSource {
         return cell
     }
     
-    func saveHabits () {
+    func saveHabits (updateWatch: Bool = true) {
         UserDefaults.standard.set(try? PropertyListEncoder().encode(habits), forKey:"FINALE_DEV_APP_savedHabits")
+        
+        if (updateWatch) {
+            //watch_updateTable() WATCH
+        }
     }
     func loadHabits () {
         if let data = UserDefaults.standard.value(forKey:"FINALE_DEV_APP_savedHabits") as? Data {
@@ -591,8 +723,16 @@ extension ViewController: UITableViewDataSource {
             let moveDown = UIAction(title: "Move down", image: UIImage(systemName: "arrow.down.circle")) { action in
                 self.moveDown(index: indexPath.row)
             }
-            let DEBUG_CHEAT = UIAction(title: "Add streak", image: UIImage(systemName: "plus")) { action in
-                self.addStreak(index: indexPath.row)
+            let cheat = UIAction(title: "Fix streak", image: UIImage(systemName: "slider.horizontal.3")) { action in
+                let cheatVC = DEBUG_CHEAT()
+                cheatVC.modalPresentationStyle = .formSheet
+                cheatVC.transitioningDelegate = self
+                cheatVC.delegate = self
+                cheatVC.habitIndex = indexPath.row
+                cheatVC.habitName = self.habits[indexPath.row].name
+                cheatVC.days = String(self.habits[indexPath.row].count)
+                cheatVC.streaks = String(self.habits[indexPath.row].streakCount)
+                self.present(cheatVC, animated: true, completion: nil)
             }
 
 
@@ -609,7 +749,7 @@ extension ViewController: UITableViewDataSource {
             contextMenu.append(edit)
             let nonDestructive = UIMenu(title: "", options: .displayInline, children: contextMenu)
 
-            return UIMenu(title: "", children: [nonDestructive, remove])
+            return UIMenu(title: "", children: [nonDestructive, remove, cheat])
         }
     }
 }
@@ -625,6 +765,7 @@ extension ViewController: UITextFieldDelegate {
         self.view.endEditing(true)
         UserDefaults.standard.set(nameTextField.text, forKey: "FINALE_DEV_APP_displayName")
         UserDefaults.standard.set(hiText.font.pointSize, forKey: "FINALE_DEV_APP_displayNameFontSize")
+        //watch_updateName()    WATCH
         
         Analytics.logEvent("app_username_set", parameters: ["app_username" : nameTextField.text])
         return false
@@ -656,10 +797,8 @@ struct Habit: Codable, Equatable {
     var count: Int
     var streakCount: Int
     var doneToday: Bool
-    //var lastDone: Int
     var lastDone: Date
     var notificationTime: String
-
 }
 
 extension Date {

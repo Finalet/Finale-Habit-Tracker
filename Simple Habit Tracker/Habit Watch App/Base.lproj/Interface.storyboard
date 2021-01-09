@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17506" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="17500"/>
+    </dependencies>
+    <scenes>
+        <!--Main screen-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" userLabel="Main screen" customClass="InterfaceController" customModule="Habit_Watch_App" customModuleProvider="target">
+                    <items>
+                        <label alignment="left" text="Hi," textAlignment="left" id="XVi-3C-s1B">
+                            <fontDescription key="font" type="system" weight="semibold" pointSize="28"/>
+                        </label>
+                        <table alignment="left" id="pa9-Jm-8db">
+                            <items>
+                                <tableRow identifier="cell" id="gfe-3g-5a0" customClass="RowController" customModule="Habit_Watch_App_Extension">
+                                    <group key="rootItem" width="1" height="30" alignment="left" spacing="6" id="dbT-bD-39P">
+                                        <items>
+                                            <imageView width="24" height="24" alignment="left" verticalAlignment="center" image="sport.basketBall" id="xPY-2Z-65b"/>
+                                            <label alignment="left" verticalAlignment="center" text="Habit name" id="1Wu-OV-3d3">
+                                                <fontDescription key="font" style="UICTFontTextStyleBody"/>
+                                            </label>
+                                            <label width="18" height="18" alignment="right" verticalAlignment="center" text="👌" textAlignment="right" id="FRa-US-mKa">
+                                                <fontDescription key="font" type="system" pointSize="16"/>
+                                            </label>
+                                        </items>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                    </group>
+                                    <connections>
+                                        <outlet property="emoji" destination="FRa-US-mKa" id="PE3-gx-Dib"/>
+                                        <outlet property="habitIcon" destination="xPY-2Z-65b" id="fT2-ui-Umb"/>
+                                        <outlet property="habitName" destination="1Wu-OV-3d3" id="Q3i-Gt-oVD"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
+                    <connections>
+                        <outlet property="habitsTable" destination="pa9-Jm-8db" id="KNZ-lg-pMw"/>
+                        <outlet property="hiTextLabel" destination="XVi-3C-s1B" id="Tt3-Rn-tRY"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="47" y="293"/>
+        </scene>
+        <!--Expanded view-->
+        <scene sceneID="N98-b2-SPz">
+            <objects>
+                <controller identifier="ExpandedView" id="P4T-BY-2t6" userLabel="Expanded view" customClass="ExpandedView" customModule="Habit_Watch_App_Extension">
+                    <items>
+                        <group width="134" alignment="left" id="kdY-bP-zON">
+                            <items>
+                                <imageView width="40" height="40" alignment="left" image="sport.basketBall" id="HvG-P9-h4T"/>
+                                <group alignment="right" verticalAlignment="center" layout="vertical" spacing="0.0" id="94Q-gx-If2">
+                                    <items>
+                                        <label alignment="right" text="Total days: 12" textAlignment="left" id="cUB-xY-jnG">
+                                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                        </label>
+                                        <label alignment="right" text="Streak: 9" textAlignment="left" id="Yxt-yE-eY1">
+                                            <fontDescription key="font" style="UICTFontTextStyleFootnote"/>
+                                        </label>
+                                    </items>
+                                </group>
+                            </items>
+                        </group>
+                        <label alignment="left" text="Habit name" textAlignment="left" numberOfLines="0" id="TPQ-lr-zH2">
+                            <fontDescription key="font" type="system" pointSize="26"/>
+                        </label>
+                        <button width="1" alignment="left" verticalAlignment="bottom" title="Complete" id="CyC-yw-bfK">
+                            <connections>
+                                <action selector="completeButton" destination="P4T-BY-2t6" id="Ksz-6v-krI"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="completeButtonUI" destination="CyC-yw-bfK" id="4dE-oT-cPf"/>
+                        <outlet property="habitIcon" destination="HvG-P9-h4T" id="5OD-gW-W5G"/>
+                        <outlet property="habitName" destination="TPQ-lr-zH2" id="7F3-Zj-nXU"/>
+                        <outlet property="streakLabel" destination="Yxt-yE-eY1" id="eSK-rN-2bg"/>
+                        <outlet property="totalDaysLabel" destination="cUB-xY-jnG" id="xVJ-om-8bZ"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="313" y="293"/>
+        </scene>
+        <!--Static Notification Interface Controller-->
+        <scene sceneID="AEw-b0-oYE">
+            <objects>
+                <notificationController id="YCC-NB-fut">
+                    <items>
+                        <label alignment="left" text="Alert Label" numberOfLines="0" id="IdU-wH-bcW"/>
+                    </items>
+                    <notificationCategory key="notificationCategory" identifier="myCategory" id="JfB-70-Muf"/>
+                    <connections>
+                        <outlet property="notificationAlertLabel" destination="IdU-wH-bcW" id="JKC-fr-R95"/>
+                        <segue destination="4sK-HA-Art" kind="relationship" relationship="dynamicNotificationInterface" id="kXh-Jw-8B1"/>
+                        <segue destination="eXb-UN-Cd0" kind="relationship" relationship="dynamicInteractiveNotificationInterface" id="mpB-YA-K8N"/>
+                    </connections>
+                </notificationController>
+            </objects>
+            <point key="canvasLocation" x="220" y="643"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="ZPc-GJ-vnh">
+            <objects>
+                <controller id="4sK-HA-Art" customClass="NotificationController" customModule="Habit_Watch_App" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="468" y="643"/>
+        </scene>
+        <!--Notification Controller-->
+        <scene sceneID="Niz-AI-uX2">
+            <objects>
+                <controller id="eXb-UN-Cd0" customClass="NotificationController" customModule="Habit_Watch_App" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="468" y="983"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="sport.basketBall" width="150" height="150"/>
+    </resources>
+</document>
