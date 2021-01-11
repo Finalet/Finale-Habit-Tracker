@@ -42,7 +42,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Geg-Pz-xnh">
-                                <rect key="frame" x="20" y="199" width="388" height="727"/>
+                                <rect key="frame" x="0.0" y="199" width="428" height="727"/>
                                 <color key="backgroundColor" name="app.background"/>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pmF-8M-Sx9">
@@ -84,9 +84,9 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B5w-4P-HiD" secondAttribute="trailing" constant="20" id="Abg-51-afg"/>
                             <constraint firstItem="B5w-4P-HiD" firstAttribute="top" secondItem="FpT-i0-Xkl" secondAttribute="bottom" id="DgQ-YM-C60"/>
                             <constraint firstItem="gQb-uc-q4g" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Ghs-pS-EC9"/>
-                            <constraint firstItem="Geg-Pz-xnh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="HBF-Wg-LRS"/>
+                            <constraint firstItem="Geg-Pz-xnh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="HBF-Wg-LRS"/>
                             <constraint firstAttribute="trailing" secondItem="gQb-uc-q4g" secondAttribute="trailing" constant="80" id="LrW-Ys-QWt"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Geg-Pz-xnh" secondAttribute="trailing" constant="20" id="We2-KU-KgP"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Geg-Pz-xnh" secondAttribute="trailing" id="We2-KU-KgP"/>
                             <constraint firstItem="gQb-uc-q4g" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="80" id="aa4-OQ-ORQ"/>
                             <constraint firstItem="FpT-i0-Xkl" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="c4F-qb-wB5"/>
                             <constraint firstAttribute="trailing" secondItem="Pzk-zH-sU4" secondAttribute="trailing" constant="20" id="cAh-Oc-Ovx"/>

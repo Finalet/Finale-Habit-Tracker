@@ -132,15 +132,18 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Midnight" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jAu-IX-GAJ">
-                                    <rect key="frame" x="301.33333333333331" y="163" width="67" height="21"/>
+                                    <rect key="frame" x="296.66666666666669" y="163" width="67" height="21"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ucg-jb-8p7">
-                                    <rect key="frame" x="374.33333333333331" y="162.33333333333331" width="19.666666666666686" height="22"/>
+                                    <rect key="frame" x="369.66666666666669" y="161.66666666666663" width="24.333333333333314" height="23.666666666666657"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                     <color key="tintColor" systemColor="systemTealColor"/>
-                                    <state key="normal" image="questionmark.circle" catalog="system"/>
+                                    <state key="normal">
+                                        <imageReference key="image" image="questionmark.circle" catalog="system" symbolScale="large"/>
+                                    </state>
                                     <connections>
                                         <action selector="startNewDayButton:" destination="-1" eventType="touchUpInside" id="e4F-8i-GFD"/>
                                     </connections>
@@ -207,8 +210,8 @@
         </view>
     </objects>
     <resources>
-        <image name="icon" width="2048" height="2048"/>
-        <image name="icon.dark" width="2048" height="2048"/>
+        <image name="icon" width="1024" height="1024"/>
+        <image name="icon.dark" width="1024" height="1024"/>
         <image name="questionmark.circle" catalog="system" width="128" height="121"/>
         <namedColor name="app.background">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

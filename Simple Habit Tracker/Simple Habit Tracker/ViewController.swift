@@ -33,6 +33,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     @IBOutlet weak var hiText: UILabel!
     @IBOutlet weak var suggestionLabel: UILabel!
     
+    var timeOffset = 0
+    
     // var wcSession : WCSession? WATCH
     
     override func viewDidLoad() {
@@ -53,10 +55,29 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         }
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(appWentToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-                
+        
+        checkTimeOffset()
+        
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(stopEditingTable))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+        
         // watch() WATCH
+    }
+    
+    func checkTimeOffset(offset: Int = Int()) {
+        if (offset != Int()) {
+            timeOffset = offset
+            return
+        }
+        
+        if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_timeOffset") == nil) {
+            timeOffset = 0
+            UserDefaults.standard.set(timeOffset, forKey: "FINALE_DEV_APP_timeOffset")
+        } else {
+            timeOffset = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_timeOffset")
+        }
     }
     
     func watch () {
@@ -185,7 +206,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         }
     }
     func createNewSlider(habit: Habit) -> MTSlideToOpenView {
-        let slide = MTSlideToOpenView(frame: CGRect(x: 20, y: slidersGap/2, width: UIScreen.main.bounds.width - 80, height: sliderHeight))
+        let slide = MTSlideToOpenView(frame: CGRect(x: 40, y: slidersGap/2, width: UIScreen.main.bounds.width - 80, height: sliderHeight))
         slide.sliderViewTopDistance = 0
         slide.sliderCornerRadius = sliderHeight/2
         slide.thumbnailViewTopDistance = 4
@@ -349,25 +370,12 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
                 break
             }
         }
-        
-    }
-    func moveUp (index: Int) {
-        let habitToMove = habits[index]
-        habits.remove(at: index)
-        habits.insert(habitToMove, at: index-1)
-        tableView.reloadData()
-        saveHabits()
-    }
-    func moveDown (index: Int) {
-        let habitToMove = habits[index]
-        habits.remove(at: index)
-        habits.insert(habitToMove, at: index+1)
-        tableView.reloadData()
-        saveHabits()
+        UISelectionFeedbackGenerator().selectionChanged()
     }
     func fixHabitNumbers (habitIndex: Int, totalDays: Int, streakCount: Int) {
         habits[habitIndex].count = totalDays
         habits[habitIndex].streakCount = streakCount
+        sliders.removeAll()
         tableView.reloadData()
         saveHabits()
     }
@@ -382,12 +390,14 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             }
         })
         
-        habits.remove(at: index)
-        sliders.removeAll()
-        tableView.reloadData()
+        UISelectionFeedbackGenerator().selectionChanged()
         
-        saveHabits()
-        
+        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.15) {
+            self.habits.remove(at: index)
+            self.sliders.removeAll()
+            self.tableView.reloadData()
+            self.saveHabits()
+        }
         Analytics.logEvent("habit_removed", parameters: nil)
     }
     func openEditHabit (index: Int) {
@@ -423,6 +433,20 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         saveHabits()
         
         Analytics.logEvent("habit_added", parameters: ["habit_name" : name, "habit_color" : color, "habit_icon" : icon, "habit_notification_time" : notificationTime])
+    }
+    
+    func saveHabits (updateWatch: Bool = true) {
+        UserDefaults.standard.set(try? PropertyListEncoder().encode(habits), forKey:"FINALE_DEV_APP_savedHabits")
+        
+        if (updateWatch) {
+            //watch_updateTable() WATCH
+        }
+    }
+    func loadHabits () {
+        if let data = UserDefaults.standard.value(forKey:"FINALE_DEV_APP_savedHabits") as? Data {
+            let loadedHabits = try? PropertyListDecoder().decode(Array<Habit>.self, from: data)
+            habits = loadedHabits ?? [Habit]()
+        }
     }
     
     var currentRed: CGFloat = 0
@@ -480,7 +504,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     }
     
     func checkDate () {
-        if (lastDay != Date().dayNumberOfWeek()) {
+        if (lastDay != Date().dayNumberOfWeek(timeOffset: timeOffset)) {
             for x in 0..<habits.count {
                 if (habits[x].doneToday == true) {
                     sliders[x].resetStateWithAnimation(true)
@@ -499,7 +523,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
                     }
                 }
             }
-            lastDay = Date().dayNumberOfWeek()!
+            lastDay = Date().dayNumberOfWeek(timeOffset: timeOffset)!
             // watch_updateLastDay() WATCH
             UserDefaults.standard.set(lastDay, forKey: "FINALE_DEV_APP_lastDay")
             saveHabits()
@@ -671,11 +695,21 @@ extension ViewController: UITableViewDataSource {
         let itemToMove = habits[sourceIndexPath.row]
         habits.remove(at: sourceIndexPath.row)
         habits.insert(itemToMove, at: destinationIndexPath.row)
+        
+        let sliderToMove = sliders[sourceIndexPath.row]
+        sliders.remove(at: sourceIndexPath.row)
+        sliders.insert(sliderToMove, at: destinationIndexPath.row)
+    }
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if (proposedDestinationIndexPath.row == habits.count) {
+            return IndexPath(row: proposedDestinationIndexPath.row - 1, section: proposedDestinationIndexPath.section)
+        }
+        return proposedDestinationIndexPath
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) //NOT USING THIS CAUSE MEMORY OVERLOADED FROM CREATING NEW SLIDERS EVERYTIME
-        let cell = UITableViewCell();
+        let cell = CustomTableCell();
         
         cell.selectionStyle = .none
         cell.backgroundColor = .clear
@@ -685,26 +719,50 @@ extension ViewController: UITableViewDataSource {
         return cell
     }
     
-    func saveHabits (updateWatch: Bool = true) {
-        UserDefaults.standard.set(try? PropertyListEncoder().encode(habits), forKey:"FINALE_DEV_APP_savedHabits")
-        
-        if (updateWatch) {
-            //watch_updateTable() WATCH
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        return .none
+    }
+    func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
+    }
+    @objc func stopEditingTable () {
+        if (tableView.isEditing) {
+            tableView.isEditing = false
+            saveHabits()
         }
     }
-    func loadHabits () {
-        if let data = UserDefaults.standard.value(forKey:"FINALE_DEV_APP_savedHabits") as? Data {
-            let loadedHabits = try? PropertyListDecoder().decode(Array<Habit>.self, from: data)
-            habits = loadedHabits ?? [Habit]()
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        if(indexPath.row == self.habits.count) {
+            return false
+        } else {
+            return true
         }
     }
     
+    func tableView(_ tableView: UITableView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        guard let indexPath = configuration.identifier as? IndexPath else { return nil }
+        
+        let parameters = UIPreviewParameters()
+        parameters.backgroundColor = .clear
+        let view = sliders[indexPath.row]
+        view.layer.cornerRadius = sliderHeight/2
+
+        return UITargetedPreview(view: view, parameters: parameters)
+    }
+    func tableView(_ tableView: UITableView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        let parameters = UIPreviewParameters()
+            parameters.backgroundColor = .clear
+        
+        guard let indexPath = configuration.identifier as? IndexPath else { return nil }
+
+        return UITargetedPreview(view: sliders[indexPath.row], parameters: parameters)
+    }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
         if indexPath.row == habits.count { //if its the last cell which is empty
             return nil
         }
-        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+        return UIContextMenuConfiguration(identifier: indexPath as NSIndexPath, previewProvider: nil) { suggestedActions in
             let removeCancel = UIAction(title: "Cancel", image: UIImage(systemName: "xmark")) { action in }
             let removeConfirm = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
                 self.removeHabit(index: indexPath.row)
@@ -717,11 +775,9 @@ extension ViewController: UITableViewDataSource {
             let reset = UIAction(title: "Reset today", image: UIImage(systemName: "arrow.counterclockwise")) { action in
                 self.resetHabit(index: indexPath.row)
             }
-            let moveUp = UIAction(title: "Move up", image: UIImage(systemName: "arrow.up.circle")) { action in
-                self.moveUp(index: indexPath.row)
-            }
-            let moveDown = UIAction(title: "Move down", image: UIImage(systemName: "arrow.down.circle")) { action in
-                self.moveDown(index: indexPath.row)
+            let reorder = UIAction(title: "Reorder", image: UIImage(systemName: "arrow.up.arrow.down")) { action in
+                self.tableView.isEditing = true
+                UISelectionFeedbackGenerator().selectionChanged()
             }
             let cheat = UIAction(title: "Fix streak", image: UIImage(systemName: "slider.horizontal.3")) { action in
                 let cheatVC = DEBUG_CHEAT()
@@ -740,16 +796,10 @@ extension ViewController: UITableViewDataSource {
             if (self.habits[indexPath.row].doneToday) {
                 contextMenu.append(reset)
             }
-            if (indexPath.row != 0) {
-                contextMenu.append(moveUp)
-            }
-            if (indexPath.row != self.habits.count - 1) {
-                contextMenu.append(moveDown)
-            }
+            contextMenu.append(reorder)
             contextMenu.append(edit)
-            let nonDestructive = UIMenu(title: "", options: .displayInline, children: contextMenu)
-
-            return UIMenu(title: "", children: [nonDestructive, remove, cheat])
+            let nonDestructive = UIMenu(options: .displayInline, children: contextMenu)
+            return UIMenu(children: [nonDestructive, remove, cheat])
         }
     }
 }
@@ -802,8 +852,9 @@ struct Habit: Codable, Equatable {
 }
 
 extension Date {
-    func dayNumberOfWeek() -> Int? {
-        return Calendar.current.dateComponents([.weekday], from: self).weekday
+    func dayNumberOfWeek(timeOffset: Int) -> Int? {
+        let dayAdjusted = Calendar.current.date(byAdding: .hour, value: -timeOffset, to: self)
+        return Calendar.current.dateComponents([.weekday], from: dayAdjusted!).weekday
     }
     static var yesterday: Date { return Date().dayBefore }
     static var tomorrow:  Date { return Date().dayAfter }
@@ -825,5 +876,19 @@ extension Date {
     }
     var isLastDayOfMonth: Bool {
         return dayAfter.month != month
+    }
+}
+
+class CustomTableCell: UITableViewCell {
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+
+        if editing {
+            for view in subviews where view.description.contains("Reorder") {
+                for case let subview as UIImageView in view.subviews {
+                    subview.frame = subview.frame.offsetBy(dx: 10, dy: 0)
+                }
+            }
+        }
     }
 }

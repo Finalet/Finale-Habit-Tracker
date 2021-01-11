@@ -28,9 +28,9 @@ class SettingsView: UIViewController {
     @IBOutlet weak var hapticsSwitch: UISwitch!
     
     @IBOutlet weak var startNewDayLabel: UILabel!
-    var currentTimeSelected = 0
-    let timeOptions24 = ["Midnight", "01:00", "02:00", "03:00", "04:00"]
-    let timeOptions12 = ["Midnight", "1am", "2am", "3am", "4am"]
+    var timeOffset = 0
+    let timeOptions24 = ["Midnight", "01:00", "02:00", "03:00", "04:00", "05:00"]
+    let timeOptions12 = ["Midnight", "1:00 am", "2:00 am", "3:00 am", "4:00 am", "5:00 am"]
     
     @IBOutlet weak var interfaceSwitch: UISegmentedControl!
     
@@ -66,11 +66,11 @@ class SettingsView: UIViewController {
         soundsSwitch.setOn(soundsEnabled, animated: false)
         hapticsSwitch.setOn(hapticsEnabled, animated: false)
         
-        if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_newDayTime") == nil) {
-            currentTimeSelected = 0
-            UserDefaults.standard.set(currentTimeSelected, forKey: "FINALE_DEV_APP_newDayTime")
+        if (UserDefaults.standard.object(forKey: "FINALE_DEV_APP_timeOffset") == nil) {
+            timeOffset = 0
+            UserDefaults.standard.set(timeOffset, forKey: "FINALE_DEV_APP_timeOffset")
         } else {
-            currentTimeSelected = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_newDayTime")
+            timeOffset = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_timeOffset")
         }
         changeStartNewDay()
         
@@ -220,23 +220,27 @@ class SettingsView: UIViewController {
         pickerView.delegate = self
         pickerView.timeOptions24 = timeOptions24
         pickerView.timeOptions12 = timeOptions12
-        pickerView.currentOption = currentTimeSelected
+        pickerView.currentOption = timeOffset
         present(pickerView, animated: true, completion: nil)
+        
+        UISelectionFeedbackGenerator().selectionChanged()
     }
     func changeStartNewDay (save: Bool = false) {
         if (is24Hour()) {
-            startNewDayLabel.text = timeOptions24[currentTimeSelected]
+            startNewDayLabel.text = timeOptions24[timeOffset]
         } else {
-            startNewDayLabel.text = timeOptions12[currentTimeSelected]
+            startNewDayLabel.text = timeOptions12[timeOffset]
         }
         
         if (!save) {
             return
         }
-        UserDefaults.standard.set(currentTimeSelected, forKey: "FINALE_DEV_APP_newDayTime")
+        UserDefaults.standard.set(timeOffset, forKey: "FINALE_DEV_APP_timeOffset")
 
+        delegate?.checkTimeOffset(offset: timeOffset)
+        
         var time = ""
-        switch currentTimeSelected {
+        switch timeOffset {
         case 0:
             time = "00:00"
         case 1:
@@ -247,6 +251,8 @@ class SettingsView: UIViewController {
             time = "03:00"
         case 4:
             time = "04:00"
+        case 5:
+            time = "05:00"
         default:
             time = "00:00"
         }
@@ -308,7 +314,7 @@ class pickStartNewDay: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
         title.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         
         let explanation = UILabel()
-        explanation.text = "Your habits will be reset at the start of a new day."
+        explanation.text = "Your habits will refresh at the start of a new day."
         explanation.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
         explanation.textColor = UIColor.systemGray
         explanation.translatesAutoresizingMaskIntoConstraints = false
@@ -356,7 +362,7 @@ class pickStartNewDay: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 5
+        return timeOptions24.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
@@ -373,10 +379,11 @@ class pickStartNewDay: UIViewController, UIPickerViewDelegate, UIPickerViewDataS
     }
     @objc func confirm() {
         self.dismiss(animated: true, completion: nil)
+        UISelectionFeedbackGenerator().selectionChanged()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        delegate?.currentTimeSelected = UIPicker.selectedRow(inComponent: 0)
+        delegate?.timeOffset = UIPicker.selectedRow(inComponent: 0)
         delegate?.changeStartNewDay(save: true)
     }
 }

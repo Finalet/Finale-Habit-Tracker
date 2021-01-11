@@ -17,24 +17,6 @@
 		8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8845133225803337006F8BD0 /* ColorViewCell.xib */; };
 		8845133B258038A1006F8BD0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8845133A258038A1006F8BD0 /* Colors.xcassets */; };
 		8847771E2578963700999250 /* UIColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8847771D2578963700999250 /* UIColor+Components.swift */; };
-		88784219259BBEAF00460645 /* dark_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784207259BBEAE00460645 /* dark_icon@2x.png */; };
-		8878421A259BBEAF00460645 /* dark_icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784208259BBEAE00460645 /* dark_icon@2x~ipad.png */; };
-		8878421B259BBEAF00460645 /* dark_icon~ios-marketing.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784209259BBEAE00460645 /* dark_icon~ios-marketing.png */; };
-		8878421C259BBEAF00460645 /* dark_icon-29@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8878420A259BBEAE00460645 /* dark_icon-29@2x~ipad.png */; };
-		8878421D259BBEAF00460645 /* dark_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8878420B259BBEAE00460645 /* dark_icon@3x.png */; };
-		8878421E259BBEAF00460645 /* dark_icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8878420C259BBEAE00460645 /* dark_icon~ipad.png */; };
-		8878421F259BBEAF00460645 /* dark_icon-20@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 8878420D259BBEAE00460645 /* dark_icon-20@2x~ipad.png */; };
-		88784220259BBEAF00460645 /* dark_icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8878420E259BBEAE00460645 /* dark_icon-40@2x.png */; };
-		88784221259BBEAF00460645 /* dark_icon-20@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8878420F259BBEAE00460645 /* dark_icon-20@3x.png */; };
-		88784222259BBEAF00460645 /* dark_icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784210259BBEAE00460645 /* dark_icon-29@2x.png */; };
-		88784223259BBEAF00460645 /* dark_icon-29~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784211259BBEAE00460645 /* dark_icon-29~ipad.png */; };
-		88784224259BBEAF00460645 /* dark_icon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784212259BBEAF00460645 /* dark_icon-40@3x.png */; };
-		88784225259BBEAF00460645 /* dark_icon-40~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784213259BBEAF00460645 /* dark_icon-40~ipad.png */; };
-		88784226259BBEAF00460645 /* dark_icon-20~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784214259BBEAF00460645 /* dark_icon-20~ipad.png */; };
-		88784227259BBEAF00460645 /* dark_icon-40@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784215259BBEAF00460645 /* dark_icon-40@2x~ipad.png */; };
-		88784228259BBEAF00460645 /* dark_icon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784216259BBEAF00460645 /* dark_icon-29@3x.png */; };
-		88784229259BBEAF00460645 /* dark_icon-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784217259BBEAF00460645 /* dark_icon-20@2x.png */; };
-		8878422A259BBEAF00460645 /* dark_icon-83.5@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88784218259BBEAF00460645 /* dark_icon-83.5@2x~ipad.png */; };
 		888CD50E25A3CF71007B237C /* tickSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 888CD50D25A3CF71007B237C /* tickSound.mp3 */; };
 		888CD51D25A3D1FA007B237C /* GSAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 888CD51C25A3D1FA007B237C /* GSAudio.swift */; };
 		889A69B5257EC5360016D3D0 /* PresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 889A69B4257EC5360016D3D0 /* PresentationController.swift */; };
@@ -57,6 +39,24 @@
 		88B5596E25785E4D00D64D1A /* Simple_Habit_TrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5596D25785E4D00D64D1A /* Simple_Habit_TrackerTests.swift */; };
 		88B5597925785E4D00D64D1A /* Simple_Habit_TrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B5597825785E4D00D64D1A /* Simple_Habit_TrackerUITests.swift */; };
 		88B6C18D257B27580045D022 /* ConfettiType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B6C18C257B27580045D022 /* ConfettiType.swift */; };
+		88C401BA25B4479300143271 /* dark_icon@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401A825B4479100143271 /* dark_icon@2x~ipad.png */; };
+		88C401BB25B4479300143271 /* dark_icon-20~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401A925B4479100143271 /* dark_icon-20~ipad.png */; };
+		88C401BC25B4479300143271 /* dark_icon-40~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401AA25B4479100143271 /* dark_icon-40~ipad.png */; };
+		88C401BD25B4479300143271 /* dark_icon-29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401AB25B4479100143271 /* dark_icon-29@3x.png */; };
+		88C401BE25B4479300143271 /* dark_icon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401AC25B4479100143271 /* dark_icon@3x.png */; };
+		88C401BF25B4479300143271 /* dark_icon-40@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401AD25B4479100143271 /* dark_icon-40@2x~ipad.png */; };
+		88C401C025B4479300143271 /* dark_icon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401AE25B4479100143271 /* dark_icon-40@3x.png */; };
+		88C401C125B4479300143271 /* dark_icon-20@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401AF25B4479100143271 /* dark_icon-20@3x.png */; };
+		88C401C225B4479300143271 /* dark_icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B025B4479200143271 /* dark_icon-40@2x.png */; };
+		88C401C325B4479300143271 /* dark_icon-29~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B125B4479200143271 /* dark_icon-29~ipad.png */; };
+		88C401C425B4479300143271 /* dark_icon-29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B225B4479200143271 /* dark_icon-29@2x.png */; };
+		88C401C525B4479300143271 /* dark_icon-20@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B325B4479200143271 /* dark_icon-20@2x~ipad.png */; };
+		88C401C625B4479300143271 /* dark_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B425B4479200143271 /* dark_icon@2x.png */; };
+		88C401C725B4479300143271 /* dark_icon-29@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B525B4479200143271 /* dark_icon-29@2x~ipad.png */; };
+		88C401C825B4479300143271 /* dark_icon-83.5@2x~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B625B4479300143271 /* dark_icon-83.5@2x~ipad.png */; };
+		88C401C925B4479300143271 /* dark_icon~ios~marketing.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B725B4479300143271 /* dark_icon~ios~marketing.png */; };
+		88C401CA25B4479300143271 /* dark_icon~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B825B4479300143271 /* dark_icon~ipad.png */; };
+		88C401CB25B4479300143271 /* dark_icon-20@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88C401B925B4479300143271 /* dark_icon-20@2x.png */; };
 		88CD2CC8259AD35500C06B13 /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88CD2CC7259AD35500C06B13 /* TutorialView.swift */; };
 		88CD2CD2259AD84700C06B13 /* TutorialView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88CD2CD1259AD84700C06B13 /* TutorialView.xib */; };
 		88D11F7E257B1CD30040C61F /* MTSlideToOpenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */; };
@@ -156,24 +156,6 @@
 		8845133225803337006F8BD0 /* ColorViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorViewCell.xib; sourceTree = "<group>"; };
 		8845133A258038A1006F8BD0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8847771D2578963700999250 /* UIColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Components.swift"; sourceTree = "<group>"; };
-		88784207259BBEAE00460645 /* dark_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon@2x.png"; sourceTree = "<group>"; };
-		88784208259BBEAE00460645 /* dark_icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon@2x~ipad.png"; sourceTree = "<group>"; };
-		88784209259BBEAE00460645 /* dark_icon~ios-marketing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon~ios-marketing.png"; sourceTree = "<group>"; };
-		8878420A259BBEAE00460645 /* dark_icon-29@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-29@2x~ipad.png"; sourceTree = "<group>"; };
-		8878420B259BBEAE00460645 /* dark_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon@3x.png"; sourceTree = "<group>"; };
-		8878420C259BBEAE00460645 /* dark_icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon~ipad.png"; sourceTree = "<group>"; };
-		8878420D259BBEAE00460645 /* dark_icon-20@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-20@2x~ipad.png"; sourceTree = "<group>"; };
-		8878420E259BBEAE00460645 /* dark_icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-40@2x.png"; sourceTree = "<group>"; };
-		8878420F259BBEAE00460645 /* dark_icon-20@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-20@3x.png"; sourceTree = "<group>"; };
-		88784210259BBEAE00460645 /* dark_icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-29@2x.png"; sourceTree = "<group>"; };
-		88784211259BBEAE00460645 /* dark_icon-29~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-29~ipad.png"; sourceTree = "<group>"; };
-		88784212259BBEAF00460645 /* dark_icon-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-40@3x.png"; sourceTree = "<group>"; };
-		88784213259BBEAF00460645 /* dark_icon-40~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-40~ipad.png"; sourceTree = "<group>"; };
-		88784214259BBEAF00460645 /* dark_icon-20~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-20~ipad.png"; sourceTree = "<group>"; };
-		88784215259BBEAF00460645 /* dark_icon-40@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-40@2x~ipad.png"; sourceTree = "<group>"; };
-		88784216259BBEAF00460645 /* dark_icon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-29@3x.png"; sourceTree = "<group>"; };
-		88784217259BBEAF00460645 /* dark_icon-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-20@2x.png"; sourceTree = "<group>"; };
-		88784218259BBEAF00460645 /* dark_icon-83.5@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-83.5@2x~ipad.png"; sourceTree = "<group>"; };
 		888CD50D25A3CF71007B237C /* tickSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = tickSound.mp3; sourceTree = "<group>"; };
 		888CD51525A3D11C007B237C /* Habit Watch App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit Watch App.entitlements"; sourceTree = "<group>"; };
 		888CD51C25A3D1FA007B237C /* GSAudio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GSAudio.swift; sourceTree = "<group>"; };
@@ -205,6 +187,24 @@
 		88B6C18C257B27580045D022 /* ConfettiType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiType.swift; sourceTree = "<group>"; };
 		88B970992586E01F00084C6E /* Simple Habit Tracker.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Simple Habit Tracker.entitlements"; sourceTree = "<group>"; };
 		88B9709E2586E03100084C6E /* Habit WidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Habit WidgetExtension.entitlements"; sourceTree = "<group>"; };
+		88C401A825B4479100143271 /* dark_icon@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon@2x~ipad.png"; sourceTree = "<group>"; };
+		88C401A925B4479100143271 /* dark_icon-20~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-20~ipad.png"; sourceTree = "<group>"; };
+		88C401AA25B4479100143271 /* dark_icon-40~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-40~ipad.png"; sourceTree = "<group>"; };
+		88C401AB25B4479100143271 /* dark_icon-29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-29@3x.png"; sourceTree = "<group>"; };
+		88C401AC25B4479100143271 /* dark_icon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon@3x.png"; sourceTree = "<group>"; };
+		88C401AD25B4479100143271 /* dark_icon-40@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-40@2x~ipad.png"; sourceTree = "<group>"; };
+		88C401AE25B4479100143271 /* dark_icon-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-40@3x.png"; sourceTree = "<group>"; };
+		88C401AF25B4479100143271 /* dark_icon-20@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-20@3x.png"; sourceTree = "<group>"; };
+		88C401B025B4479200143271 /* dark_icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-40@2x.png"; sourceTree = "<group>"; };
+		88C401B125B4479200143271 /* dark_icon-29~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-29~ipad.png"; sourceTree = "<group>"; };
+		88C401B225B4479200143271 /* dark_icon-29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-29@2x.png"; sourceTree = "<group>"; };
+		88C401B325B4479200143271 /* dark_icon-20@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-20@2x~ipad.png"; sourceTree = "<group>"; };
+		88C401B425B4479200143271 /* dark_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon@2x.png"; sourceTree = "<group>"; };
+		88C401B525B4479200143271 /* dark_icon-29@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-29@2x~ipad.png"; sourceTree = "<group>"; };
+		88C401B625B4479300143271 /* dark_icon-83.5@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-83.5@2x~ipad.png"; sourceTree = "<group>"; };
+		88C401B725B4479300143271 /* dark_icon~ios~marketing.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon~ios~marketing.png"; sourceTree = "<group>"; };
+		88C401B825B4479300143271 /* dark_icon~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon~ipad.png"; sourceTree = "<group>"; };
+		88C401B925B4479300143271 /* dark_icon-20@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dark_icon-20@2x.png"; sourceTree = "<group>"; };
 		88CD2CC7259AD35500C06B13 /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		88CD2CD1259AD84700C06B13 /* TutorialView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TutorialView.xib; sourceTree = "<group>"; };
 		88D11F7D257B1CD30040C61F /* MTSlideToOpenView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTSlideToOpenView.swift; sourceTree = "<group>"; };
@@ -303,24 +303,24 @@
 		889A05A12590422300A7EABF /* Alternate Icons */ = {
 			isa = PBXGroup;
 			children = (
-				88784217259BBEAF00460645 /* dark_icon-20@2x.png */,
-				8878420D259BBEAE00460645 /* dark_icon-20@2x~ipad.png */,
-				8878420F259BBEAE00460645 /* dark_icon-20@3x.png */,
-				88784214259BBEAF00460645 /* dark_icon-20~ipad.png */,
-				88784210259BBEAE00460645 /* dark_icon-29@2x.png */,
-				8878420A259BBEAE00460645 /* dark_icon-29@2x~ipad.png */,
-				88784216259BBEAF00460645 /* dark_icon-29@3x.png */,
-				88784211259BBEAE00460645 /* dark_icon-29~ipad.png */,
-				8878420E259BBEAE00460645 /* dark_icon-40@2x.png */,
-				88784215259BBEAF00460645 /* dark_icon-40@2x~ipad.png */,
-				88784212259BBEAF00460645 /* dark_icon-40@3x.png */,
-				88784213259BBEAF00460645 /* dark_icon-40~ipad.png */,
-				88784218259BBEAF00460645 /* dark_icon-83.5@2x~ipad.png */,
-				88784207259BBEAE00460645 /* dark_icon@2x.png */,
-				88784208259BBEAE00460645 /* dark_icon@2x~ipad.png */,
-				8878420B259BBEAE00460645 /* dark_icon@3x.png */,
-				88784209259BBEAE00460645 /* dark_icon~ios-marketing.png */,
-				8878420C259BBEAE00460645 /* dark_icon~ipad.png */,
+				88C401B925B4479300143271 /* dark_icon-20@2x.png */,
+				88C401B325B4479200143271 /* dark_icon-20@2x~ipad.png */,
+				88C401AF25B4479100143271 /* dark_icon-20@3x.png */,
+				88C401A925B4479100143271 /* dark_icon-20~ipad.png */,
+				88C401B225B4479200143271 /* dark_icon-29@2x.png */,
+				88C401B525B4479200143271 /* dark_icon-29@2x~ipad.png */,
+				88C401AB25B4479100143271 /* dark_icon-29@3x.png */,
+				88C401B125B4479200143271 /* dark_icon-29~ipad.png */,
+				88C401B025B4479200143271 /* dark_icon-40@2x.png */,
+				88C401AD25B4479100143271 /* dark_icon-40@2x~ipad.png */,
+				88C401AE25B4479100143271 /* dark_icon-40@3x.png */,
+				88C401AA25B4479100143271 /* dark_icon-40~ipad.png */,
+				88C401B625B4479300143271 /* dark_icon-83.5@2x~ipad.png */,
+				88C401B425B4479200143271 /* dark_icon@2x.png */,
+				88C401A825B4479100143271 /* dark_icon@2x~ipad.png */,
+				88C401AC25B4479100143271 /* dark_icon@3x.png */,
+				88C401B725B4479300143271 /* dark_icon~ios~marketing.png */,
+				88C401B825B4479300143271 /* dark_icon~ipad.png */,
 			);
 			path = "Alternate Icons";
 			sourceTree = "<group>";
@@ -643,37 +643,37 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				88784228259BBEAF00460645 /* dark_icon-29@3x.png in Resources */,
 				88B5596325785E4C00D64D1A /* LaunchScreen.storyboard in Resources */,
 				8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */,
+				88C401C425B4479300143271 /* dark_icon-29@2x.png in Resources */,
+				88C401C625B4479300143271 /* dark_icon@2x.png in Resources */,
+				88C401CB25B4479300143271 /* dark_icon-20@2x.png in Resources */,
 				8802ED752585AB2200ABE4FF /* Images.bundle in Resources */,
 				88CD2CD2259AD84700C06B13 /* TutorialView.xib in Resources */,
-				8878421B259BBEAF00460645 /* dark_icon~ios-marketing.png in Resources */,
-				88784224259BBEAF00460645 /* dark_icon-40@3x.png in Resources */,
+				88C401C025B4479300143271 /* dark_icon-40@3x.png in Resources */,
+				88C401BA25B4479300143271 /* dark_icon@2x~ipad.png in Resources */,
 				8845133B258038A1006F8BD0 /* Colors.xcassets in Resources */,
+				88C401C525B4479300143271 /* dark_icon-20@2x~ipad.png in Resources */,
 				88A5320625901BE5008BD5E9 /* SettingsView.xib in Resources */,
-				8878421A259BBEAF00460645 /* dark_icon@2x~ipad.png in Resources */,
-				88784222259BBEAF00460645 /* dark_icon-29@2x.png in Resources */,
-				88784223259BBEAF00460645 /* dark_icon-29~ipad.png in Resources */,
 				88FC5171259D66C50045B20A /* GoogleService-Info.plist in Resources */,
-				8878422A259BBEAF00460645 /* dark_icon-83.5@2x~ipad.png in Resources */,
-				88784219259BBEAF00460645 /* dark_icon@2x.png in Resources */,
-				88784221259BBEAF00460645 /* dark_icon-20@3x.png in Resources */,
-				88784229259BBEAF00460645 /* dark_icon-20@2x.png in Resources */,
-				8878421F259BBEAF00460645 /* dark_icon-20@2x~ipad.png in Resources */,
+				88C401C225B4479300143271 /* dark_icon-40@2x.png in Resources */,
+				88C401BE25B4479300143271 /* dark_icon@3x.png in Resources */,
 				8821E63D259FD0D200A95261 /* scrollviewtest.xib in Resources */,
-				8878421C259BBEAF00460645 /* dark_icon-29@2x~ipad.png in Resources */,
-				88784220259BBEAF00460645 /* dark_icon-40@2x.png in Resources */,
-				88784226259BBEAF00460645 /* dark_icon-20~ipad.png in Resources */,
+				88C401BF25B4479300143271 /* dark_icon-40@2x~ipad.png in Resources */,
 				88B5596025785E4C00D64D1A /* Assets.xcassets in Resources */,
-				8878421D259BBEAF00460645 /* dark_icon@3x.png in Resources */,
-				88784227259BBEAF00460645 /* dark_icon-40@2x~ipad.png in Resources */,
-				88784225259BBEAF00460645 /* dark_icon-40~ipad.png in Resources */,
+				88C401C725B4479300143271 /* dark_icon-29@2x~ipad.png in Resources */,
 				8806A39F25A6361200D5797D /* DEBUG_CHEAT.xib in Resources */,
 				88B5595E25785E4B00D64D1A /* Main.storyboard in Resources */,
+				88C401C825B4479300143271 /* dark_icon-83.5@2x~ipad.png in Resources */,
+				88C401BD25B4479300143271 /* dark_icon-29@3x.png in Resources */,
+				88C401BB25B4479300143271 /* dark_icon-20~ipad.png in Resources */,
+				88C401C925B4479300143271 /* dark_icon~ios~marketing.png in Resources */,
 				8821E633259FCE4A00A95261 /* AddHabitView.xib in Resources */,
-				8878421E259BBEAF00460645 /* dark_icon~ipad.png in Resources */,
 				888CD50E25A3CF71007B237C /* tickSound.mp3 in Resources */,
+				88C401C325B4479300143271 /* dark_icon-29~ipad.png in Resources */,
+				88C401C125B4479300143271 /* dark_icon-20@3x.png in Resources */,
+				88C401BC25B4479300143271 /* dark_icon-40~ipad.png in Resources */,
+				88C401CA25B4479300143271 /* dark_icon~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -972,7 +972,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Habit WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = AYPPAXMRMG;
 				INFOPLIST_FILE = "Habit Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -981,7 +981,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.031;
+				MARKETING_VERSION = 1.041;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -998,7 +998,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = "Habit WidgetExtension.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = AYPPAXMRMG;
 				INFOPLIST_FILE = "Habit Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -1007,7 +1007,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.031;
+				MARKETING_VERSION = 1.041;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker.widget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1143,14 +1143,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Simple Habit Tracker/Simple Habit Tracker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = AYPPAXMRMG;
 				INFOPLIST_FILE = "Simple Habit Tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.031;
+				MARKETING_VERSION = 1.041;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1167,14 +1167,14 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Simple Habit Tracker/Simple Habit Tracker.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = AYPPAXMRMG;
 				INFOPLIST_FILE = "Simple Habit Tracker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.031;
+				MARKETING_VERSION = 1.041;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Grant151.habit-tracker";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
