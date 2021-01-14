@@ -229,6 +229,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         slide.textLabelLeadingDistance = 60
         slide.draggedView.backgroundColor = UIColor(named: habit.color + ".main")
         slide.sliderBackgroundColor = UIColor(named: habit.color + ".secondary")!
+        slide.layer.cornerRadius = sliderHeight/2
         
         slide.thumnailImageView.layer.shadowRadius = 4
         slide.thumnailImageView.layer.shadowOpacity = 0.3
@@ -392,12 +393,11 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         
         UISelectionFeedbackGenerator().selectionChanged()
         
-        DispatchQueue.main.asyncAfter(deadline:DispatchTime.now() + 0.15) {
-            self.habits.remove(at: index)
-            self.sliders.removeAll()
-            self.tableView.reloadData()
-            self.saveHabits()
-        }
+        self.habits.remove(at: index)
+        self.sliders.removeAll()
+        self.tableView.reloadData()
+        self.saveHabits()
+        
         Analytics.logEvent("habit_removed", parameters: nil)
     }
     func openEditHabit (index: Int) {
@@ -740,20 +740,18 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, previewForHighlightingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
-        guard let indexPath = configuration.identifier as? IndexPath else { return nil }
+        let indexPath = configuration.identifier as! IndexPath
         
         let parameters = UIPreviewParameters()
         parameters.backgroundColor = .clear
-        let view = sliders[indexPath.row]
-        view.layer.cornerRadius = sliderHeight/2
 
-        return UITargetedPreview(view: view, parameters: parameters)
+        return UITargetedPreview(view: sliders[indexPath.row], parameters: parameters)
     }
     func tableView(_ tableView: UITableView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
+        let indexPath = configuration.identifier as! IndexPath
+        
         let parameters = UIPreviewParameters()
             parameters.backgroundColor = .clear
-        
-        guard let indexPath = configuration.identifier as? IndexPath else { return nil }
 
         return UITargetedPreview(view: sliders[indexPath.row], parameters: parameters)
     }
@@ -763,11 +761,19 @@ extension ViewController: UITableViewDataSource {
             return nil
         }
         return UIContextMenuConfiguration(identifier: indexPath as NSIndexPath, previewProvider: nil) { suggestedActions in
-            let removeCancel = UIAction(title: "Cancel", image: UIImage(systemName: "xmark")) { action in }
+           /* let removeCancel = UIAction(title: "Cancel", image: UIImage(systemName: "xmark")) { action in }
             let removeConfirm = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
                 self.removeHabit(index: indexPath.row)
             }
             let remove = UIMenu(title: "Delete", image: UIImage(systemName: "trash"), options: .destructive, children: [removeCancel, removeConfirm])
+            */
+            let delete = UIAction(title: "Delete", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+                let slideVC = deleteHabitConfirm(habitName: self.habits[indexPath.row].name, habitIndex: indexPath.row)
+                slideVC.modalPresentationStyle = .custom
+                slideVC.transitioningDelegate = self
+                slideVC.delegate = self
+                self.present(slideVC, animated: true, completion: nil)
+            }
             
             let edit = UIAction(title: "Edit", image: UIImage(systemName: "square.and.pencil")) { action in
                 self.openEditHabit(index: indexPath.row)
@@ -798,10 +804,10 @@ extension ViewController: UITableViewDataSource {
             }
             contextMenu.append(reorder)
             contextMenu.append(edit)
-            let nonDestructive = UIMenu(options: .displayInline, children: contextMenu)
-            return UIMenu(children: [nonDestructive, remove, cheat])
+            let nonDestructive = UIMenu(title: "", options: .displayInline, children: contextMenu)
+            return UIMenu(title: "", children: [nonDestructive, delete, cheat])
         }
-    }
+    } 
 }
 
 extension ViewController: UIViewControllerTransitioningDelegate {
@@ -890,5 +896,97 @@ class CustomTableCell: UITableViewCell {
                 }
             }
         }
+    }
+}
+
+class deleteHabitConfirm: UIViewController {
+    var displayTitle = UILabel()
+    var subtext = UILabel()
+    var cancelButton = UIButton()
+    var deleteButton = UIButton()
+    
+    var habitIndex = Int()
+    
+    weak var delegate: ViewController?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+               
+        view.addSubview(displayTitle)
+        view.addSubview(subtext)
+        view.addSubview(cancelButton)
+        view.addSubview(deleteButton)
+        
+        displayTitle.translatesAutoresizingMaskIntoConstraints = false
+        displayTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        displayTitle.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        displayTitle.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
+        
+        subtext.translatesAutoresizingMaskIntoConstraints = false
+        subtext.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
+        subtext.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20).isActive = true
+        subtext.topAnchor.constraint(equalTo: displayTitle.bottomAnchor, constant: 10).isActive = true
+        
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        cancelButton.topAnchor.constraint(equalTo: subtext.bottomAnchor, constant: 20).isActive = true
+        cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
+        cancelButton.widthAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3).isActive = true
+        cancelButton.heightAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3/3).isActive = true
+        
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        deleteButton.topAnchor.constraint(equalTo: subtext.bottomAnchor, constant: 20).isActive = true
+        deleteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
+        deleteButton.widthAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3).isActive = true
+        deleteButton.heightAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3/3).isActive = true
+    }
+    init(habitName: String, habitIndex: Int) {
+        self.displayTitle.textAlignment = .center
+        self.displayTitle.text = "Delete \"\(habitName)\"?"
+        self.displayTitle.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
+        
+        self.habitIndex = habitIndex
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        subtext.text = "You will lose all your progress"
+        subtext.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.body)
+        subtext.textColor = .gray
+        subtext.textAlignment = .center
+        
+        cancelButton.setTitle(" Cancel", for: .normal) //label space to move icon left
+        cancelButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
+        cancelButton.addTarget(self, action: #selector(dismissView), for: .touchUpInside)
+        cancelButton.backgroundColor = .systemTeal
+        cancelButton.layer.cornerRadius = 10
+        cancelButton.setImage(UIImage(systemName: "xmark", withConfiguration: UIImage.SymbolConfiguration(weight: .semibold)), for: .normal)
+        cancelButton.imageView?.contentMode = .scaleAspectFit
+        cancelButton.tintColor = .white
+        cancelButton.setTitleColor(.white, for: .normal)
+        cancelButton.setTitleColor(.gray, for: .highlighted)
+        
+        deleteButton.setTitle(" Delete", for: .normal) //label space to move icon left
+        deleteButton.titleLabel?.font = UIFont.preferredFont(forTextStyle: UIFont.TextStyle.headline)
+        deleteButton.addTarget(self, action: #selector(deleteHabit), for: .touchUpInside)
+        deleteButton.backgroundColor = .red
+        deleteButton.layer.cornerRadius = 10
+        deleteButton.setImage(UIImage(systemName: "trash", withConfiguration: UIImage.SymbolConfiguration(weight: .semibold)), for: .normal)
+        deleteButton.imageView?.contentMode = .scaleAspectFit
+        deleteButton.tintColor = .white
+        deleteButton.setTitleColor(.white, for: .normal)
+        deleteButton.setTitleColor(.gray, for: .highlighted)
+        
+        self.view.backgroundColor = UIColor(named: "app.background")
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func deleteHabit () {
+        delegate?.removeHabit(index: habitIndex)
+        self.dismiss(animated: true, completion: nil)
+    }
+    @objc func dismissView () {
+        self.dismiss(animated: true, completion: nil)
     }
 }

@@ -13,7 +13,6 @@
 		8806A39F25A6361200D5797D /* DEBUG_CHEAT.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8806A39E25A6361200D5797D /* DEBUG_CHEAT.xib */; };
 		8806A3A725A63AC200D5797D /* DEBUG_CHEAT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8806A3A625A63AC200D5797D /* DEBUG_CHEAT.swift */; };
 		8821E633259FCE4A00A95261 /* AddHabitView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8821E632259FCE4A00A95261 /* AddHabitView.xib */; };
-		8821E63D259FD0D200A95261 /* scrollviewtest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8821E63C259FD0D200A95261 /* scrollviewtest.xib */; };
 		8845133325803337006F8BD0 /* ColorViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8845133225803337006F8BD0 /* ColorViewCell.xib */; };
 		8845133B258038A1006F8BD0 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8845133A258038A1006F8BD0 /* Colors.xcassets */; };
 		8847771E2578963700999250 /* UIColor+Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8847771D2578963700999250 /* UIColor+Components.swift */; };
@@ -152,7 +151,6 @@
 		8806A39E25A6361200D5797D /* DEBUG_CHEAT.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DEBUG_CHEAT.xib; sourceTree = "<group>"; };
 		8806A3A625A63AC200D5797D /* DEBUG_CHEAT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DEBUG_CHEAT.swift; sourceTree = "<group>"; };
 		8821E632259FCE4A00A95261 /* AddHabitView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddHabitView.xib; sourceTree = "<group>"; };
-		8821E63C259FD0D200A95261 /* scrollviewtest.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = scrollviewtest.xib; sourceTree = "<group>"; };
 		8845133225803337006F8BD0 /* ColorViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorViewCell.xib; sourceTree = "<group>"; };
 		8845133A258038A1006F8BD0 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8847771D2578963700999250 /* UIColor+Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Components.swift"; sourceTree = "<group>"; };
@@ -400,7 +398,6 @@
 				889A69B4257EC5360016D3D0 /* PresentationController.swift */,
 				88A5320525901BE5008BD5E9 /* SettingsView.xib */,
 				8821E632259FCE4A00A95261 /* AddHabitView.xib */,
-				8821E63C259FD0D200A95261 /* scrollviewtest.xib */,
 				88A5320F25901D9A008BD5E9 /* SettingsView.swift */,
 				8802ED742585AB2200ABE4FF /* Images.bundle */,
 				889A69BE257EC6B50016D3D0 /* AddHabitView.swift */,
@@ -658,7 +655,6 @@
 				88FC5171259D66C50045B20A /* GoogleService-Info.plist in Resources */,
 				88C401C225B4479300143271 /* dark_icon-40@2x.png in Resources */,
 				88C401BE25B4479300143271 /* dark_icon@3x.png in Resources */,
-				8821E63D259FD0D200A95261 /* scrollviewtest.xib in Resources */,
 				88C401BF25B4479300143271 /* dark_icon-40@2x~ipad.png in Resources */,
 				88B5596025785E4C00D64D1A /* Assets.xcassets in Resources */,
 				88C401C725B4479300143271 /* dark_icon-29@2x~ipad.png in Resources */,

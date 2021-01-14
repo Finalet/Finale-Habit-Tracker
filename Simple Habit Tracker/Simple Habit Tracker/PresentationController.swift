@@ -16,14 +16,20 @@ class PresentationController: UIPresentationController {
   }
   
   override var frameOfPresentedViewInContainerView: CGRect {
-    var height: CGFloat = 0.8
-    if (presentedViewController.nibName == "SettingsView") {
-        height = 0.45
+    var height: CGFloat = 0
+    var heightInverted: CGFloat = 0
+    if (presentedViewController is AddHabitView) {
+        height = self.containerView!.frame.height * 0.8
+        heightInverted = self.containerView!.frame.height * 0.2
+    } else if (presentedViewController is SettingsView) {
+        height = self.containerView!.frame.height * 0.45
+        heightInverted = self.containerView!.frame.height * 0.55
+    } else if (presentedViewController is deleteHabitConfirm) {
+        height = 160 + self.presentingViewController.view.safeAreaInsets.bottom
+        heightInverted = self.containerView!.frame.height - height
     }
     
-    return CGRect(origin: CGPoint(x: 0, y: self.containerView!.frame.height * (1-height)),
-             size: CGSize(width: self.containerView!.frame.width, height: self.containerView!.frame.height *
-              height))
+    return CGRect(origin: CGPoint(x: 0, y: heightInverted), size: CGSize(width: self.containerView!.frame.width, height: height))
   }
 
   override func presentationTransitionWillBegin() {
