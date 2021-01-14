@@ -35,7 +35,8 @@ struct Provider: IntentTimelineProvider {
         let name = userDefaults?.string(forKey: "FINALE_DEV_APP_widgetCacheName") ?? ""
         let streak = userDefaults?.array(forKey: "FINALE_DEV_APP_widgetCacheStreak") as! [Int]
         let doneToday = userDefaults?.array(forKey: "FINALE_DEV_APP_widgetCacheDoneTodays") as! [Bool]
-
+        let timeOffset = userDefaults?.integer(forKey: "FINALE_DEV_APP_widgetTimeOffset") ?? 0
+        
         let currentDate = Date()
         let initialEntry = SimpleEntry(date: currentDate, name: name, habits: habits, icons: icons, streak: streak, doneToday: doneToday, configuration: configuration)
         entries.append(initialEntry)
@@ -47,7 +48,7 @@ struct Provider: IntentTimelineProvider {
                 streakReset[i] = 0
             }
         }
-        let midnight = Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date())!
+        let midnight = Calendar.current.date(bySettingHour: 0 + timeOffset, minute: 0, second: 0, of: Date())!
         let resetDate = Calendar.current.date(byAdding: .day, value: 1, to: midnight)!
         let resetEntry = SimpleEntry(date: resetDate, name: name, habits: habits, icons: icons, streak: streakReset, doneToday: doneTodayReset, configuration: configuration)
         entries.append(resetEntry)

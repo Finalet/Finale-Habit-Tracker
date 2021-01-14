@@ -25,7 +25,7 @@ class PresentationController: UIPresentationController {
         height = self.containerView!.frame.height * 0.45
         heightInverted = self.containerView!.frame.height * 0.55
     } else if (presentedViewController is deleteHabitConfirm) {
-        height = 160 + self.presentingViewController.view.safeAreaInsets.bottom
+        height = 150 + self.presentingViewController.view.safeAreaInsets.bottom
         heightInverted = self.containerView!.frame.height - height
     }
     

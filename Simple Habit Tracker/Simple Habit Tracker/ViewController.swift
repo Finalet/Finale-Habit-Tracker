@@ -150,6 +150,21 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             if (habitsNames.count >= 5) {
                 break
             }
+            if (habit.doneToday) {
+                continue
+            }
+            habitsNames.append(habit.name)
+            habitsIcons.append(habit.icon.replacingOccurrences(of: ".png", with: ""))
+            habitsStreaks.append(habit.streakCount)
+            habitsDoneTodays.append(habit.doneToday)
+        }
+        for habit in habits {
+            if (habitsNames.count >= 5) {
+                break
+            }
+            if (!habit.doneToday) {
+                continue
+            }
             habitsNames.append(habit.name)
             habitsIcons.append(habit.icon.replacingOccurrences(of: ".png", with: ""))
             habitsStreaks.append(habit.streakCount)
@@ -160,6 +175,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         userDefaults?.setValue(nameTextField.text, forKey: "FINALE_DEV_APP_widgetCacheName")
         userDefaults?.setValue(habitsStreaks, forKey: "FINALE_DEV_APP_widgetCacheStreak")
         userDefaults?.setValue(habitsDoneTodays, forKey: "FINALE_DEV_APP_widgetCacheDoneTodays")
+        userDefaults?.setValue(timeOffset, forKey: "FINALE_DEV_APP_widgetTimeOffset")
         if #available(iOS 14.0, *) {
             WidgetCenter.shared.reloadAllTimelines()
         }
@@ -802,10 +818,13 @@ extension ViewController: UITableViewDataSource {
             if (self.habits[indexPath.row].doneToday) {
                 contextMenu.append(reset)
             }
+            if (self.nameTextField.text!.contains("_debug")){
+                contextMenu.append(cheat)
+            }
             contextMenu.append(reorder)
             contextMenu.append(edit)
             let nonDestructive = UIMenu(title: "", options: .displayInline, children: contextMenu)
-            return UIMenu(title: "", children: [nonDestructive, delete, cheat])
+            return UIMenu(title: "", children: [nonDestructive, delete])
         }
     } 
 }
@@ -931,13 +950,13 @@ class deleteHabitConfirm: UIViewController {
         cancelButton.topAnchor.constraint(equalTo: subtext.bottomAnchor, constant: 20).isActive = true
         cancelButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40).isActive = true
         cancelButton.widthAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3).isActive = true
-        cancelButton.heightAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3/3).isActive = true
+        cancelButton.heightAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3/3.5).isActive = true
         
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         deleteButton.topAnchor.constraint(equalTo: subtext.bottomAnchor, constant: 20).isActive = true
         deleteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40).isActive = true
         deleteButton.widthAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3).isActive = true
-        deleteButton.heightAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3/3).isActive = true
+        deleteButton.heightAnchor.constraint(equalToConstant: (view.bounds.width - 80)/2.3/3.5).isActive = true
     }
     init(habitName: String, habitIndex: Int) {
         self.displayTitle.textAlignment = .center
