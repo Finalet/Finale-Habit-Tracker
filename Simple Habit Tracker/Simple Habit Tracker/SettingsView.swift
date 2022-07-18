@@ -34,6 +34,9 @@ class SettingsView: UIViewController {
     
     @IBOutlet weak var interfaceSwitch: UISegmentedControl!
     
+    @IBOutlet weak var finaleToDoLogo: UIImageView!
+    
+    @IBOutlet weak var finaleToDoContainer: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         delegate?.loadInterface()
@@ -74,6 +77,12 @@ class SettingsView: UIViewController {
         }
         changeStartNewDay()
         
+        finaleToDoLogo.layer.borderColor = UIColor.systemGray4.cgColor
+        finaleToDoLogo.layer.borderWidth = 1
+        finaleToDoLogo.layer.cornerRadius = 12
+        
+        finaleToDoContainer.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(OpenFinaleToDoAppStore)))
+        
         Analytics.logEvent("settings_open", parameters: nil)
     }
     
@@ -104,6 +113,11 @@ class SettingsView: UIViewController {
         interfaceSwitch.addTarget(self, action: #selector(changeInterface), for: .valueChanged)
         
         interfaceSwitch.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_interface")
+    }
+    
+    @objc func OpenFinaleToDoAppStore () {
+        let url = URL(string: "https://apps.apple.com/app/apple-store/id1622931101?pt=118399445&ct=Finale%20Daily%20Habit%20Tracker&mt=8")
+        UIApplication.shared.open(url!)
     }
     
     @objc func changeInterface () {

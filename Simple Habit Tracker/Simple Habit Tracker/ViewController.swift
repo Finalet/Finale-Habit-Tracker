@@ -802,14 +802,11 @@ extension ViewController: UITableViewDataSource {
                 UISelectionFeedbackGenerator().selectionChanged()
             }
             let cheat = UIAction(title: "Fix streak", image: UIImage(systemName: "slider.horizontal.3")) { action in
-                let cheatVC = DEBUG_CHEAT()
-                cheatVC.modalPresentationStyle = .formSheet
+                let cheatVC = DEBUG_CHEAT(habitName: self.habits[indexPath.row].name, days: String(self.habits[indexPath.row].count), streaks: String(self.habits[indexPath.row].streakCount), habitIndex: indexPath.row)
+                cheatVC.modalPresentationStyle = .overFullScreen
+                cheatVC.modalTransitionStyle = .crossDissolve
                 cheatVC.transitioningDelegate = self
                 cheatVC.delegate = self
-                cheatVC.habitIndex = indexPath.row
-                cheatVC.habitName = self.habits[indexPath.row].name
-                cheatVC.days = String(self.habits[indexPath.row].count)
-                cheatVC.streaks = String(self.habits[indexPath.row].streakCount)
                 self.present(cheatVC, animated: true, completion: nil)
             }
 
@@ -818,11 +815,9 @@ extension ViewController: UITableViewDataSource {
             if (self.habits[indexPath.row].doneToday) {
                 contextMenu.append(reset)
             }
-            if (self.nameTextField.text!.contains("_debug")){
-                contextMenu.append(cheat)
-            }
             contextMenu.append(reorder)
             contextMenu.append(edit)
+            contextMenu.append(cheat)
             let nonDestructive = UIMenu(title: "", options: .displayInline, children: contextMenu)
             return UIMenu(title: "", children: [nonDestructive, delete])
         }
