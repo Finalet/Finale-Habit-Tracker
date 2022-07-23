@@ -51,13 +51,12 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         
         lastDay = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_lastDay")
         _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+            self.checkTimeOffset()
             self.checkDate()
         }
         
         UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         NotificationCenter.default.addObserver(self, selector: #selector(appWentToBackground), name: UIApplication.willResignActiveNotification, object: nil)
-        
-        checkTimeOffset()
         
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(stopEditingTable))
         tap.cancelsTouchesInView = false
@@ -277,7 +276,16 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             }
         }
         
-        sliders.append(slide)
+        var didInsert = false
+        for i in 0..<sliders.count {
+            if sliders[i].habit == habit {
+                sliders.remove(at: i)
+                sliders.insert(slide, at: i)
+                didInsert = true
+                break
+            }
+        }
+        if !didInsert { sliders.append(slide) }
         
         return slide
     }
@@ -539,7 +547,7 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
                     }
                 }
             }
-            lastDay = Date().dayNumberOfWeek(timeOffset: timeOffset)!
+            lastDay = Date().dayNumberOfWeek(timeOffset: timeOffset)
             // watch_updateLastDay() WATCH
             UserDefaults.standard.set(lastDay, forKey: "FINALE_DEV_APP_lastDay")
             saveHabits()
@@ -731,6 +739,7 @@ extension ViewController: UITableViewDataSource {
         cell.backgroundColor = .clear
         if (indexPath.row != habits.count) { //Create empty row at the bottom to add space
             cell.contentView.addSubview(createNewSlider(habit: habits[indexPath.row]))
+            print(sliders.count)
         }
         return cell
     }
@@ -872,9 +881,9 @@ struct Habit: Codable, Equatable {
 }
 
 extension Date {
-    func dayNumberOfWeek(timeOffset: Int) -> Int? {
-        let dayAdjusted = Calendar.current.date(byAdding: .hour, value: -timeOffset, to: self)
-        return Calendar.current.dateComponents([.weekday], from: dayAdjusted!).weekday
+    func dayNumberOfWeek(timeOffset: Int) -> Int {
+        let dayAdjusted = Calendar.current.date(byAdding: .hour, value: -timeOffset, to: self) ?? self
+        return Calendar.current.dateComponents([.weekday], from: dayAdjusted).weekday ?? 0
     }
     static var yesterday: Date { return Date().dayBefore }
     static var tomorrow:  Date { return Date().dayAfter }
