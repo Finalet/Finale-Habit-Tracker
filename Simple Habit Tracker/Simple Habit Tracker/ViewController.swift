@@ -50,8 +50,8 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         view.addGestureRecognizer(holdRecognizer)
         
         lastDay = UserDefaults.standard.integer(forKey: "FINALE_DEV_APP_lastDay")
+        self.checkTimeOffset()
         _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
-            self.checkTimeOffset()
             self.checkDate()
         }
         
@@ -61,7 +61,6 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(stopEditingTable))
         tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
-        
         // watch() WATCH
     }
     
@@ -530,10 +529,12 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     func checkDate () {
         if (lastDay != Date().dayNumberOfWeek(timeOffset: timeOffset)) {
             for x in 0..<habits.count {
+                guard let slider = getSlider(habit: habits[x]) else { continue }
+                
                 if (habits[x].doneToday == true) {
-                    sliders[x].resetStateWithAnimation(true)
+                    slider.resetStateWithAnimation(true)
                     habits[x].doneToday = false
-                    sliders[x].habit = habits[x]
+                    slider.habit = habits[x]
                 }
                 if (Calendar.current.isDateInYesterday(habits[x].lastDone) != true && Calendar.current.isDateInToday(habits[x].lastDone) != true && Calendar.current.isDateInTomorrow(habits[x].lastDone) != true) {
                     for i in 0..<sliders.count {
@@ -552,6 +553,13 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
             UserDefaults.standard.set(lastDay, forKey: "FINALE_DEV_APP_lastDay")
             saveHabits()
         }
+    }
+    
+    func getSlider(habit: Habit) -> MTSlideToOpenView? {
+        for slider in sliders {
+            if slider.habit == habit { return slider }
+        }
+        return nil
     }
     
     func getEmoji (streakCount: Int) -> String {
