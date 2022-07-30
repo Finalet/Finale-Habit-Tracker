@@ -747,7 +747,6 @@ extension ViewController: UITableViewDataSource {
         cell.backgroundColor = .clear
         if (indexPath.row != habits.count) { //Create empty row at the bottom to add space
             cell.contentView.addSubview(createNewSlider(habit: habits[indexPath.row]))
-            print(sliders.count)
         }
         return cell
     }
@@ -777,8 +776,11 @@ extension ViewController: UITableViewDataSource {
         
         let parameters = UIPreviewParameters()
         parameters.backgroundColor = .clear
-
-        return UITargetedPreview(view: sliders[indexPath.row], parameters: parameters)
+        
+        let cell = tableView.cellForRow(at: indexPath)!
+        let preview = cell.contentView.subviews.first ?? cell.contentView
+        
+        return UITargetedPreview(view: preview, parameters: parameters)
     }
     func tableView(_ tableView: UITableView, previewForDismissingContextMenuWithConfiguration configuration: UIContextMenuConfiguration) -> UITargetedPreview? {
         let indexPath = configuration.identifier as! IndexPath
@@ -786,7 +788,10 @@ extension ViewController: UITableViewDataSource {
         let parameters = UIPreviewParameters()
             parameters.backgroundColor = .clear
 
-        return UITargetedPreview(view: sliders[indexPath.row], parameters: parameters)
+        let cell = tableView.cellForRow(at: indexPath)!
+        let preview = cell.contentView.subviews.first ?? cell.contentView
+        
+        return UITargetedPreview(view: preview, parameters: parameters)
     }
     
     func tableView(_ tableView: UITableView, contextMenuConfigurationForRowAt indexPath: IndexPath, point: CGPoint) -> UIContextMenuConfiguration? {
