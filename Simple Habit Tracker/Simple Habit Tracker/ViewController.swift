@@ -529,12 +529,12 @@ class ViewController: UIViewController, MTSlideToOpenDelegate, MTSlideToOpenSwif
     func checkDate () {
         if (lastDay != Date().dayNumberOfWeek(timeOffset: timeOffset)) {
             for x in 0..<habits.count {
-                guard let slider = getSlider(habit: habits[x]) else { continue }
+                let slider = getSlider(habit: habits[x])
                 
                 if (habits[x].doneToday == true) {
-                    slider.resetStateWithAnimation(true)
+                    slider?.resetStateWithAnimation(true)
                     habits[x].doneToday = false
-                    slider.habit = habits[x]
+                    slider?.habit = habits[x]
                 }
                 if (Calendar.current.isDateInYesterday(habits[x].lastDone) != true && Calendar.current.isDateInToday(habits[x].lastDone) != true && Calendar.current.isDateInTomorrow(habits[x].lastDone) != true) {
                     for i in 0..<sliders.count {
